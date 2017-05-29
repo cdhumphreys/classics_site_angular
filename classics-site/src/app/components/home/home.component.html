@@ -1,0 +1,7 @@
+<div class="container">
+  <div class="row">
+    <a *ngFor="let quiz of quizzes; let i = index" [routerLink]="['/quiz', i]">
+    {{ quiz.book }}
+    </a>
+  </div>
+</div>
