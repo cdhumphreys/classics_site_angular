@@ -1,7 +1,12 @@
 <div class="container">
   <div class="row">
-    <a *ngFor="let quiz of quizzes; let i = index" [routerLink]="['/quiz', i]">
-    {{ quiz.book }}
-    </a>
+    <ul>
+      <li *ngFor="let quiz of quizzes; let i = index">
+        <a [routerLink]="['/quiz', i]">
+          Quiz: {{ quiz.book }}
+        </a>
+      </li>        
+    </ul>
+    
   </div>
 </div>

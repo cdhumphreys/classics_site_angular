@@ -1,0 +1,46 @@
+.quiz-name {
+    padding: 0;
+}
+
+.quiz-question {
+    padding: 2em 0;
+    -webkit-transition: all 1500ms ease-in-out;
+    -o-transition: all 1500ms ease-in-out;
+    transition: all 1500ms ease-in-out;
+}
+
+.quiz-answer {
+    padding: 1em 2em;
+    cursor: pointer;
+
+
+}
+
+.quiz-answer:hover {
+    text-decoration: underline;
+}
+
+.question-explanation {
+
+}
+
+.answer-correct {
+  background-color: rgba(0,255,0,0.4);
+}
+
+.answer-wrong {
+  background-color: rgba(255,0,0,0.4);
+}
+
+/*General classes*/
+
+.question-hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.transition-setting {
+  -webkit-transition: all 500ms ease-in-out;
+  -o-transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
+}
