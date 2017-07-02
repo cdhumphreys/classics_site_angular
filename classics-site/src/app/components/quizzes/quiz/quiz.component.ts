@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-// import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 import { ActivatedRoute, Params } from '@angular/router';
-
 import { AnswerFilterPipe } from '../../../pipes/answer-filter.pipe';
 
-import quizData from '../../../data/questions';
-
-
+import { QuizDataService } from '../../../services/quiz-data.service';
 
 @Component({
   selector: 'app-quiz',
@@ -15,53 +11,67 @@ import quizData from '../../../data/questions';
 })
 export class QuizComponent implements OnInit {
   quiz: String;
-  questions: any;
-  answeredQuestions = [];
+  quizData: any;
   currentQuestion = 0;
-
-  constructor(private route: ActivatedRoute) { }
+  answeredQuestions = [];
+  correctAnswers = 0;
+  constructor(
+    private route: ActivatedRoute,
+    private quizDataService: QuizDataService
+  ) { }
 
   ngOnInit() {
     this.route.params
     .subscribe(
       (params: Params) => {
-        this.quiz = "Book " + quizData[params['quiz']].book;
-        this.questions = quizData[params['quiz']]["questions"];
+        // this.quiz = 'Book ' + quizData[params['quiz']].book;
+        // this.questions = quizData[params['quiz']]['questions'];
+        const quizIndex = params['quiz'];
 
-        for (let i = 0; i < this.questions.length; i++) {
-          this.answeredQuestions.push({
-            answered: false,
+        this.quizData = this.quizDataService.getQuizData(quizIndex);
+        console.log(this.quizData);
+        for (let questionIndex = 0; questionIndex < this.quizData.length; questionIndex++) {
+          let answeredQuestionEntry = {
             correct: null,
-            correctIndex: null
-          });
+            correctIndex: null,
+            answeredIndex: null,
+            answerClasses: []
+          };
+
+          for (let property in this.quizData[questionIndex]) {
+            if (property.includes('correct') && this.quizData[questionIndex][property] == 1) {
+              let correctIndex = parseInt(property.split('_')[1]) - 1;
+              answeredQuestionEntry.correctIndex = correctIndex;
+            }
+            if (property.includes('answer')) {
+              answeredQuestionEntry.answerClasses.push('none');
+            }
+          }
+
+          this.answeredQuestions.push(answeredQuestionEntry);
         }
+        console.log(this.answeredQuestions);
+
       }
     );
   }
 
-  onAnswerQuestion(questionIndex, answerIndex) {
-    if(this.answeredQuestions[questionIndex].answered) {
-      return;
-    }
-    else {
+  onAnswerQuestion(questionIndex, selectedAnswerIndex) {
+    if (questionIndex == this.currentQuestion) {
       this.currentQuestion++;
-      let correctAnswerIndex = null;
-      let answeredCorrectly = false;
+      this.answeredQuestions[questionIndex].answeredIndex = selectedAnswerIndex;
+      console.log(questionIndex, selectedAnswerIndex);
 
-      for (let property in this.questions[questionIndex]) {
-        if (property.includes('correct') && this.questions[questionIndex][property] == 1) {
-          correctAnswerIndex = parseInt(property.split('_')[1]);
-          if (answerIndex == correctAnswerIndex) {
-            answeredCorrectly = true;
-          }
-        }
+      if (selectedAnswerIndex == this.answeredQuestions[questionIndex].correctIndex) {
+        this.answeredQuestions[questionIndex].correct = true;
+        this.correctAnswers++;
       }
-      console.log(answeredCorrectly, correctAnswerIndex);
-      this.answeredQuestions[questionIndex] = {
-        answered: true,
-        correct: answeredCorrectly,
-        correctAnswerIndex
-      };
+      else {
+        this.answeredQuestions[questionIndex].correct = false;
+        this.answeredQuestions[questionIndex].answerClasses[selectedAnswerIndex] = 'answer-wrong';
+      }
+
+      this.answeredQuestions[questionIndex].answerClasses[this.answeredQuestions[questionIndex].correctIndex] = 'answer-correct';
     }
   }
 }

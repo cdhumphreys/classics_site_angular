@@ -4,11 +4,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { QuizComponent } from './components/quizzes/quiz/quiz.component';
 import { HomeComponent } from './components/home/home.component';
+
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
+
+import { QuizDataService } from './services/quiz-data.service';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -32,7 +36,9 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [
+    QuizDataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

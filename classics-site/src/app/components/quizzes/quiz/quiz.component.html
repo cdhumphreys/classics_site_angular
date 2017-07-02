@@ -4,26 +4,32 @@
 
 <div class="quiz-wrapper">
     <ol>
-        <li class="quiz-question transition-setting" *ngFor="let question of questions; let i = index" [ngClass]="{'question-hide': i > currentQuestion}">
+        <li class="quiz-question transition-setting" *ngFor="let question of quizData; let i = index" [ngClass]="{'question-hide': i > currentQuestion}">
+
             <h4 class="quiz-question-title">{{ question.question }}</h4>
             <ul>
-                <li class="quiz-answer transition-setting"
-                *ngFor="let answer of (questions | answerFilter:i); let j = index"
+                <li class="quiz-answer"
+                *ngFor="let answer of (quizData | answerFilter:i); let j = index"
                 (click)="onAnswerQuestion(i, j)"
-                [ngClass]="{
-                  'answer-correct': (answeredQuestions[i].correct && answeredQuestions[i].answered && answeredQuestions[i].answerIndex == j),
-                  'answer-wrong': (!answeredQuestions[i].correct && answeredQuestions[i].answered)
-                }"
                 >
-                    {{ answer }}
+                    <div
+                    class="quiz-answer transition-setting"
+                    [ngClass]="answeredQuestions[i].answerClasses[j]"
+                    >{{ answer }}</div>
                 </li>
             </ul>
 
             <h5
-           [ngClass]="{'question-hide': !answeredQuestions[i].answered}"
+            [ngClass]="{'question-hide': !(currentQuestion > i)}"
             class="quiz-explanation transition-setting">
-            <strong>Explanation</strong>: {{ questions[i]['explanation'] }}
+              <strong>Explanation</strong>: {{ question['explanation'] }}
             </h5>
+            <hr>
         </li>
+
     </ol>
+    <div class="total-tracker">
+      <h4>Total:</h4>
+      <h4>{{correctAnswers}}/{{answeredQuestions.length}}</h4>
+    </div>
 </div>

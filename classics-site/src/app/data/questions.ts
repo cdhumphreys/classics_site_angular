@@ -7,9 +7,9 @@ const questions = [
       "answer_1":"Zeus, the keeper of Fate and overseer of all events",
       "correct_1":0,
       "answer_2":"the Muse Kalliope, to inspire him to sing his poem properly",
-      "correct_2":1,
+      "correct_2":0,
       "answer_3":"Achilleus and his anger, whose story the poem follows",
-      "correct_3":0,
+      "correct_3":1,
       "answer_4":"Paris, whose actions started the Trojan war",
       "correct_4":0,
       "explanation":"Sing, goddess, of the anger of Achilleus, son of Peleus, the accursed anger which brought uncounted anguish on the Achaians"
