@@ -1,35 +1,53 @@
-<h2 class="quiz-name">
- {{ quiz }}
-</h2>
 
-<div class="quiz-wrapper">
-    <ol>
-        <li class="quiz-question transition-setting" *ngFor="let question of quizData; let i = index" [ngClass]="{'question-hide': i > currentQuestion}">
+<div class="container">
+  <h2 class="quiz-name">
+   {{ quiz }}
+  </h2>
 
-            <h4 class="quiz-question-title">{{ question.question }}</h4>
-            <ul>
-                <li class="quiz-answer"
-                *ngFor="let answer of (quizData | answerFilter:i); let j = index"
-                (click)="onAnswerQuestion(i, j)"
-                >
-                    <div
-                    class="quiz-answer transition-setting"
-                    [ngClass]="answeredQuestions[i].answerClasses[j]"
-                    >{{ answer }}</div>
-                </li>
-            </ul>
+  <div *ngIf="!showEndScreen" class="quiz-wrapper row">
+      <ul class="col-xs-12 col-sm-8 cold-sm-offset-2 quiz-question-container">
+          <li
+          class="quiz-question transition-setting"
+          *ngFor="let question of quizData; let i = index"
+          [ngClass]="{'question-hide': i != currentQuestion}"
+          >
 
-            <h5
-            [ngClass]="{'question-hide': !(currentQuestion > i)}"
-            class="quiz-explanation transition-setting">
-              <strong>Explanation</strong>: {{ question['explanation'] }}
-            </h5>
-            <hr>
-        </li>
+              <h4 class="quiz-question-title">{{ question.question }}</h4>
+              <ul class="quiz-answers-container">
+                  <li class="quiz-answer"
+                  *ngFor="let answer of (quizData | answerFilter:i); let j = index"
+                  (click)="onAnswerQuestion(i, j)"
+                  >
+                      <div
+                      class="quiz-answer transition-setting"
+                      [ngClass]="answeredQuestions[i].answerClasses[j]"
+                      >{{ answer }}</div>
+                  </li>
+              </ul>
 
-    </ol>
-    <div class="total-tracker">
-      <h4>Total:</h4>
-      <h4>{{correctAnswers}}/{{answeredQuestions.length}}</h4>
+              <h5
+              [ngClass]="{'question-hide': answeredQuestions[i].answeredIndex == null}"
+              class="quiz-explanation transition-setting">
+                <i>{{ question['explanation'] }}</i>
+              </h5>
+              <hr>
+          </li>
+      </ul>
+  </div>
+  <div *ngIf="!showEndScreen" class="question-tracking row">
+    <div class="question-tracker">
+      <h4>Questions:</h4>
+      <h4>{{currentQuestion + 1}}/{{answeredQuestions.length}}</h4>
     </div>
+    <button
+    (click)="nextQuestion()"
+    [disabled]="answeredQuestions[currentQuestion].answeredIndex == null"
+    class="next-question btn btn-primary">Next Question</button>
+  </div>
+  <div *ngIf="showEndScreen" class="end-screen" class="row">
+    <h3>Finished!</h3>
+    <h4>You scored: {{correctAnswers}}/{{answeredQuestions.length}}</h4>
+    <button class="btn-spacing btn btn-info">Back to Home</button>
+    <button class="btn-spacing print-button btn btn-primary"><a [routerLink]="'./print'" [queryParams]="{ quizIndex: quizIndex }">Print</a></button>
+  </div>
 </div>

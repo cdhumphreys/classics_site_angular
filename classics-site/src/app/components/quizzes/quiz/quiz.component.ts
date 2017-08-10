@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { RouterModule, Routes, ActivatedRoute, Params } from '@angular/router';
 import { AnswerFilterPipe } from '../../../pipes/answer-filter.pipe';
 
 import { QuizDataService } from '../../../services/quiz-data.service';
@@ -11,10 +11,13 @@ import { QuizDataService } from '../../../services/quiz-data.service';
 })
 export class QuizComponent implements OnInit {
   quiz: String;
+  quizIndex: number;
   quizData: any;
   currentQuestion = 0;
   answeredQuestions = [];
   correctAnswers = 0;
+  showEndScreen = false;
+
   constructor(
     private route: ActivatedRoute,
     private quizDataService: QuizDataService
@@ -26,9 +29,11 @@ export class QuizComponent implements OnInit {
       (params: Params) => {
         // this.quiz = 'Book ' + quizData[params['quiz']].book;
         // this.questions = quizData[params['quiz']]['questions'];
-        const quizIndex = params['quiz'];
+        this.quizIndex = params['quiz'];
+        const data = this.quizDataService.getQuizData(this.quizIndex);
+        this.quizData = data.questions;
 
-        this.quizData = this.quizDataService.getQuizData(quizIndex);
+        this.quiz = `Book ${data.book}`;
         console.log(this.quizData);
         for (let questionIndex = 0; questionIndex < this.quizData.length; questionIndex++) {
           let answeredQuestionEntry = {
@@ -50,7 +55,6 @@ export class QuizComponent implements OnInit {
 
           this.answeredQuestions.push(answeredQuestionEntry);
         }
-        console.log(this.answeredQuestions);
 
       }
     );
@@ -58,9 +62,11 @@ export class QuizComponent implements OnInit {
 
   onAnswerQuestion(questionIndex, selectedAnswerIndex) {
     if (questionIndex == this.currentQuestion) {
-      this.currentQuestion++;
+      if (this.answeredQuestions[questionIndex].correct != null) {
+        return;
+      }
+      // this.currentQuestion++;
       this.answeredQuestions[questionIndex].answeredIndex = selectedAnswerIndex;
-      console.log(questionIndex, selectedAnswerIndex);
 
       if (selectedAnswerIndex == this.answeredQuestions[questionIndex].correctIndex) {
         this.answeredQuestions[questionIndex].correct = true;
@@ -73,5 +79,17 @@ export class QuizComponent implements OnInit {
 
       this.answeredQuestions[questionIndex].answerClasses[this.answeredQuestions[questionIndex].correctIndex] = 'answer-correct';
     }
+  }
+
+  nextQuestion() {
+    if (this.currentQuestion < this.answeredQuestions.length - 1) {
+      this.currentQuestion++;
+    }
+
+    if (this.currentQuestion == this.answeredQuestions.length - 1 && this.answeredQuestions[this.currentQuestion].correct != null) {
+      this.showEndScreen = true;
+      this.quizDataService.setStudentAnswers(this.quizIndex, this.answeredQuestions);
+    }
+
   }
 }

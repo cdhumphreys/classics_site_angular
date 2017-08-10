@@ -1,0 +1,32 @@
+body {
+  overflow: visible;
+}
+
+.answer-correct {
+  /*background-color: rgba(0,255,0,0.4);*/
+  font-weight: bold;
+}
+
+.answer-wrong {
+  /*background-color: rgba(255,0,0,0.4);*/
+  text-decoration: line-through;
+}
+
+.page-break	{
+  display: block;
+  page-break-before: always;
+}
+
+@media print {
+    div {
+      float: none !important;
+      position: static !important;
+      display: inline;
+      box-sizing: content-box !important;
+    }
+    body {
+    	font-family: Georgia, serif;
+    	background: none;
+    	color: black;
+    }
+}

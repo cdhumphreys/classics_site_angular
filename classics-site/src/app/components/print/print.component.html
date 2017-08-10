@@ -1,0 +1,34 @@
+
+
+<div class="container">
+  <h2 class="quiz-name">
+   {{ quiz }}
+  </h2>
+
+  <div class="quiz-wrapper row">
+      <ol class="col-xs-12 col-sm-8 cold-sm-offset-2 quiz-question-container">
+          <li
+          class="quiz-question transition-setting"
+
+          *ngFor="let question of quizQuestions; let i = index">
+              <div *ngIf="i % 5 == 0" class="page-break"></div>
+              <h4 class="quiz-question-title">{{ question.question }}</h4>
+              <ul class="quiz-answers-container">
+                  <li class="quiz-answer"
+                  *ngFor="let answer of (quizQuestions | answerFilter:i); let j = index">
+                      <div
+                      class="quiz-answer"
+                      [ngClass]="studentAnswers[i].answerClasses[j]">
+                        {{ answer }}
+                      </div>
+                  </li>
+              </ul>
+
+              <h5 class="quiz-explanation">
+                <i>{{ question['explanation'] }}</i>
+              </h5>
+              <hr>
+          </li>
+      </ol>
+  </div>
+</div>
