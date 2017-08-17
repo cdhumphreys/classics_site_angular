@@ -1,9 +1,21 @@
 <div class="container">
   <div class="row">
-    <span *ngIf="auth_user_not_found" class="text-center help-block text-warning">No user was found with that e-mail</span>
-    <span *ngIf="auth_email_in_use" class="text-center help-block text-warning">That e-mail is already in use</span>
-    <span *ngIf="auth_weak_password" class="text-center help-block text-warning">Your password must be at least 6 characters long</span>
-    <span *ngIf="auth_wrong_password" class="text-center help-block text-warning">Incorrect Password</span>
+    <div
+    *ngIf="auth_user_not_found"
+    role="alert"
+    class="col-xs-5 col-xs-offset-4 alert alert-warning text-center">No user was found with that e-mail</div>
+    <div
+    *ngIf="auth_email_in_use"
+    role="alert"
+    class="col-xs-5 col-xs-offset-4 alert alert-warning text-center">That e-mail is already in use</div>
+    <div
+    *ngIf="auth_weak_password"
+    role="alert"
+    class="col-xs-5 col-xs-offset-4 alert alert-warning text-center">Your password must be at least 6 characters long</div>
+    <div
+    *ngIf="auth_wrong_password"
+    role="alert"
+    class="col-xs-5 col-xs-offset-4 alert alert-danger text-center">Incorrect Password</div>
     <form
     *ngIf="!(user | async)?.uid"
     class="form-horizontal col-sm-10 col-md-6 col-sm-offset-1 col-md-offset-3"

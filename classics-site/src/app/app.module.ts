@@ -11,6 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 import { QuizComponent } from './components/quizzes/quiz/quiz.component';
 import { LoginComponent } from './components/login/login.component';
 import { PrintComponent } from './components/print/print.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
 
@@ -21,6 +22,7 @@ import { AngularFireModule } from 'angularfire2';
 // New imports to update based on AngularFire2 version 4
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAsj0eyzBbypGOR5De6zaKDPeHuBRN0OD8",
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'quiz/:quiz', component: QuizComponent},
   {path: 'quiz/:quiz/print', component: PrintComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'admin', component: AdminComponent}
 ];
 
 
@@ -49,6 +52,7 @@ const appRoutes: Routes = [
     AnswerFilterPipe,
     LoginComponent,
     PrintComponent,
+    AdminComponent
 
   ],
   imports: [
