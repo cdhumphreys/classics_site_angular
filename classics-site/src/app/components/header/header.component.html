@@ -16,7 +16,7 @@
         <li>
           <a href="#" [routerLink]="['/admin']">
             <button
-            *ngIf="(user | async)?.uid"
+            *ngIf="(userDetails | async)?.isAdmin"
             class="btn btn-info">
               Admin
             </button>

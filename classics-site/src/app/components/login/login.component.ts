@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   auth_email_in_use = false;
   auth_weak_password = false;
   auth_wrong_password = false;
+  adminSignup = false;
 
   // items: FirebaseListObservable<any[]>;
   // msgVal: string = '';
@@ -44,7 +45,24 @@ export class LoginComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+
+      if (!this.adminSignup) {
+        firebase.database().ref('users/' + user.uid).set({
+          email: email,
+          isAdmin: false
+        });
+      }
+      else {
+        firebase.database().ref('users/' + user.uid).set({
+          email: email,
+          isAdmin: true
+        });
+      }
+
+    })
+    .catch((error) => {
       console.log(error);
 
       if (error["code"] == "auth/email-already-in-use") {
@@ -53,8 +71,9 @@ export class LoginComponent implements OnInit {
       else if (error["code"] == "auth/weak-password") {
         this.auth_weak_password = true;
       }
-
     });
+
+
   }
 
   login(form: NgForm) {
