@@ -1,23 +1,98 @@
 <div class="row">
-  <div
-  class="btn btn-primary col-xs-5 spacing"
+  <button
+  class="btn btn-primary col-xs-5  col-xs-offset-1 spacing"
   (click)="onSelectOption('new', $event)"
-  >Add new question</div>
-  <div
-  class="btn btn-success col-xs-5"
+  >Add new question</button>
+  <button
+  class="btn btn-warning col-xs-5"
   (click)="onSelectOption('edit', $event)"
-  >Edit existing questions</div>
+  >Edit existing questions</button>
 </div>
 
 <div
   [ngSwitch]="selectedOption"
-  class="row">
+  class="row"
+  style="margin-top: 3em">
   <div
   *ngSwitchCase="'new'">
-    <h3>Add New Question</h3>
+    <h3 style="text-decoration: underline">Add New Question</h3>
+    <div class="row">
+      <div class="col-xs-12">
+        <form [formGroup]="questionForm">
+          <div class="row">
+            <button type="submit" [disabled]="!questionForm.valid" class="btn btn-success col-xs-3 col-xs-offset-3" style="margin-right:2em">Save</button>
+            <button type="button" class="btn btn-danger col-xs-3">Cancel</button>
+          </div>
+          <div class="row" style="margin-top: 2em">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="book">Select Book:</label>
+                <select class="form-control" name="book" formControlName="book" required>
+                  <option *ngFor="let book of books" [value]="book">{{book}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="question">Question:</label>
+                <input type="text" name="question" class="form-control" formControlName="question">
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 2em">
+            <div class="col-xs-12" formArrayName="answers">
+              <div class="row">
+                <div class="form-group col-xs-12"
+                *ngFor="let answerCtrl of questionForm.get('answers').controls; let i = index"
+                [formGroupName]="i">
+                  <label [for]="'answer_'+i">Answer {{i+1}}:</label>
+                  <input type="text" class="form-control" formControlName="answer" [name]="'answer_'+i">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button
+              class="btn btn-info"
+              (click)="onAddAnswer()">Add Answer</button>
+              <button
+              class="btn btn-warning"
+              [disabled]="questionForm.get('answers').length == 1"
+              (click)="onRemoveAnswer()">Remove Answer</button>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 3em">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="correctAnswer">Correct Answer:</label>
+                <select class="form-control" name="correctAnswer" formControlName="correctAnswer">
+                  <option *ngFor="let answerCtrl of questionForm.get('answers').controls; let i = index" [value]="i">{{i+1}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 1em">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="explanation">Explanation:</label>
+                <textarea class="form-control" formControlName="explanation" name="explanation" rows="8" cols="80"></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </div>
+
+
   <div
   *ngSwitchCase="'edit'">
-    <h3>Edit Existing Question</h3>
+    <h3 style="text-decoration: underline">Edit Existing Question</h3>
   </div>
+
+
 </div>
