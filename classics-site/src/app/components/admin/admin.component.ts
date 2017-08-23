@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators, NgForm } from '@angular/forms';
+import { QuizDatabaseService } from '../../services/quiz-database.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,11 +10,9 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 export class AdminComponent implements OnInit {
   selectedOption: string;
 
-  // populate this from db
-  books = [1,2,3,4,5];
-
-  questionForm: FormGroup;
-  constructor() { }
+  addNewForm: FormGroup;
+  editForm: FormGroup;
+  constructor(private dbService: QuizDatabaseService) { }
 
   ngOnInit() {
     this.initForm();
@@ -51,11 +50,7 @@ export class AdminComponent implements OnInit {
     let correctAnswer = '';
     let explanation = '';
 
-    if (this.selectedOption == 'edit') {
-      // populate with selected question data
-    }
-
-    this.questionForm = new FormGroup({
+    this.addNewForm = new FormGroup({
       'book': new FormControl(book, Validators.required),
       'question': new FormControl(question, Validators.required),
       'answers': answers,
@@ -65,13 +60,26 @@ export class AdminComponent implements OnInit {
   }
 
   onAddAnswer() {
-    (<FormArray>this.questionForm.get('answers')).push(new FormGroup({
+    (<FormArray>this.addNewForm.get('answers')).push(new FormGroup({
       'answer': new FormControl(null, Validators.required)
     }));
   }
 
   onRemoveAnswer() {
-    (<FormArray>this.questionForm.get('answers')).removeAt((<FormArray>this.questionForm.get('answers')).length-1);
+    (<FormArray>this.addNewForm.get('answers')).removeAt((<FormArray>this.addNewForm.get('answers')).length-1);
+  }
+
+  onSubmitNewQuestion(form: NgForm) {
+    let book = form.value.book;
+    let question = form.value.question;
+    let answers = form.value.answers;
+    let correctAnswer = parseInt(form.value.correctAnswer);
+
+    let explanation = form.value.explanation.trim();
+  }
+
+  onSubmitEditQuestion(form: NgForm) {
+
   }
 
 }

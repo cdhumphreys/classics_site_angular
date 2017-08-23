@@ -16,6 +16,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
 
 import { QuizDataService } from './services/quiz-data.service';
+import { QuizDatabaseService } from './services/quiz-database.service';
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -67,7 +68,8 @@ const appRoutes: Routes = [
     AngularFireAuthModule
   ],
   providers: [
-    QuizDataService
+    QuizDataService,
+    QuizDatabaseService
   ],
   bootstrap: [AppComponent]
 })
