@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { QuizDatabaseService } from '../../services/quiz-database.service';
 
 @Component({
@@ -12,22 +12,43 @@ export class AdminComponent implements OnInit {
 
   addNewForm: FormGroup;
   editForm: FormGroup;
+
+  editQuestion = {
+    book: 1,
+    questions: [
+      {
+        question: 'Example question',
+        answers: ['answer 1', 'answer 2'],
+        correct: 0,
+        explanation: 'asdasd'
+      },
+      {
+        question: 'Another Example question',
+        answers: ['answer 1', 'answer 2', 'answer 3'],
+        correct: 1,
+        explanation: 'zxcvb'
+      },
+    ],
+    selectedQuestion: 0
+  }
+
+
   constructor(private dbService: QuizDatabaseService) { }
 
   ngOnInit() {
-    this.initForm();
+    // this.initForm();
   }
 
-  onSelectOption(selectedOption: string, event) {
+  private onSelectOption(selectedOption: string, event) {
     let clickedButton = event.target;
     let siblingsArray = Array.prototype.slice.call(clickedButton.parentElement.childNodes,null);
 
-      let siblings = siblingsArray.filter((element) => {
-        if (element.classList) {
-          if (element != clickedButton) {
-            return element;
-          }
+    let siblings = siblingsArray.filter((element) => {
+      if (element.classList) {
+        if (element != clickedButton) {
+          return element;
         }
+      }
     });
 
     // Add active class to clicked button, remove from the other buttons
@@ -36,10 +57,18 @@ export class AdminComponent implements OnInit {
       siblings[i].classList.remove('active');
     }
 
+    if (selectedOption == 'new') {
+      this.initAddForm();
+    }
+    else if (selectedOption == 'edit') {
+      this.initEditForm();
+    }
+
     this.selectedOption = selectedOption;
+    console.log(this.selectedOption);
   }
 
-  private initForm() {
+  private initAddForm() {
     let book = '';
     let question = '';
     let answers = new FormArray([
@@ -59,17 +88,21 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  onAddAnswer() {
+  private initEditForm() {
+    // this.dbService.getQuestions();
+  }
+
+  private onAddAnswer() {
     (<FormArray>this.addNewForm.get('answers')).push(new FormGroup({
       'answer': new FormControl(null, Validators.required)
     }));
   }
 
-  onRemoveAnswer() {
+  private onRemoveAnswer() {
     (<FormArray>this.addNewForm.get('answers')).removeAt((<FormArray>this.addNewForm.get('answers')).length-1);
   }
 
-  onSubmitNewQuestion(form: NgForm) {
+  private onSubmitNewQuestion(form: NgForm) {
     let book = form.value.book;
     let question = form.value.question;
     let answers = form.value.answers;
