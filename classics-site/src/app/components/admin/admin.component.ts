@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
       },
     ],
     selectedQuestion: 0
-  }
+  };
 
 
   constructor(private dbService: QuizDatabaseService) { }
@@ -61,7 +61,7 @@ export class AdminComponent implements OnInit {
       this.initAddForm();
     }
     else if (selectedOption == 'edit') {
-      this.initEditForm();
+      // this.initEditForm();
     }
 
     this.selectedOption = selectedOption;
@@ -88,9 +88,6 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  private initEditForm() {
-    // this.dbService.getQuestions();
-  }
 
   private onAddAnswer() {
     (<FormArray>this.addNewForm.get('answers')).push(new FormGroup({
@@ -109,10 +106,25 @@ export class AdminComponent implements OnInit {
     let correctAnswer = parseInt(form.value.correctAnswer);
 
     let explanation = form.value.explanation.trim();
+
+    // TODO: set form values into quizQuestion object with interface then send to database using service
+
   }
 
-  onSubmitEditQuestion(form: NgForm) {
 
+
+  private onChooseEditBook($event) {
+    let chosenBook = parseInt($event.target.value);
+
+    this.dbService.getQuestions(chosenBook);
+  }
+
+  private onSubmitEditQuestion(form: NgForm) {
+    // TODO: set form values into quizQuestion object with interface then update database question using service
+  }
+
+  private onDeleteQuestion() {
+    // TODO: get question index from form, use service to delete from database
   }
 
 }

@@ -118,7 +118,7 @@
         <form #editForm (ngSubmit)="onSubmitEditQuestion()">
           <div class="form-group">
             <label for="editBook">Select Book:</label>
-            <select class="form-control" name="editBook" required [(ngModel)]="editQuestion.book">
+            <select class="form-control" name="editBook" required [(ngModel)]="editQuestion.book" (change)="onChooseEditBook($event)">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
