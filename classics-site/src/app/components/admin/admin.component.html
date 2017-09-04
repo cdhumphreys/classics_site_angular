@@ -115,7 +115,7 @@
     <h3 style="text-decoration: underline">Edit Existing Question</h3>
     <div class="row" style="margin-top: 2em">
       <div class="col-xs-12">
-        <form #editForm (ngSubmit)="onSubmitEditQuestion()">
+        <form #editForm (ngSubmit)="onSubmitEditQuestion(editForm)">
           <div class="form-group">
             <label for="editBook">Select Book:</label>
             <select class="form-control" name="editBook" required [(ngModel)]="editQuestion.book" (change)="onChooseEditBook($event)">
@@ -169,7 +169,7 @@
             <label for="editExplanation">Edit Explanation:</label>
             <textarea class="form-control" name="editExplanation" rows="8" cols="80" [(ngModel)]="editQuestion.questions[editQuestion.selectedQuestion].explanation"></textarea>
           </div>
-          <button type="button" class="btn btn-success">Save changes</button>
+          <button type="button" class="btn btn-success" type="submit">Save changes</button>
         </form>
       </div>
     </div>

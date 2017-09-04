@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { QuizDatabaseService } from '../../services/quiz-database.service';
 
+import { QuizQuestion } from '../../interfaces/quiz-question.interface'
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -11,7 +13,6 @@ export class AdminComponent implements OnInit {
   selectedOption: string;
 
   addNewForm: FormGroup;
-  editForm: FormGroup;
 
   editQuestion = {
     book: 1,
@@ -60,9 +61,6 @@ export class AdminComponent implements OnInit {
     if (selectedOption == 'new') {
       this.initAddForm();
     }
-    else if (selectedOption == 'edit') {
-      // this.initEditForm();
-    }
 
     this.selectedOption = selectedOption;
     console.log(this.selectedOption);
@@ -103,16 +101,28 @@ export class AdminComponent implements OnInit {
     let book = form.value.book;
     let question = form.value.question;
     let answers = form.value.answers;
-    let correctAnswer = parseInt(form.value.correctAnswer);
+    let correct = parseInt(form.value.correctAnswer);
 
     let explanation = form.value.explanation.trim();
 
     // TODO: set form values into quizQuestion object with interface then send to database using service
+    let quizQuestion: QuizQuestion = {
+      question,
+      answers,
+      correct,
+      explanation
+    };
+
+    // clear all fields except book field
+    form.reset({
+      book
+    });
+
 
   }
 
 
-
+// TODO: Separate into two angular components - add form and edit forms, should clear this file up a lot
   private onChooseEditBook($event) {
     let chosenBook = parseInt($event.target.value);
 
@@ -121,6 +131,7 @@ export class AdminComponent implements OnInit {
 
   private onSubmitEditQuestion(form: NgForm) {
     // TODO: set form values into quizQuestion object with interface then update database question using service
+
   }
 
   private onDeleteQuestion() {

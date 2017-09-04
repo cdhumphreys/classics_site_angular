@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
         this.userDetails = db.object('/users/' + user.uid);
         this.userDetails.subscribe(
           (snapshot) => {
-            console.log(snapshot);
+            console.log('user is signed in');
           },
           (error) => {
             console.log('details subscribe error');
