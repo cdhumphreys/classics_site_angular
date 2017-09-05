@@ -18,7 +18,7 @@ export class QuizDatabaseService {
 
   addNewQuestion(book, questionObj: QuizQuestion) {
     this.fetchBookData(book);
-    this.bookRef.push(questionObj);
+    return this.bookRef.push(questionObj);
   }
 
   editQuestion(book: number, questionIndex: number, questionObj: QuizQuestion) {
@@ -29,6 +29,11 @@ export class QuizDatabaseService {
   deleteQuestion(book:number, questionIndex: number) {
     this.fetchBookData(book);
     this.bookRef.remove(String(questionIndex));
+  }
+
+  deleteAllQuestions(book: number) {
+    this.fetchBookData(book);
+    this.bookRef.remove();
   }
 
   fetchBookData(book) {

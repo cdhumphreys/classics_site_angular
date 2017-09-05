@@ -56,7 +56,7 @@ export class AddQuestionFormComponent implements OnInit {
 
     let explanation = form.value.explanation.trim();
 
-    // TODO: set form values into quizQuestion object with interface then send to database using service
+
     let quizQuestion: QuizQuestion = {
       question,
       answers,
@@ -69,6 +69,14 @@ export class AddQuestionFormComponent implements OnInit {
       book
     });
 
+    // TODO: visual feedback on success/fail
+    this.dbService.addNewQuestion(book, quizQuestion)
+    .then(() => {
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
   }
 
