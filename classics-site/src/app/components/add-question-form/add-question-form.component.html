@@ -1,0 +1,90 @@
+<form [formGroup]="addNewForm" (ngSubmit)="onSubmitNewQuestion(addNewForm)">
+  <div class="row">
+    <button type="submit" [disabled]="!addNewForm.valid" class="btn btn-success col-xs-3 col-xs-offset-3" style="margin-right:2em">Save</button>
+    <button type="button" class="btn btn-danger col-xs-3">Cancel</button>
+  </div>
+  <div class="row" style="margin-top: 2em">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="book">Select Book:</label>
+        <select class="form-control" name="book" formControlName="book" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="question">Question:</label>
+        <input type="text" name="question" class="form-control" formControlName="question" required>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 2em">
+    <div class="col-xs-12" formArrayName="answers">
+      <div class="row">
+        <div class="form-group col-xs-12"
+        *ngFor="let answerCtrl of addNewForm.get('answers').controls; let i = index"
+        [formGroupName]="i">
+          <label [for]="'answer_'+i">Answer {{i+1}}:</label>
+          <input type="text" class="form-control" formControlName="answer" [name]="'answer_'+i" required>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <button
+      type="button"
+      class="btn btn-info"
+      (click)="onAddAnswer()">Add Answer</button>
+      <button
+      type="button"
+      class="btn btn-warning"
+      [disabled]="addNewForm.get('answers').length == 1"
+      (click)="onRemoveAnswer()">Remove Answer</button>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 3em">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="correctAnswer">Correct Answer:</label>
+        <select class="form-control" name="correctAnswer" formControlName="correctAnswer" required>
+          <option *ngFor="let answerCtrl of addNewForm.get('answers').controls; let i = index" [value]="i">{{i+1}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 1em">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="explanation">Explanation:</label>
+        <textarea class="form-control" formControlName="explanation" name="explanation" rows="8" cols="80"></textarea>
+      </div>
+    </div>
+  </div>
+</form>
