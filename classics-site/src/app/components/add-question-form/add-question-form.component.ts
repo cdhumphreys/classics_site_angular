@@ -23,7 +23,7 @@ export class AddQuestionFormComponent implements OnInit {
   }
 
   private initAddForm() {
-    let book = '';
+    let book = 0;
     let question = '';
     let answers = new FormArray([
       new FormGroup({
@@ -73,7 +73,6 @@ export class AddQuestionFormComponent implements OnInit {
       book
     });
 
-    // TODO: visual feedback on success/fail
     this.dbService.addNewQuestion(book, quizQuestion)
     .then(() => {
       this.successNotification = true;

@@ -12,23 +12,13 @@ import { QuizQuestion } from '../../interfaces/quiz-question.interface'
 })
 export class EditQuestionFormComponent implements OnInit {
   editQuestion = {
-    book: 1,
-    questions: [
-      {
-        question: 'Example question',
-        answers: ['answer 1', 'answer 2'],
-        correct: 0,
-        explanation: 'asdasd'
-      },
-      {
-        question: 'Another Example question',
-        answers: ['answer 1', 'answer 2', 'answer 3'],
-        correct: 1,
-        explanation: 'zxcvb'
-      },
-    ],
-    selectedQuestion: 0
+    book: 0,
+    questions: [],
+    selectedQuestionIndex: 0
   };
+
+  successNotification = false;
+  failureNotification = false;
 
   constructor(private dbService: QuizDatabaseService) { }
 
@@ -38,11 +28,60 @@ export class EditQuestionFormComponent implements OnInit {
   private onChooseEditBook($event) {
     let chosenBook = parseInt($event.target.value);
 
-    this.dbService.getQuestions(chosenBook);
+    this.dbService.getQuestions(chosenBook).subscribe((snapshot) => {
+      console.log(snapshot);
+
+      // Clear current questions
+      this.editQuestion.questions = [];
+      this.editQuestion.selectedQuestionIndex = 0;
+
+      for (let i = 0; i < snapshot.length; i++) {
+        this.editQuestion.questions.push(snapshot[i]);
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   private onSubmitEditQuestion(form: NgForm) {
     // TODO: set form values into quizQuestion object with interface then update database question using service
+    let book = form.value.book;
+    let question = form.value.question;
+    let answers = form.value.answers;
+    let correct = parseInt(form.value.correctAnswer);
+
+    let explanation = form.value.explanation.trim();
+
+
+    let quizQuestion: QuizQuestion = {
+      question,
+      answers,
+      correct,
+      explanation
+    };
+
+    // clear all fields except book field
+    form.reset({
+      book
+    });
+
+    this.dbService.editQuestion(book, this.editQuestion.selectedQuestionIndex, quizQuestion)
+    .then(() => {
+      this.successNotification = true;
+
+      setTimeout(() => {
+        this.successNotification = false;
+      }, 2000);
+    })
+    .catch((error) => {
+      console.log(error);
+
+      this.failureNotification = true;
+
+      setTimeout(() => {
+        this.failureNotification = false;
+      }, 2000);
+    });
 
   }
 

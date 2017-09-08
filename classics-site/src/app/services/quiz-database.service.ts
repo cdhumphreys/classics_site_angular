@@ -23,7 +23,7 @@ export class QuizDatabaseService {
 
   editQuestion(book: number, questionIndex: number, questionObj: QuizQuestion) {
     this.fetchBookData(book);
-    this.bookRef.update(String(questionIndex), questionObj);
+    return this.bookRef.update(String(questionIndex), questionObj);
   }
 
   deleteQuestion(book:number, questionIndex: number) {
