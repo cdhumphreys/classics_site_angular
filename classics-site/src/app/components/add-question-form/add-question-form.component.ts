@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 import { QuizDatabaseService } from '../../services/quiz-database.service';
@@ -12,6 +12,10 @@ import { QuizQuestion } from '../../interfaces/quiz-question.interface'
 })
 export class AddQuestionFormComponent implements OnInit {
   addNewForm: FormGroup;
+
+  successNotification = false;
+  failureNotification = false;
+
   constructor(private dbService: QuizDatabaseService) { }
 
   ngOnInit() {
@@ -72,10 +76,20 @@ export class AddQuestionFormComponent implements OnInit {
     // TODO: visual feedback on success/fail
     this.dbService.addNewQuestion(book, quizQuestion)
     .then(() => {
+      this.successNotification = true;
 
+      setTimeout(() => {
+        this.successNotification = false;
+      }, 2000);
     })
     .catch((error) => {
       console.log(error);
+
+      this.failureNotification = true;
+
+      setTimeout(() => {
+        this.failureNotification = false;
+      }, 2000);
     });
 
   }
