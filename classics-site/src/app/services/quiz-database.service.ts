@@ -21,19 +21,19 @@ export class QuizDatabaseService {
     return this.bookRef.push(questionObj);
   }
 
-  editQuestion(book: number, questionIndex: number, questionObj: QuizQuestion) {
-    this.fetchBookData(book);
-    return this.bookRef.update(String(questionIndex), questionObj);
+  editQuestion(key: string, questionObj: QuizQuestion) {
+    // this.fetchBookData(book);
+    return this.bookRef.update(key, questionObj);
   }
 
-  deleteQuestion(book:number, questionIndex: number) {
+  deleteQuestion(book:number, key: string) {
     this.fetchBookData(book);
-    this.bookRef.remove(String(questionIndex));
+    return this.bookRef.remove(key);
   }
 
   deleteAllQuestions(book: number) {
     this.fetchBookData(book);
-    this.bookRef.remove();
+    return this.bookRef.remove();
   }
 
   fetchBookData(book) {

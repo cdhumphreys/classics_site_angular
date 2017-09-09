@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormsModule, Validators, NgForm } from '@angular/forms';
 
 import { QuizDatabaseService } from '../../services/quiz-database.service';
 
@@ -17,20 +17,22 @@ export class EditQuestionFormComponent implements OnInit {
     selectedQuestionIndex: 0
   };
 
+  questionKey: string;
+
+
   successNotification = false;
   failureNotification = false;
 
   constructor(private dbService: QuizDatabaseService) { }
 
   ngOnInit() {
+    // TODO: fix answers input population
   }
 
   private onChooseEditBook($event) {
     let chosenBook = parseInt($event.target.value);
 
     this.dbService.getQuestions(chosenBook).subscribe((snapshot) => {
-      console.log(snapshot);
-
       // Clear current questions
       this.editQuestion.questions = [];
       this.editQuestion.selectedQuestionIndex = 0;
@@ -38,19 +40,24 @@ export class EditQuestionFormComponent implements OnInit {
       for (let i = 0; i < snapshot.length; i++) {
         this.editQuestion.questions.push(snapshot[i]);
       }
+
     }, (error) => {
       console.log(error);
+      this.failureNotification = true;
     });
   }
 
-  private onSubmitEditQuestion(form: NgForm) {
+  private onSubmitEditQuestion() {
     // TODO: set form values into quizQuestion object with interface then update database question using service
-    let book = form.value.book;
-    let question = form.value.question;
-    let answers = form.value.answers;
-    let correct = parseInt(form.value.correctAnswer);
+    const bookQuestion = this.editQuestion.questions[this.editQuestion.selectedQuestionIndex];
 
-    let explanation = form.value.explanation.trim();
+    const question = bookQuestion.question;
+    const answers = bookQuestion.answers;
+    const correct = parseInt(bookQuestion.correct);
+    const explanation = bookQuestion.explanation;
+    const key = bookQuestion.$key;
+
+    console.log(bookQuestion);
 
 
     let quizQuestion: QuizQuestion = {
@@ -60,12 +67,8 @@ export class EditQuestionFormComponent implements OnInit {
       explanation
     };
 
-    // clear all fields except book field
-    form.reset({
-      book
-    });
 
-    this.dbService.editQuestion(book, this.editQuestion.selectedQuestionIndex, quizQuestion)
+    this.dbService.editQuestion(key, quizQuestion)
     .then(() => {
       this.successNotification = true;
 
@@ -85,8 +88,24 @@ export class EditQuestionFormComponent implements OnInit {
 
   }
 
+  private trackByAnswer(index: number, answer:any) {
+    console.log(answer);
+    return answer.answer;
+  }
+
+  private onAddAnswer() {
+    this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].answers.push({answer: ''});
+  }
+
+  private onRemoveAnswer($event, index) {
+    if (index <= this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].correct) {
+      this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].correct -= 1;
+    }
+    this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].answers.splice(index,1);
+  }
+
   private onDeleteQuestion() {
-    // TODO: get question index from form, use service to delete from database
+    this.dbService.deleteQuestion(this.editQuestion.book, this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].$key);
   }
 
 }
