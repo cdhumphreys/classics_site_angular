@@ -25,9 +25,7 @@ export class EditQuestionFormComponent implements OnInit {
 
   constructor(private dbService: QuizDatabaseService) { }
 
-  ngOnInit() {
-    // TODO: fix answers input population
-  }
+  ngOnInit() {}
 
   private onChooseEditBook($event) {
     let chosenBook = parseInt($event.target.value);
@@ -48,7 +46,6 @@ export class EditQuestionFormComponent implements OnInit {
   }
 
   private onSubmitEditQuestion() {
-    // TODO: set form values into quizQuestion object with interface then update database question using service
     const bookQuestion = this.editQuestion.questions[this.editQuestion.selectedQuestionIndex];
 
     const question = bookQuestion.question;
@@ -89,7 +86,6 @@ export class EditQuestionFormComponent implements OnInit {
   }
 
   private trackByAnswer(index: number, answer:any) {
-    console.log(answer);
     return answer.answer;
   }
 

@@ -8,7 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
-import { QuizComponent } from './components/quizzes/quiz/quiz.component';
+import { QuizComponent } from './components/quiz/quiz.component';
 import { LoginComponent } from './components/login/login.component';
 import { PrintComponent } from './components/print/print.component';
 import { AdminComponent } from './components/admin/admin.component';
@@ -39,8 +39,8 @@ export const firebaseConfig = {
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'quiz/:quiz', component: QuizComponent},
-  {path: 'quiz/:quiz/print', component: PrintComponent},
+  {path: 'quiz/:book', component: QuizComponent},
+  {path: 'quiz/:book/print', component: PrintComponent},
   {path: 'login', component: LoginComponent},
   {path: 'admin', component: AdminComponent}
 ];

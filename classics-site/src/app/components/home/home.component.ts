@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QuizDatabaseService } from '../../services/quiz-database.service';
 
 
 @Component({
@@ -7,14 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  quizzes = [
-    {book: 1, img: 'images/book_1.png'},
-    {book: 2, img: 'images/book_2.png'},
-    {book: 3, img: 'images/book_3.png'}
-  ];
+  quizzes = [];
 
-  constructor() {}
+  constructor(private dbService: QuizDatabaseService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dbService.getQuizzes().subscribe((snapshot) => {
+      console.log(snapshot);
+
+      for (var i = 0; i < snapshot.length; i++) {
+        this.quizzes.push({book: snapshot[i].$key});
+      }
+    },
+  (error) => {
+    console.log(error);
+  })
+  }
 
 }

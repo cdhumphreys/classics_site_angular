@@ -45,7 +45,10 @@
       <input class="form-control" type="text" [(ngModel)]="editQuestion.questions[editQuestion.selectedQuestionIndex].question" name="selectedQuestionIndex">
     </div>
     <div *ngFor="let answer of editQuestion.questions[editQuestion.selectedQuestionIndex].answers; let j = index; trackBy: TrackByAnswer;" class="form-group">
-      <label for="answer_{{j}}">Answer {{j+1}}:<div (click)="onRemoveAnswer($event, j)" class="btn btn-xs btn-danger" style="margin-left: 2em;">Delete Answer</div></label>
+      <label for="answer_{{j}}">
+        Answer {{j+1}}:
+        <button type="button" *ngIf="j !== 0" (click)="onRemoveAnswer($event, j)" class="btn btn-xs btn-danger" style="margin-left: 2em;">Delete Answer</button>
+      </label>
       <input class="form-control" type="text" name="answer_{{j}}" [(ngModel)]="answer.answer">
     </div>
     <div (click)="onAddAnswer()" class="btn btn-info">Add Answer</div>

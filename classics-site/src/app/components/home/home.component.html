@@ -2,11 +2,11 @@
   <div class="row">
     <ul>
       <li *ngFor="let quiz of quizzes; let i = index">
-        <a [routerLink]="['/quiz', i]">
-          Quiz: {{ quiz.book }}
+        <a [routerLink]="['/quiz', quiz.book]">
+          Quiz: Book {{ quiz.book }}
         </a>
-      </li>        
+      </li>
     </ul>
-    
+
   </div>
 </div>

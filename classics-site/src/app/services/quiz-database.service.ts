@@ -11,6 +11,10 @@ export class QuizDatabaseService {
   bookRef: FirebaseListObservable<any>;
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) { }
 
+  getQuizzes() {
+    return this.db.list('/books');
+  }
+
   getQuestions(book: number) {
     this.fetchBookData(book);
     return this.bookRef;
@@ -22,7 +26,6 @@ export class QuizDatabaseService {
   }
 
   editQuestion(key: string, questionObj: QuizQuestion) {
-    // this.fetchBookData(book);
     return this.bookRef.update(key, questionObj);
   }
 
