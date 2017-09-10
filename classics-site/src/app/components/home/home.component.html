@@ -1,5 +1,8 @@
 <div class="container">
   <div class="row">
+    <h2>Illiad Quizzes</h2>
+  </div>
+  <div class="row">
     <ul>
       <li *ngFor="let quiz of quizzes; let i = index">
         <a [routerLink]="['/quiz', quiz.book]">
@@ -7,6 +10,12 @@
         </a>
       </li>
     </ul>
+    <div *ngIf="quizzes.length == 0 && (userDetails | async)">
+      No quizzes yet!
+    </div>
+    <div *ngIf="!(userDetails | async)">
+      Please login to view the quizzes
+    </div>
 
   </div>
 </div>

@@ -15,9 +15,16 @@ import { QuizQuestion } from '../../interfaces/quiz-question.interface';
 export class QuizComponent implements OnInit {
   quiz: String;
   book: number;
-  quizData: QuizQuestion;
+  quizData: QuizQuestion[];
   currentQuestion = 0;
-  answeredQuestions = [];
+  answeredQuestions = [
+    {
+      correct: null,
+      correctIndex: 0,
+      answeredIndex: null,
+      answerClasses: []
+    }
+  ];
   correctAnswers = 0;
   showEndScreen = false;
 
@@ -34,29 +41,27 @@ export class QuizComponent implements OnInit {
         this.book = params['book'];
         this.quiz = `Book ${this.book}`;
 
-        this.dbService.getQuestions(this.book).subscribe((snapshot) => {
+        this.dbService.getQuestions(this.book).subscribe(
+        (snapshot) => {
           this.quizData = snapshot;
           console.log(snapshot);
-            // for (let questionIndex = 0; questionIndex < this.quizData.length; questionIndex++) {
-            //   let answeredQuestionEntry = {
-            //     correct: null,
-            //     correctIndex: null,
-            //     answeredIndex: null,
-            //     answerClasses: []
-            //   };
-            //
-            //   for (let property in this.quizData[questionIndex]) {
-            //     if (property.includes('correct') && this.quizData[questionIndex][property] == 1) {
-            //       let correctIndex = parseInt(property.split('_')[1]) - 1;
-            //       answeredQuestionEntry.correctIndex = propety;
-            //     }
-            //     if (property.includes('answer')) {
-            //       answeredQuestionEntry.answerClasses.push('none');
-            //     }
-            //   }
-            //   this.answeredQuestions.push(answeredQuestionEntry);
-            // }
-          },
+          this.answeredQuestions = [];
+
+          for (let questionIndex = 0; questionIndex < this.quizData.length; questionIndex++) {
+            let answeredQuestionEntry = {
+              correct: null,
+              correctIndex: this.quizData[questionIndex].correct,
+              answeredIndex: null,
+              answerClasses: []
+            };
+
+            for (let answers in this.quizData[questionIndex].answers) {
+              answeredQuestionEntry.answerClasses.push('none');
+            }
+            this.answeredQuestions.push(answeredQuestionEntry);
+          }
+
+        },
         (error) => {
           console.log(error);
         });

@@ -25,13 +25,13 @@ export class HeaderComponent implements OnInit {
             console.log('user is signed in');
           },
           (error) => {
-            console.log('details subscribe error');
+            console.log('user is not signed in');
           }
         );
       }
     },
     (error) => {
-      console.log('user subscribe error');
+      console.log('error connecting');
       console.log(error);
     });
    }

@@ -15,13 +15,13 @@
               <h4 class="quiz-question-title">{{ question.question }}</h4>
               <ul class="quiz-answers-container">
                   <li class="quiz-answer"
-                  *ngFor="let answer of (quizData | answerFilter:i); let j = index"
+                  *ngFor="let answer of question.answers; let j = index"
                   (click)="onAnswerQuestion(i, j)"
                   >
                       <div
                       class="quiz-answer transition-setting"
                       [ngClass]="answeredQuestions[i].answerClasses[j]"
-                      >{{ answer }}</div>
+                      >{{ answer.answer }}</div>
                   </li>
               </ul>
 
@@ -47,7 +47,7 @@
   <div *ngIf="showEndScreen" class="end-screen" class="row">
     <h3>Finished!</h3>
     <h4>You scored: {{correctAnswers}}/{{answeredQuestions.length}}</h4>
-    <button class="btn-spacing btn btn-info">Back to Home</button>
+    <button class="btn-spacing btn btn-info"><a [routerLink]="'/'">Back to Home</a></button>
     <button class="btn-spacing print-button btn btn-primary"><a [routerLink]="'./print'" [queryParams]="{ quizIndex: quizIndex }">Print</a></button>
   </div>
 </div>
