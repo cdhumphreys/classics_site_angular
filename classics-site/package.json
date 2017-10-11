@@ -33,7 +33,6 @@
     "typescript": "~2.2.0"
   },
   "devDependencies": {
-
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",

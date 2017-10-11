@@ -9,6 +9,11 @@
           Quiz: Book {{ quiz.book }}
         </a>
       </li>
+      <li>
+        <a [routerLink]="['/gapFill']">
+          Gap Fill Revision
+        </a>
+      </li>
     </ul>
     <div *ngIf="quizzes.length == 0 && (userDetails | async)">
       No quizzes yet!

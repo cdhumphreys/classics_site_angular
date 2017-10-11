@@ -1,12 +1,16 @@
 <div class="row">
   <button
-  class="btn btn-primary col-xs-5  col-xs-offset-1 spacing"
+  class="btn btn-primary col-xs-3"
   (click)="onSelectOption('new', $event)"
   >Add new question</button>
   <button
-  class="btn btn-warning col-xs-5"
+  class="btn btn-warning col-xs-3 col-xs-offset-1"
   (click)="onSelectOption('edit', $event)"
   >Edit existing questions</button>
+  <button
+  class="btn btn-danger col-xs-3 col-xs-offset-1"
+  (click)="onSelectOption('addGapFill', $event)"
+  >Add gap fill</button>
 </div>
 
 <div
@@ -20,13 +24,20 @@
         <add-question-form></add-question-form>
       </div>
     </div>
-
   </div>
   <div *ngSwitchCase="'edit'">
     <h3 style="text-decoration: underline">Edit Existing Question</h3>
     <div class="row" style="margin-top: 2em">
       <div class="col-xs-12">
         <edit-question-form></edit-question-form>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'addGapFill'">
+    <h3 style="text-decoration: underline">Add a new gap fill exercise</h3>
+    <div class="row" style="margin-top: 2em">
+      <div class="col-xs-12">
+        <add-gap-fill></add-gap-fill>
       </div>
     </div>
   </div>

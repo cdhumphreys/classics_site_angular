@@ -64,4 +64,9 @@
     </div>
     <button type="button" class="btn btn-success" type="submit">Save changes</button>
   </div>
+  <div *ngIf="editQuestion.questions.length == 0 && editQuestion.book != 0">
+    <h6>
+      No questions have been added to this book.
+    </h6>
+  </div>
 </form>

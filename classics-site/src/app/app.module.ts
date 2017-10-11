@@ -14,17 +14,22 @@ import { PrintComponent } from './components/print/print.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AddQuestionFormComponent } from './components/add-question-form/add-question-form.component';
 import { EditQuestionFormComponent } from './components/edit-question-form/edit-question-form.component';
+import { GapFillComponent } from './components/gap-fill/gap-fill.component';
+import { AddGapFillComponent } from './components/add-gap-fill/add-gap-fill.component';
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
 
 import { QuizDataService } from './services/quiz-data.service';
 import { QuizDatabaseService } from './services/quiz-database.service';
+import { GapFillService } from './services/gap-fill.service';
 
 import { AngularFireModule } from 'angularfire2';
 
 // New imports to update based on AngularFire2 version 4
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+
+
 
 
 
@@ -42,7 +47,8 @@ const appRoutes: Routes = [
   {path: 'quiz/:book', component: QuizComponent},
   {path: 'quiz/:book/print', component: PrintComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'admin', component: AdminComponent}
+  {path: 'admin', component: AdminComponent},
+  {path: 'gapFill', component: GapFillComponent}
 ];
 
 
@@ -58,7 +64,9 @@ const appRoutes: Routes = [
     PrintComponent,
     AdminComponent,
     AddQuestionFormComponent,
-    EditQuestionFormComponent
+    EditQuestionFormComponent,
+    GapFillComponent,
+    AddGapFillComponent
 
   ],
   imports: [
@@ -74,7 +82,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     QuizDataService,
-    QuizDatabaseService
+    QuizDatabaseService,
+    GapFillService
   ],
   bootstrap: [AppComponent]
 })

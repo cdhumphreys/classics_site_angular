@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AddQuestionFormComponent } from '../add-question-form/add-question-form.component';
 import { EditQuestionFormComponent } from '../edit-question-form/edit-question-form.component';
+import { AddGapFillComponent } from '../add-gap-fill/add-gap-fill.component';
 
 @Component({
   selector: 'app-admin',

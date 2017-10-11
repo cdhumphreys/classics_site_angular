@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators, NgForm } from '@angular/forms';
 
 import { QuizDatabaseService } from '../../services/quiz-database.service';
