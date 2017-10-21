@@ -1,23 +1,30 @@
-<form #addNewGapFill="ngForm" (ngSubmit)="onSubmitNewGapFill(addNewGapFll)">
-  <div class="row">
-    <button type="submit" [disabled]="!addNewGapFill.valid" class="btn btn-success col-xs-3 col-xs-offset-3" style="margin-right:2em">Save</button>
-    <button type="button" class="btn btn-danger col-xs-3">Cancel</button>
+<div class="row">
+    <button type="button" [disabled]="!canUploadData" class="btn btn-success col-xs-3 col-xs-offset-3" style="margin-right:2em" (click)="uploadNewGapFill()">Save</button>
+    <button type="button" class="btn btn-danger col-xs-3" (click)="clearInputs()">Cancel</button>
   </div>
   <div class="row">
     <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center" style="margin-top: 2em">Gap fill exercise uploaded!</div>
     <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center" style="margin-top: 2em">Error uploading gap fill exercise, please try again</div>
   </div>
+  <div class="row" style="margin-top: 2em">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="gapFillName" #gapFillName name="gapFillName" class="form-control" [(ngModel)]="model.gapFillName" required placeholder="Please enter a name for this exercise" (keyup)="checkFormValidity()">
+      </div>
+    </div>
+  </div>
   <div [ngClass]="{'hidden': textsSaved}" class="row" style="margin-top: 2em">
     <div class="col-xs-5">
       <div class="form-group">
         <label for="latin">Latin:</label>
-        <textarea rows="20" type="text" id="latin" #latinTextArea name="latin" class="form-control" [(ngModel)]="model.latinText" required></textarea>
+        <textarea rows="20" type="text" id="latin" #latinTextArea name="latin" class="form-control" [(ngModel)]="model.latinText" required placeholder="Please enter the latin text"></textarea>
       </div>
     </div>
     <div class="col-xs-5 col-xs-offset-1">
       <div class="form-group">
         <label for="english">English:</label>
-        <textarea rows="20" type="text" id="english" #englishTextArea name="english" class="form-control" [(ngModel)]="model.englishText" required></textarea>
+        <textarea rows="20" type="text" id="english" #englishTextArea name="english" class="form-control" [(ngModel)]="model.englishText" required placeholder="Please enter the english translation"></textarea>
       </div>
     </div>
   </div>
@@ -33,14 +40,17 @@
     <div class="col-xs-5 col-xs-offset-1">
       <div class="form-group">
         <label for="english">English:</label>
-        <div class="form-control">
-          <span *ngFor="let word of parsedEnglishText" class="hoverable">{{word}} </span>
+        <div class="form-control text-output">
+          <ng-container *ngFor="let word of parsedEnglishText; let i = index;">
+            <span class="hoverable hoverable-add" (click)="onSelectTranslatableWord($event)">{{word}}</span><span *ngIf="i != parsedEnglishText.length - 1">&nbsp;</span>
+          </ng-container>
         </div>
       </div>
+      <h6 class="bg-info" style="padding: 1em;">Please click on the words that can be gaps for this exercise</h6>
     </div>
   </div>
 
-  <button type="button" name="button" class="btn btn-success" (click)="onSaveTexts(englishTextArea.value)" [disabled]="textsSaved">Save Texts</button>
+  <button type="button" name="button" class="btn btn-success" (click)="onSaveTexts(englishTextArea.value)" [disabled]="textsSaved || !latinTextArea.classList.contains('ng-valid') || !englishTextArea.classList.contains('ng-valid')">Save Texts</button>
   <button type="button" name="button" class="btn btn-warning" (click)="onEditTexts()" [disabled]="!textsSaved">Edit Texts</button>
 
   <h4 *ngIf="!textsSaved" class="bg-info" style="margin-top: 2em; padding: 1em;">Please save the texts to continue...</h4>
@@ -48,9 +58,12 @@
     <div class="col-xs-12">
       <div class="form-group">
         <label for="translatableWords">Translatable Words</label><br/>
-        <small>You can enter the words manually below or select them from the English text above</small>
-        <input type="text" id="translatableWords" name="translatableWords" [(ngModel)]="model.translatableWords" class="form-control" [disabled]="!textsSaved">
+        <small>Click the words below to remove them</small>
+        <div class="form-control" [ngClass]="{'disabled': !textsSaved}">
+          <ng-container *ngFor="let word of model.translatableWords; let j = index;">
+            <span class="hoverable hoverable-delete" (click)="onRemoveTranslatableWord($event)">{{word}}</span><span *ngIf="j != model.translatableWords.length - 1">&nbsp;</span>
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>
-</form>

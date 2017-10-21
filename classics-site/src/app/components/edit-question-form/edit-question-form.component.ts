@@ -27,7 +27,7 @@ export class EditQuestionFormComponent implements OnInit {
 
   ngOnInit() {}
 
-  private onChooseEditBook($event) {
+  public onChooseEditBook($event) {
     let chosenBook = parseInt($event.target.value);
 
     this.dbService.getQuestions(chosenBook).subscribe((snapshot) => {
@@ -45,7 +45,7 @@ export class EditQuestionFormComponent implements OnInit {
     });
   }
 
-  private onSubmitEditQuestion() {
+  public onSubmitEditQuestion() {
     const bookQuestion = this.editQuestion.questions[this.editQuestion.selectedQuestionIndex];
 
     const question = bookQuestion.question;
@@ -85,22 +85,22 @@ export class EditQuestionFormComponent implements OnInit {
 
   }
 
-  private trackByAnswer(index: number, answer:any) {
+  public trackByAnswer(index: number, answer:any) {
     return answer.answer;
   }
 
-  private onAddAnswer() {
+  public onAddAnswer() {
     this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].answers.push({answer: ''});
   }
 
-  private onRemoveAnswer($event, index) {
+  public onRemoveAnswer($event, index) {
     if (index <= this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].correct) {
       this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].correct -= 1;
     }
     this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].answers.splice(index,1);
   }
 
-  private onDeleteQuestion() {
+  public onDeleteQuestion() {
     this.dbService.deleteQuestion(this.editQuestion.book, this.editQuestion.questions[this.editQuestion.selectedQuestionIndex].$key);
   }
 

@@ -1,6 +1,6 @@
 export interface GapFill {
-  latin: string;
-  english: string;
-  name: string;
-  randomisableWords: string[];
+  gapFillName: string;
+  latinText: string;
+  englishText: string;
+  translatableWords: string[];
 }

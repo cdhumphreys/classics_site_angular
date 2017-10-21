@@ -6,8 +6,23 @@
   display: none;
 }
 
+.hoverable {
+  padding: 0.25em;
+  border-radius: 5px;
+}
+
 .hoverable:hover {
-  -webkit-filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.75));
-  -o-filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.75));
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.75));
+  cursor: pointer;
+}
+
+.hoverable-add:hover {
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+.hoverable-delete:hover {
+  background-color: rgba(255, 0, 0, 0.75);
+}
+
+.text-output {
+  height: auto !important;
 }

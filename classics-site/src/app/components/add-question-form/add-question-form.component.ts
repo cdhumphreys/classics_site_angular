@@ -11,7 +11,8 @@ import { QuizQuestion } from '../../interfaces/quiz-question.interface'
   styleUrls: ['./add-question-form.component.css']
 })
 export class AddQuestionFormComponent implements OnInit {
-  addNewForm: FormGroup;
+  addNewFormGroup: FormGroup;
+  addNewForm: NgForm;
 
   successNotification = false;
   failureNotification = false;
@@ -33,7 +34,7 @@ export class AddQuestionFormComponent implements OnInit {
     let correctAnswer = '';
     let explanation = '';
 
-    this.addNewForm = new FormGroup({
+    this.addNewFormGroup = new FormGroup({
       'book': new FormControl(book, Validators.required),
       'question': new FormControl(question, Validators.required),
       'answers': answers,
@@ -42,17 +43,17 @@ export class AddQuestionFormComponent implements OnInit {
     });
   }
 
-  private onAddAnswer() {
-    (<FormArray>this.addNewForm.get('answers')).push(new FormGroup({
+  public onAddAnswer() {
+    (<FormArray>this.addNewFormGroup.get('answers')).push(new FormGroup({
       'answer': new FormControl(null, Validators.required)
     }));
   }
 
-  private onRemoveAnswer() {
-    (<FormArray>this.addNewForm.get('answers')).removeAt((<FormArray>this.addNewForm.get('answers')).length-1);
+  public onRemoveAnswer() {
+    (<FormArray>this.addNewFormGroup.get('answers')).removeAt((<FormArray>this.addNewFormGroup.get('answers')).length-1);
   }
 
-  private onSubmitNewQuestion(form: NgForm) {
+  public onSubmitNewQuestion(form: NgForm) {
     let book = form.value.book;
     let question = form.value.question;
     let answers = form.value.answers;
@@ -91,6 +92,10 @@ export class AddQuestionFormComponent implements OnInit {
       }, 2000);
     });
 
+  }
+
+  get getAddNewFormGroupAnswers() {
+    return <FormArray>this.addNewFormGroup.get('answers');
   }
 
 }

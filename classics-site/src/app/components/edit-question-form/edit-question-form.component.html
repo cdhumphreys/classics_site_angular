@@ -2,7 +2,7 @@
   <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center" style="margin-top: 2em">Question updated successfully!</div>
   <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center" style="margin-top: 2em">Error updating question, please try again or contact an administrator</div>
 </div>
-<form #editForm (ngSubmit)="onSubmitEditQuestion(editForm)">
+<form #editForm (ngSubmit)="onSubmitEditQuestion()">
   <div class="form-group">
     <label for="editBook">Select Book:</label>
     <select class="form-control" name="editBook" required [(ngModel)]="editQuestion.book" (change)="onChooseEditBook($event)" placeholder="Please select a book">

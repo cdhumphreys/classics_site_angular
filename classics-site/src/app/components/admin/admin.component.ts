@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {}
 
-  private onSelectOption(selectedOption: string, event) {
+  public onSelectOption(selectedOption: string, event) {
     let clickedButton = event.target;
     let siblingsArray = Array.prototype.slice.call(clickedButton.parentElement.childNodes,null);
 
