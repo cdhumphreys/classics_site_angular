@@ -1,0 +1,29 @@
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #292b2c;
+  background-color: #fff;
+  border-color: #ccc;
+
+  -webkit-transition: all 0.2s ease-in-out;;
+  -o-transition: all 0.2s ease-in-out;;
+  transition: all 0.2s ease-in-out;;
+}
+
+.btn-secondary:hover {
+  color: white;
+  background-color: #292b2c;
+}

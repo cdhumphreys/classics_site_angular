@@ -9,6 +9,7 @@ import { GapFillService } from '../../services/gap-fill.service';
 })
 export class AddGapFillComponent implements OnInit {
   model: GapFill = {
+    category: '',
     gapFillName: '',
     latinText: '',
     englishText: '',
@@ -30,6 +31,7 @@ export class AddGapFillComponent implements OnInit {
   latinTextArea: any;
   englishTextArea: any;
   gapFillNameInput: any;
+  gapFillCategory: any;
 
 
   constructor(private gapfillService: GapFillService) { }
@@ -38,6 +40,7 @@ export class AddGapFillComponent implements OnInit {
     this.latinTextArea = document.querySelector('#latin');
     this.englishTextArea = document.querySelector('#english');
     this.gapFillNameInput = document.querySelector('#gapFillName');
+    this.gapFillCategory = document.querySelector('#category');
   }
 
   public clearInputs() {
@@ -107,12 +110,33 @@ export class AddGapFillComponent implements OnInit {
   }
 
   public checkFormValidity() {
-    this.canUploadData = (this.latinTextArea.classList.contains('ng-valid') && this.englishTextArea.classList.contains('ng-valid') && this.gapFillNameInput.classList.contains('ng-valid') && this.model.translatableWords.length > 0 && this.textsSaved);
+    this.canUploadData = (this.latinTextArea.classList.contains('ng-valid') &&
+    this.englishTextArea.classList.contains('ng-valid') &&
+    this.gapFillNameInput.classList.contains('ng-valid') &&
+    this.gapFillCategory.classList.contains('ng-valid') &&
+    this.model.translatableWords.length > 0 &&
+    this.textsSaved);
   }
 
   public uploadNewGapFill() {
+    this.gapfillService.addGapFillText(this.model)
+    .then((data) => {
+      this.successNotification = true;
+      this.clearInputs();
 
-    this.gapfillService.addGapFillText(this.model);
+      setTimeout(() => {
+        this.successNotification = false;
+      }, 3000);
+    })
+    .catch((error) => {
+      this.failureNotification = true;
+
+      setTimeout(() => {
+        this.failureNotification = false;
+      }, 3000);
+    });
+
+
   }
 
 }

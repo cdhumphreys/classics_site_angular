@@ -47,7 +47,7 @@
   <div *ngIf="showEndScreen" class="end-screen" class="row">
     <h3>Finished!</h3>
     <h4>You scored: {{correctAnswers}}/{{answeredQuestions.length}}</h4>
-    <button class="btn-spacing btn btn-info"><a [routerLink]="'/'">Back to Home</a></button>
-    <button class="btn-spacing print-button btn btn-primary"><a [routerLink]="'./print'" [queryParams]="{ quizIndex: quizIndex }">Print</a></button>
+    <button class="btn-spacing margin-top-spacing btn btn-info"><a [routerLink]="'/'">Back to Home</a></button>
+    <button class="btn-spacing margin-top-spacing print-button btn btn-primary"><a [routerLink]="'./print'" [queryParams]="{ quizIndex: quizIndex }">Print</a></button>
   </div>
 </div>

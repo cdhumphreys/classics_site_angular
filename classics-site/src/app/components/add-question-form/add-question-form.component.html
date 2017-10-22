@@ -4,10 +4,10 @@
     <button type="button" class="btn btn-danger col-xs-3">Cancel</button>
   </div>
   <div class="row">
-    <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center" style="margin-top: 2em">Question uploaded!</div>
-    <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center" style="margin-top: 2em">Error uploading question, please try again</div>
+    <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center margin-top-spacing">Question uploaded!</div>
+    <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center margin-top-spacing">Error uploading question, please try again</div>
   </div>
-  <div class="row" style="margin-top: 2em">
+  <div class="row margin-top-spacing">
     <div class="col-xs-12">
       <div class="form-group">
         <label for="book">Select Book:</label>
@@ -49,7 +49,7 @@
       </div>
     </div>
   </div>
-  <div class="row" style="margin-top: 2em">
+  <div class="row margin-top-spacing">
     <div class="col-xs-12" formArrayName="answers">
       <div class="row">
         <div class="form-group col-xs-12"

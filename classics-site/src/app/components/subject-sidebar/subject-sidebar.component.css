@@ -1,0 +1,18 @@
+.bg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /*background-color: #f0eded;*/
+  padding: 2em;
+}
+
+.exercise-list {
+  list-style: none;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+
+.category-expansion-button {
+  margin-bottom: 1em;
+}

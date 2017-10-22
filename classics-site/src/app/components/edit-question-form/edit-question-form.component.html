@@ -1,6 +1,6 @@
 <div class="row">
-  <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center" style="margin-top: 2em">Question updated successfully!</div>
-  <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center" style="margin-top: 2em">Error updating question, please try again or contact an administrator</div>
+  <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center margin-top-spacing">Question updated successfully!</div>
+  <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center margin-top-spacing">Error updating question, please try again or contact an administrator</div>
 </div>
 <form #editForm (ngSubmit)="onSubmitEditQuestion()">
   <div class="form-group">
@@ -52,7 +52,7 @@
       <input class="form-control" type="text" name="answer_{{j}}" [(ngModel)]="answer.answer">
     </div>
     <div (click)="onAddAnswer()" class="btn btn-info">Add Answer</div>
-    <div class="form-group" style="margin-top: 2em;">
+    <div class="form-group margin-top-spacing">
       <label for="editCorrectAnswer">Correct Answer:</label>
       <select class="form-control" name="editCorrectAnswer" required [(ngModel)]="editQuestion.questions[editQuestion.selectedQuestionIndex].correct">
         <option *ngFor="let answer of editQuestion.questions[editQuestion.selectedQuestionIndex].answers; let k = index" [value]="k">{{k + 1}}</option>

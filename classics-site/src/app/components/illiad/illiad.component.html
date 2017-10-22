@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row heading">
+    <h2>Illiad</h2>
+  </div>
+  <div class="row">
+    <h3>Quizzes</h3>
+    <ul class="margin-top-spacing">
+      <li *ngFor="let quiz of quizzes; let i = index">
+        <a [routerLink]="['/quiz', quiz.book]">
+          Quiz: Book {{ quiz.book }}
+        </a>
+      </li>
+    </ul>
+    <div *ngIf="quizzes.length == 0">
+      <ul>
+        <li>No quizzes yet!</li>
+      </ul>
+    </div>
+  </div>
+</div>

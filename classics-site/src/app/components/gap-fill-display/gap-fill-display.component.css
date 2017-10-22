@@ -1,0 +1,17 @@
+.category {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.preview-wrapper {
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-wrapper li {
+  flex: 1 1 auto;
+}

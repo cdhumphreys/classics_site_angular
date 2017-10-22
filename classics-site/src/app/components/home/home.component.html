@@ -1,26 +1,24 @@
 <div class="container">
   <div class="row">
-    <h2>Illiad Quizzes</h2>
-  </div>
-  <div class="row">
-    <ul>
-      <li *ngFor="let quiz of quizzes; let i = index">
-        <a [routerLink]="['/quiz', quiz.book]">
-          Quiz: Book {{ quiz.book }}
-        </a>
-      </li>
-      <li>
-        <a [routerLink]="['/gapFill']">
-          Gap Fill Revision
-        </a>
-      </li>
-    </ul>
-    <div *ngIf="quizzes.length == 0 && (userDetails | async)">
-      No quizzes yet!
-    </div>
     <div *ngIf="!(userDetails | async)">
-      Please login to view the quizzes
+      Please login
     </div>
-
+  </div>
+  <div *ngIf="(userDetails | async)"class="row flex">
+    <a [routerLink]="['/illiad']">
+      <button type="button" name="button" class="btn btn-secondary btn-lg">
+        Illiad
+      </button>
+    </a>
+    <a [routerLink]="['/germanicus']">
+      <button type="button" name="button" class="btn btn-secondary btn-lg">
+        Germanicus &amp; Piso
+      </button>
+    </a>
+    <a [routerLink]="['/dayAtRaces']">
+      <button type="button" name="button" class="btn btn-secondary btn-lg">
+        Day At The Races
+      </button>
+    </a>
   </div>
 </div>

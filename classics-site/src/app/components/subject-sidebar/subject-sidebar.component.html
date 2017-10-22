@@ -1,0 +1,14 @@
+<div class="bg">
+    <ng-container *ngFor="let category of categories">
+      <div class="category-expansion-button btn btn-sm btn-warning">
+        <h4>{{ category }}</h4>
+      </div>
+      <div class="exercise-list">
+        <ul>
+          <li><a (click)="onSelectTask('interlinear-texts', category)" class="exercise-link">Interlinear Texts</a></li>
+          <li><a (click)="onSelectTask('match-up', category)" class="exercise-link">Match up</a></li>
+          <li><a (click)="onSelectTask('gap-fill', category)" class="exercise-link">Gap Fill</a></li>
+        </ul>
+    </div>
+    </ng-container>
+</div>

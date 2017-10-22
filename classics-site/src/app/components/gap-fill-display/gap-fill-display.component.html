@@ -1,0 +1,15 @@
+<h3 class="category">{{ category }}</h3>
+<h4 class="margin-top-spacing">Gap Fill Exercises</h4>
+<ul class="margin-top-spacing">
+  <li *ngFor="let gapFill of gapFills; let i = index">
+    <!-- TODO: change this to selectable previews -->
+    <a [routerLink]="['/gapFill', gapFill.gapFillName]">
+      <h4>{{ gapFill.gapFillName }}</h4>
+    </a>
+  </li>
+</ul>
+<div *ngIf="gapFills.length == 0">
+  <ul class="preview-wrapper">
+    <li>No gap fill exercises yet!</li>
+  </ul>
+</div>

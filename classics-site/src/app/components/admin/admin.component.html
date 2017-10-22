@@ -1,43 +1,44 @@
-<div class="row">
-  <button
-  class="btn btn-primary col-xs-3"
-  (click)="onSelectOption('new', $event)"
-  >Add new question</button>
-  <button
-  class="btn btn-warning col-xs-3 col-xs-offset-1"
-  (click)="onSelectOption('edit', $event)"
-  >Edit existing questions</button>
-  <button
-  class="btn btn-danger col-xs-3 col-xs-offset-1"
-  (click)="onSelectOption('addGapFill', $event)"
-  >Add gap fill</button>
-</div>
+<div class="container">
+  <div class="row">
+    <button
+    class="btn btn-primary col-xs-3"
+    (click)="onSelectOption('new', $event)"
+    >Add new question</button>
+    <button
+    class="btn btn-warning col-xs-3 col-xs-offset-1"
+    (click)="onSelectOption('edit', $event)"
+    >Edit existing questions</button>
+    <button
+    class="btn btn-danger col-xs-3 col-xs-offset-1"
+    (click)="onSelectOption('addGapFill', $event)"
+    >Add gap fill</button>
+  </div>
 
-<div
-  [ngSwitch]="selectedOption"
-  class="row"
-  style="margin-top: 3em">
-  <div *ngSwitchCase="'new'">
-    <h3 style="text-decoration: underline">Add New Question</h3>
-    <div class="row">
-      <div class="col-xs-12">
-        <add-question-form></add-question-form>
+  <div
+    [ngSwitch]="selectedOption"
+    class="row margin-top-spacing">
+    <div *ngSwitchCase="'new'">
+      <h3 style="text-decoration: underline">Add New Question</h3>
+      <div class="row">
+        <div class="col-xs-12">
+          <add-question-form></add-question-form>
+        </div>
       </div>
     </div>
-  </div>
-  <div *ngSwitchCase="'edit'">
-    <h3 style="text-decoration: underline">Edit Existing Question</h3>
-    <div class="row" style="margin-top: 2em">
-      <div class="col-xs-12">
-        <edit-question-form></edit-question-form>
+    <div *ngSwitchCase="'edit'">
+      <h3 style="text-decoration: underline">Edit Existing Question</h3>
+      <div class="row margin-top-spacing">
+        <div class="col-xs-12">
+          <edit-question-form></edit-question-form>
+        </div>
       </div>
     </div>
-  </div>
-  <div *ngSwitchCase="'addGapFill'">
-    <h3 style="text-decoration: underline">Add a new gap fill exercise</h3>
-    <div class="row" style="margin-top: 2em">
-      <div class="col-xs-12">
-        <add-gap-fill></add-gap-fill>
+    <div *ngSwitchCase="'addGapFill'">
+      <h3 style="text-decoration: underline">Add a new gap fill exercise</h3>
+      <div class="row margin-top-spacing">
+        <div class="col-xs-12">
+          <add-gap-fill></add-gap-fill>
+        </div>
       </div>
     </div>
   </div>

@@ -3,18 +3,26 @@
     <button type="button" class="btn btn-danger col-xs-3" (click)="clearInputs()">Cancel</button>
   </div>
   <div class="row">
-    <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center" style="margin-top: 2em">Gap fill exercise uploaded!</div>
-    <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center" style="margin-top: 2em">Error uploading gap fill exercise, please try again</div>
+    <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center margin-top-spacing">Gap fill exercise uploaded!</div>
+    <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center margin-top-spacing">Error uploading gap fill exercise, please try again or contact support if this error persists</div>
   </div>
-  <div class="row" style="margin-top: 2em">
+  <div class="row margin-top-spacing">
     <div class="col-xs-12">
       <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="gapFillName" #gapFillName name="gapFillName" class="form-control" [(ngModel)]="model.gapFillName" required placeholder="Please enter a name for this exercise" (keyup)="checkFormValidity()">
+        <label for="category">Category:</label>
+        <input type="text" id="gapFillCategory" #gapFillCategory name="gapFillCategory" class="form-control" [(ngModel)]="model.category" required placeholder="Please enter a category for this e.g. Ovid" (keyup)="checkFormValidity()">
       </div>
     </div>
   </div>
-  <div [ngClass]="{'hidden': textsSaved}" class="row" style="margin-top: 2em">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="gapFillName" #gapFillName name="gapFillName" class="form-control" [(ngModel)]="model.gapFillName" required placeholder="Please enter a name for this exercise e.g. Lines 1-4" (keyup)="checkFormValidity()">
+      </div>
+    </div>
+  </div>
+  <div [ngClass]="{'hidden': textsSaved}" class="row margin-top-spacing">
     <div class="col-xs-5">
       <div class="form-group">
         <label for="latin">Latin:</label>
@@ -30,7 +38,7 @@
   </div>
 
   <!-- displaying text entered from above to allow highlighting of individual words -->
-  <div [ngClass]="{'hidden': !textsSaved}" class="row" style="margin-top: 2em">
+  <div [ngClass]="{'hidden': !textsSaved}" class="row margin-top-spacing">
     <div class="col-xs-5">
       <div class="form-group">
         <label for="latin">Latin:</label>
@@ -53,8 +61,8 @@
   <button type="button" name="button" class="btn btn-success" (click)="onSaveTexts(englishTextArea.value)" [disabled]="textsSaved || !latinTextArea.classList.contains('ng-valid') || !englishTextArea.classList.contains('ng-valid')">Save Texts</button>
   <button type="button" name="button" class="btn btn-warning" (click)="onEditTexts()" [disabled]="!textsSaved">Edit Texts</button>
 
-  <h4 *ngIf="!textsSaved" class="bg-info" style="margin-top: 2em; padding: 1em;">Please save the texts to continue...</h4>
-  <div class="row" style="margin-top: 2em" [ngClass]="{'translucent': !textsSaved}">
+  <h4 *ngIf="!textsSaved" class="bg-info margin-top-spacing" style="padding: 1em;">Please save the texts to continue...</h4>
+  <div class="row margin-top-spacing" [ngClass]="{'translucent': !textsSaved}">
     <div class="col-xs-12">
       <div class="form-group">
         <label for="translatableWords">Translatable Words</label><br/>

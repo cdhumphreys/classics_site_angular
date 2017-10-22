@@ -39,18 +39,18 @@
        <button
          (click)="login(f)"
          type="submit"
-         class="col-xs-3 col-xs-offset-3 btn btn-primary button-submit"
+         class="col-xs-3 col-xs-offset-3 btn btn-primary margin-top-spacing"
         [disabled]="!f.valid"
          >Login</button>
        <button
          (click)="createUser(f)"
          type="submit"
-         class="col-xs-3 col-xs-offset-1 btn btn-secondary button-submit"
+         class="col-xs-3 col-xs-offset-1 btn btn-secondary margin-top-spacing"
         [disabled]="!f.valid"
          >Sign Up</button>
        <button (click)="resetPassword(f)"
        type="button"
-       class="btn btn-info btn-small button-submit col-xs-7 col-xs-offset-3">Reset Password</button>
+       class="btn btn-info btn-small margin-top-spacing col-xs-7 col-xs-offset-3">Reset Password</button>
      </form>
 
 
@@ -62,7 +62,7 @@
       class="col-sm-6 col-sm-offset-3 text-center">You are logged in as {{ (user | async)?.email }}</div>
        <button
        (click)="logout()"
-       class="button-submit col-xs-4 col-xs-offset-4 btn btn-primary">Logout</button>
+       class="margin-top-spacing col-xs-4 col-xs-offset-4 btn btn-primary">Logout</button>
      </div>
 
   </div>

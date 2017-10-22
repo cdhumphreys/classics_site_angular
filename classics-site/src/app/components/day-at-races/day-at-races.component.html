@@ -1,0 +1,20 @@
+
+<div class="row">
+  <div class="container heading">
+    <div class="row">
+      <h2>Day At The Races</h2>
+    </div>    
+  </div>
+  <subject-sidebar
+  class="col-xs-3"
+  (onSelectedOption)="onSelectTask($event)"
+  ></subject-sidebar>
+  <div class="col-xs-9 main-content">
+    <div class="row">
+      <gap-fill-display
+      *ngIf= "selectedTask == 'gap-fill'"
+      [category]="selectedCategory"
+      ></gap-fill-display>
+    </div>
+  </div>
+</div>
