@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 
 @Component({
-  selector: 'subject-sidebar',
-  templateUrl: './subject-sidebar.component.html',
-  styleUrls: ['./subject-sidebar.component.css']
+  selector: 'category-sidebar',
+  templateUrl: './category-sidebar.component.html',
+  styleUrls: ['./category-sidebar.component.css']
 })
-export class SubjectSidebarComponent implements OnInit {
+export class CategorySidebarComponent implements OnInit {
   categories = [
     'Ovid',
     'Propertius',

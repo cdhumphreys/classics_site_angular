@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SubjectSidebarComponent } from '../subject-sidebar/subject-sidebar.component';
+import { CategorySidebarComponent } from '../category-sidebar/category-sidebar.component';
 import { GapFillDisplayComponent } from '../gap-fill-display/gap-fill-display.component';
 
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
