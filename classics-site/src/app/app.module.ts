@@ -16,6 +16,10 @@ import { AddQuestionFormComponent } from './components/add-question-form/add-que
 import { EditQuestionFormComponent } from './components/edit-question-form/edit-question-form.component';
 import { GapFillComponent } from './components/gap-fill/gap-fill.component';
 import { AddGapFillComponent } from './components/add-gap-fill/add-gap-fill.component';
+import { IlliadComponent } from './components/illiad/illiad.component';
+import { GermanicusComponent } from './components/germanicus/germanicus.component';
+import { DayAtRacesComponent } from './components/day-at-races/day-at-races.component';
+import { CategorySidebarComponent } from './components/category-sidebar/category-sidebar.component';
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
 
@@ -28,7 +32,7 @@ import { AngularFireModule } from 'angularfire2';
 // New imports to update based on AngularFire2 version 4
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-
+import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-display.component';
 
 
 
@@ -44,11 +48,14 @@ export const firebaseConfig = {
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'illiad', component: IlliadComponent},
+  {path: 'germanicus', component: GermanicusComponent},
+  {path: 'dayAtRaces', component: DayAtRacesComponent},
   {path: 'quiz/:book', component: QuizComponent},
   {path: 'quiz/:book/print', component: PrintComponent},
   {path: 'login', component: LoginComponent},
   {path: 'admin', component: AdminComponent},
-  {path: 'gapFill', component: GapFillComponent}
+  {path: 'gapFill/:title', component: GapFillComponent}
 ];
 
 
@@ -66,7 +73,12 @@ const appRoutes: Routes = [
     AddQuestionFormComponent,
     EditQuestionFormComponent,
     GapFillComponent,
-    AddGapFillComponent
+    AddGapFillComponent,
+    IlliadComponent,
+    GermanicusComponent,
+    DayAtRacesComponent,
+    CategorySidebarComponent,
+    GapFillDisplayComponent
 
   ],
   imports: [

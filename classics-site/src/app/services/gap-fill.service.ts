@@ -13,17 +13,17 @@ export class GapFillService {
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) { }
 
-  fetchGapFillTexts() {
+  private fetchGapFillTexts() {
     this.gapFillRef = this.db.list('/gapFills/');
 
   }
 
-  getGapFillTexts() {
+  public getGapFillTexts() {
     this.fetchGapFillTexts();
     return this.gapFillRef;
   }
 
-  addGapFillText(gapFillData: GapFill) {
+  public addGapFillText(gapFillData: GapFill) {
     this.fetchGapFillTexts();
     return this.gapFillRef.push(gapFillData);
   }
