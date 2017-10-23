@@ -58,7 +58,7 @@ export class AddGapFillComponent implements OnInit {
   }
 
   public clearInputs() {
-    this.startLineInput.value = this.endLineInput.value = 0;
+    // this.startLineInput.value = this.endLineInput.value = 0;
     this.latinTextArea.value = this.englishTextArea.value = '';
 
     this.model.latinText = this.model.englishText = '';
@@ -74,7 +74,7 @@ export class AddGapFillComponent implements OnInit {
 
     // remove non-words
     const regex = /([\_\+\-\.\,\!\@\?\#\$\%\^\&\*\(\)\;\\\/|<>"'\d])/g;
-    let filteredText = englishText.replace(regex, '');
+    let filteredText = englishText.replace('\n', ' ').replace(regex, '');
     console.log(filteredText);
 
     this.parsedEnglishText = filteredText.split(' ');
@@ -124,11 +124,12 @@ export class AddGapFillComponent implements OnInit {
   }
 
   public checkFormValidity() {
+    console.log('checking validity');
     this.canUploadData = (this.latinTextArea.classList.contains('ng-valid') &&
     this.englishTextArea.classList.contains('ng-valid') &&
     this.gapFillCategory.classList.contains('ng-valid') &&
-    this.endLineInput.value > this.startLineInput.value &&
-    this.model.translatableWords.length > 0 &&
+    (this.endLineInput.value >= this.startLineInput.value) &&
+    (this.model.translatableWords.length > 0) &&
     this.textsSaved);
   }
 
@@ -144,22 +145,22 @@ export class AddGapFillComponent implements OnInit {
 
 
 
-    // this.gapfillService.addGapFillText(gapFill)
-    // .then((data) => {
-    //   this.successNotification = true;
-    //   this.clearInputs();
-    //
-    //   setTimeout(() => {
-    //     this.successNotification = false;
-    //   }, 3000);
-    // })
-    // .catch((error) => {
-    //   this.failureNotification = true;
-    //
-    //   setTimeout(() => {
-    //     this.failureNotification = false;
-    //   }, 3000);
-    // });
+    this.gapfillService.addGapFillText(gapFill)
+    .then((data) => {
+      this.successNotification = true;
+      this.clearInputs();
+
+      setTimeout(() => {
+        this.successNotification = false;
+      }, 3000);
+    })
+    .catch((error) => {
+      this.failureNotification = true;
+
+      setTimeout(() => {
+        this.failureNotification = false;
+      }, 3000);
+    });
 
 
   }

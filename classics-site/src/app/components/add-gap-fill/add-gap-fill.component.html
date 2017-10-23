@@ -20,14 +20,14 @@
       <div class="col-xs-2">
         <label for="startLine">Start Line:</label>
         <input type="number" id="startLine" #startLine name="startLine" class="form-control"
-        (keyup)="checkFormValidity()"
+        (change)="checkFormValidity()"
         [(ngModel)]="model.startLine"
         [ngClass]="{'warning': model.endLine < model.startLine}" required>
       </div>
       <div class="col-xs-2">
         <label for="endLine">End Line:</label>
         <input type="number" id="endLine" #endLine name="endLine" class="form-control"
-        (keyup)="checkFormValidity()" 
+        (change)="checkFormValidity()"
         [(ngModel)]="model.endLine"
         [ngClass]="{'warning': model.endLine < model.startLine}" required>
       </div>
@@ -60,7 +60,8 @@
     <div class="col-xs-5">
       <div class="form-group">
         <label for="latin">Latin:</label>
-        <div name="latinText" class="form-control">{{ model.latinText }}</div>
+        <textarea rows="20" type="text" name="latinText" class="form-control" disabled>{{model.latinText}}</textarea>
+        <!-- <div name="latinText" class="form-control">{{ model.latinText }}</div> -->
       </div>
     </div>
     <div class="col-xs-5 col-xs-offset-1">
