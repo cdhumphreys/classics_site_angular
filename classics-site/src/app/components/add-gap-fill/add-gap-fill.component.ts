@@ -37,6 +37,8 @@ export class AddGapFillComponent implements OnInit {
   endLineInput: any;
   gapFillCategory: any;
 
+  validityChecker: string;
+
 
   constructor(private gapfillService: GapFillService) { }
 
@@ -75,7 +77,6 @@ export class AddGapFillComponent implements OnInit {
     // remove non-words
     const regex = /([\_\+\-\.\,\!\@\?\#\$\%\^\&\*\(\)\;\\\/|<>"'\d])/g;
     let filteredText = englishText.replace('\n', ' ').replace(regex, '');
-    console.log(filteredText);
 
     this.parsedEnglishText = filteredText.split(' ');
 
@@ -128,9 +129,17 @@ export class AddGapFillComponent implements OnInit {
     this.canUploadData = (this.latinTextArea.classList.contains('ng-valid') &&
     this.englishTextArea.classList.contains('ng-valid') &&
     this.gapFillCategory.classList.contains('ng-valid') &&
-    (this.endLineInput.value >= this.startLineInput.value) &&
+    (parseInt(this.endLineInput.value) >= parseInt(this.startLineInput.value)) &&
     (this.model.translatableWords.length > 0) &&
     this.textsSaved);
+
+    this.validityChecker = `
+    latinTextArea ${this.latinTextArea.classList.contains('ng-valid')};
+    englishTextArea ${this.englishTextArea.classList.contains('ng-valid')};
+    gapFillCategory ${this.gapFillCategory.classList.contains('ng-valid')};
+    endLine greater than startLine ${(parseInt(this.endLineInput.value) >= parseInt(this.startLineInput.value))};
+    translatableWords ${this.model.translatableWords};
+    textsSaved ${this.textsSaved}`;
   }
 
   public uploadNewGapFill() {
