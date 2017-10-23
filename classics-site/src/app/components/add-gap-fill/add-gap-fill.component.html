@@ -10,18 +10,36 @@
     <div class="col-xs-12">
       <div class="form-group">
         <label for="category">Category:</label>
-        <input type="text" id="gapFillCategory" #gapFillCategory name="gapFillCategory" class="form-control" [(ngModel)]="model.category" required placeholder="Please enter a category for this e.g. Ovid" (keyup)="checkFormValidity()">
+        <input type="text" id="gapFillCategory" #gapFillCategory name="gapFillCategory" class="form-control" [(ngModel)]="model.category" required
+        placeholder="Please enter a category for this e.g. Ovid" (keyup)="checkFormValidity()">
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="gapFillName" #gapFillName name="gapFillName" class="form-control" [(ngModel)]="model.gapFillName" required placeholder="Please enter a name for this exercise e.g. Lines 1-4" (keyup)="checkFormValidity()">
+    <div class="form-group">
+      <div class="col-xs-2">
+        <label for="startLine">Start Line:</label>
+        <input type="number" id="startLine" #startLine name="startLine" class="form-control"
+        (keyup)="checkFormValidity()"
+        [(ngModel)]="model.startLine"
+        [ngClass]="{'warning': model.endLine < model.startLine}" required>
+      </div>
+      <div class="col-xs-2">
+        <label for="endLine">End Line:</label>
+        <input type="number" id="endLine" #endLine name="endLine" class="form-control"
+        (keyup)="checkFormValidity()" 
+        [(ngModel)]="model.endLine"
+        [ngClass]="{'warning': model.endLine < model.startLine}" required>
       </div>
     </div>
   </div>
+
+  <div class="row" *ngIf="model.endLine < model.startLine">
+    <div class="col-xs-12">
+      <div class="alert alert-danger text-center margin-top-spacing" text-center>The end line must be greater than the start line</div>
+    </div>
+  </div>
+
   <div [ngClass]="{'hidden': textsSaved}" class="row margin-top-spacing">
     <div class="col-xs-5">
       <div class="form-group">

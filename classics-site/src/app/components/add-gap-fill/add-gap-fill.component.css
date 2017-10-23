@@ -26,3 +26,11 @@
 .text-output {
   height: auto !important;
 }
+
+.warning {
+  border-color: red;
+}
+
+.alert-danger {
+  color: black;
+}

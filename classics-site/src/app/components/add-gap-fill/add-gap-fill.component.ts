@@ -10,12 +10,15 @@ import { GapFillService } from '../../services/gap-fill.service';
 export class AddGapFillComponent implements OnInit {
   model: GapFill = {
     category: '',
-    gapFillName: '',
+    startLine: 1,
+    endLine: 1,
     latinText: '',
     englishText: '',
     translatableWords: []
   };
 
+  gapFills = [];
+  duplicate: boolean = false;
   canUploadData: boolean = false;
 
   //To generate the hoverable spans for words after removing punctuation
@@ -30,7 +33,8 @@ export class AddGapFillComponent implements OnInit {
   //DOM elements
   latinTextArea: any;
   englishTextArea: any;
-  gapFillNameInput: any;
+  startLineInput: any;
+  endLineInput: any;
   gapFillCategory: any;
 
 
@@ -39,19 +43,29 @@ export class AddGapFillComponent implements OnInit {
   ngOnInit() {
     this.latinTextArea = document.querySelector('#latin');
     this.englishTextArea = document.querySelector('#english');
-    this.gapFillNameInput = document.querySelector('#gapFillName');
-    this.gapFillCategory = document.querySelector('#category');
+    this.startLineInput = document.querySelector('#startLine');
+    this.endLineInput = document.querySelector('#endLine');
+    this.gapFillCategory = document.querySelector('#gapFillCategory');
+
+    this.gapfillService.getGapFillTexts().subscribe(
+      (snapshot) => {
+        this.gapFills = snapshot;
+      },
+      (error) => {
+
+      }
+    );
   }
 
   public clearInputs() {
-    this.gapFillNameInput.value = this.latinTextArea.value = this.englishTextArea.value = '';
+    this.startLineInput.value = this.endLineInput.value = 0;
+    this.latinTextArea.value = this.englishTextArea.value = '';
 
-    this.model.gapFillName = this.model.latinText = this.model.englishText = '';
+    this.model.latinText = this.model.englishText = '';
     this.model.translatableWords = [];
 
     this.textsSaved = false;
     this.canUploadData = false;
-
 
   }
 
@@ -95,7 +109,7 @@ export class AddGapFillComponent implements OnInit {
       this.model.translatableWords.push(selectedWord);
     }
 
-    this.canUploadData = true;
+    this.checkFormValidity();
   }
 
   public onRemoveTranslatableWord(event: any) {
@@ -112,29 +126,40 @@ export class AddGapFillComponent implements OnInit {
   public checkFormValidity() {
     this.canUploadData = (this.latinTextArea.classList.contains('ng-valid') &&
     this.englishTextArea.classList.contains('ng-valid') &&
-    this.gapFillNameInput.classList.contains('ng-valid') &&
     this.gapFillCategory.classList.contains('ng-valid') &&
+    this.endLineInput.value > this.startLineInput.value &&
     this.model.translatableWords.length > 0 &&
     this.textsSaved);
   }
 
   public uploadNewGapFill() {
-    this.gapfillService.addGapFillText(this.model)
-    .then((data) => {
-      this.successNotification = true;
-      this.clearInputs();
+    const gapFill: GapFill = {
+      category: this.model.category.trim(),
+      startLine: this.model.startLine,
+      endLine: this.model.endLine,
+      latinText: this.model.latinText.trim(),
+      englishText: this.model.englishText.trim(),
+      translatableWords: this.model.translatableWords
+    };
 
-      setTimeout(() => {
-        this.successNotification = false;
-      }, 3000);
-    })
-    .catch((error) => {
-      this.failureNotification = true;
 
-      setTimeout(() => {
-        this.failureNotification = false;
-      }, 3000);
-    });
+
+    // this.gapfillService.addGapFillText(gapFill)
+    // .then((data) => {
+    //   this.successNotification = true;
+    //   this.clearInputs();
+    //
+    //   setTimeout(() => {
+    //     this.successNotification = false;
+    //   }, 3000);
+    // })
+    // .catch((error) => {
+    //   this.failureNotification = true;
+    //
+    //   setTimeout(() => {
+    //     this.failureNotification = false;
+    //   }, 3000);
+    // });
 
 
   }

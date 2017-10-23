@@ -13,6 +13,16 @@
   margin-bottom: 1em;
 }
 
+.exercise-list a {
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .category-expansion-button {
   margin-bottom: 1em;
+}
+
+
+.collapsed {
+  height: 0;
 }
