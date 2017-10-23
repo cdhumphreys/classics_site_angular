@@ -26,7 +26,6 @@ export class DayAtRacesComponent implements OnInit {
   onSelectTask(chosenTask: any) {
     this.selectedCategory = chosenTask.category;
     this.selectedTask = chosenTask.task;
-    console.log(chosenTask);
   }
 
 

@@ -1,13 +1,24 @@
 <h3 class="category">{{ category }}</h3>
 <h4 class="margin-top-spacing">Gap Fill Exercises</h4>
 
+<div class="buttons-container bg-info">
+  <button class="btn btn-success" [disabled]="!(selectedGapFills.length > 0)">Start</button>
+  <div class="radio">
+    <label><input type="radio" name="randomise" checked>In Order</label>
+  </div>
+  <div class="radio">
+    <label><input type="radio" name="randomise">Randomise</label>
+  </div>
+</div>
+
+
+
 <ul class="margin-top-spacing preview-wrapper">
   <li *ngFor="let gapFill of gapFills; let i = index">
-    <!-- TODO: change this to selectable previews -->
-    <a [routerLink]="['/gapFill']" class="preview-container">
-      <div class="preview"></div>
+    <div class="preview" (click)="onSelectExercise(i)">
+      <textarea rows="8" cols="20" disabled class="form-control">{{gapFill.latinText}}</textarea>
       <h4>Lines {{ gapFill.startLine}} - {{ gapFill.endLine }}</h4>
-    </a>
+    </div>
   </li>
 </ul>
 
