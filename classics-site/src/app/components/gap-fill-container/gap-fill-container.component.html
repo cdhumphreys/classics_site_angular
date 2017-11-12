@@ -1,0 +1,5 @@
+<div class="container">
+  <div class="row" *ngFor="let gapFillQuestion of gapFillQuestions; let i = index">
+    <gap-fill [gapFillQuestion]="gapFillQuestion" *ngIf="selectedQuestion == i" (onAnswered)="onAnsweredQuestion($event)"></gap-fill>
+  </div>
+</div>

@@ -40,7 +40,7 @@ export class AddGapFillComponent implements OnInit {
   validityChecker: string;
 
 
-  constructor(private gapfillService: GapFillService) { }
+  constructor(private gapFillService: GapFillService) { }
 
   ngOnInit() {
     this.latinTextArea = document.querySelector('#latin');
@@ -49,7 +49,7 @@ export class AddGapFillComponent implements OnInit {
     this.endLineInput = document.querySelector('#endLine');
     this.gapFillCategory = document.querySelector('#gapFillCategory');
 
-    this.gapfillService.getGapFillTexts().subscribe(
+    this.gapFillService.getGapFillTexts().subscribe(
       (snapshot) => {
         this.gapFills = snapshot;
       },
@@ -154,7 +154,7 @@ export class AddGapFillComponent implements OnInit {
 
 
 
-    this.gapfillService.addGapFillText(gapFill)
+    this.gapFillService.addGapFillText(gapFill)
     .then((data) => {
       this.successNotification = true;
       this.clearInputs();

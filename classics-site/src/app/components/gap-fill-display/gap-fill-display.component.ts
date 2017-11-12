@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 import { GapFillService } from '../../services/gap-fill.service';
 
@@ -12,10 +14,11 @@ import { GapFill } from '../../interfaces/gap-fill.interface';
 export class GapFillDisplayComponent implements OnInit {
   gapFills: GapFill[] = [];
   selectedGapFills: number[] = [];
+  randomiseGapFills: boolean = false;
   previews = [];
   @Input() category;
 
-  constructor(private dbService: GapFillService) { }
+  constructor(private gapFillService: GapFillService, private router: Router) { }
 
   ngOnInit() {
     this.getGapFills();
@@ -28,12 +31,10 @@ export class GapFillDisplayComponent implements OnInit {
   ngAfterViewChecked() {
     const previews = document.querySelectorAll('.preview');
     this.previews = Array.prototype.slice.call(previews);
-    console.log(previews)
-    console.log('selected', this.selectedGapFills);
   }
 
   getGapFills() {
-    this.dbService.getGapFillTexts().subscribe(
+    this.gapFillService.getGapFillTexts().subscribe(
       (snapshot) => {
         if (snapshot.length == 0) {
           return;
@@ -53,21 +54,35 @@ export class GapFillDisplayComponent implements OnInit {
   }
 
   onSelectExercise(exerciseIndex: number) {
-    const indexSearch = this.selectedGapFills.indexOf(exerciseIndex);
-    console.log('before', this.selectedGapFills);
+    const selectedGapFillsIndex = this.selectedGapFills.indexOf(exerciseIndex);
 
-    if (indexSearch == -1) {
+    if (selectedGapFillsIndex == -1) {
       this.selectedGapFills.push(exerciseIndex);
     }
     else {
-      this.selectedGapFills.splice(indexSearch, 1);
+      this.selectedGapFills.splice(selectedGapFillsIndex, 1);
     }
-
-    console.log('after', this.selectedGapFills);
-
 
     // toggle selected visuals
     this.previews[exerciseIndex].classList.toggle('selected');
   }
+
+  randomiseArray(array: any[]) {
+    return array.sort((a, b) => {
+      return (0.5 - Math.random());
+    })
+  }
+
+  onShowGapFills() {
+    const gapFills = this.gapFills.filter((element, index) => {
+      return this.selectedGapFills.includes(index);
+    });
+
+    this.gapFillService.updateSelectedGapFills(gapFills);
+
+    this.router.navigate(['../gapFill']);
+  }
+
+
 
 }

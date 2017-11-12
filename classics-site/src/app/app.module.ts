@@ -20,6 +20,8 @@ import { IlliadComponent } from './components/illiad/illiad.component';
 import { GermanicusComponent } from './components/germanicus/germanicus.component';
 import { DayAtRacesComponent } from './components/day-at-races/day-at-races.component';
 import { CategorySidebarComponent } from './components/category-sidebar/category-sidebar.component';
+import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-display.component';
+import { GapFillContainerComponent } from './components/gap-fill-container/gap-fill-container.component';
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
 
@@ -32,7 +34,7 @@ import { AngularFireModule } from 'angularfire2';
 // New imports to update based on AngularFire2 version 4
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-display.component';
+
 
 
 
@@ -55,7 +57,7 @@ const appRoutes: Routes = [
   {path: 'quiz/:book/print', component: PrintComponent},
   {path: 'login', component: LoginComponent},
   {path: 'admin', component: AdminComponent},
-  {path: 'gapFill/:title', component: GapFillComponent}
+  {path: 'gapFill', component: GapFillContainerComponent}
 ];
 
 
@@ -78,7 +80,8 @@ const appRoutes: Routes = [
     GermanicusComponent,
     DayAtRacesComponent,
     CategorySidebarComponent,
-    GapFillDisplayComponent
+    GapFillDisplayComponent,
+    GapFillContainerComponent
 
   ],
   imports: [

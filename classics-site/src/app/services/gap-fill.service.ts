@@ -10,6 +10,7 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class GapFillService {
   gapFillRef: FirebaseListObservable<any>;
+  selectedGapFills: GapFill[];
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) { }
 
@@ -26,6 +27,14 @@ export class GapFillService {
   public addGapFillText(gapFillData: GapFill) {
     this.fetchGapFillTexts();
     return this.gapFillRef.push(gapFillData);
+  }
+
+  public updateSelectedGapFills(gapFills: GapFill[]) {
+    this.selectedGapFills = gapFills;
+  }
+
+  public getChosenGapFills() {
+    return this.selectedGapFills;
   }
 
 

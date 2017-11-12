@@ -2,16 +2,17 @@
 <h4 class="margin-top-spacing">Gap Fill Exercises</h4>
 
 <div class="buttons-container bg-info">
-  <button class="btn btn-success" [disabled]="!(selectedGapFills.length > 0)">Start</button>
-  <div class="radio">
-    <label><input type="radio" name="randomise" checked>In Order</label>
-  </div>
-  <div class="radio">
-    <label><input type="radio" name="randomise">Randomise</label>
-  </div>
+    <button class="btn btn-success"
+    type="button"
+    (click)="onShowGapFills()"
+    [disabled]="!(selectedGapFills.length > 0)">Start</button>
+    <div class="radio">
+      <label (click)="randomiseGapFills = false"><input type="radio" name="randomise" [checked]="!randomiseGapFills" value="inOrder">In Order</label>
+    </div>
+    <div class="radio">
+      <label (click)="randomiseGapFills = true"><input type="radio" name="randomise" [checked]="randomiseGapFills" value="randomise">Randomise</label>
+    </div>
 </div>
-
-
 
 <ul class="margin-top-spacing preview-wrapper">
   <li *ngFor="let gapFill of gapFills; let i = index">

@@ -1,43 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { GapFill } from '../../interfaces/gap-fill.interface';
+
 import { GapFillService } from '../../services/gap-fill.service';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'app-gap-fill',
+  selector: 'gap-fill',
   templateUrl: './gap-fill.component.html',
   styleUrls: ['./gap-fill.component.css']
 })
 export class GapFillComponent implements OnInit {
-  latinText: string = '';
-  translation: string = '';
   translationArray: string[] = [];
   submittedTranslation: string[] = [];
   gapTranslation: string[] = [];
 
+  @Input() gapFillQuestion;
+  @Output() onAnswered = new EventEmitter<boolean>();
+
+
+
   randomNumbersChosen: number[] = [];
 
-
-  constructor(private gapfillservice: GapFillService) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    // fetch from db
-    this.gapfillservice.getGapFillTexts().subscribe((snapshot) => {
-      console.log(snapshot);
-    },
-  (error) => {
-    console.log(error);
-  });
-    this.latinText = 'Caecilius est in horto, Metella in atrio sedet, Quintus est filius';
-    this.translation = 'Caecilius is in the garden, Metella is sitting in the atrium, Quintus is the son';
+    this.initGapFill();
+  }
 
-    this.translationArray = this.translation.split(" ");
+  ngOnChanges() {
+      this.initGapFill();
+  }
+
+  initGapFill() {
+    this.submittedTranslation = [];
+    this.parseGapFill();
+  }
+
+  parseGapFill() {
+    this.translationArray = this.gapFillQuestion.englishText.split(" ");
     this.substituteTranslation();
   }
 
+
   substituteTranslation() {
-    const numberOfInputs = Math.floor(this.translationArray.length / 3);
+    const numberOfInputs = Math.floor(this.translationArray.length / 4);
     const inputEntries = this.getUniqueRandoms(this.translationArray.length, numberOfInputs);
-    console.log(inputEntries);
+
     this.gapTranslation = this.translationArray.map((entry, index) => {
       if (inputEntries.includes(index)) {
         return `input=${entry.length + 3}`;
@@ -67,8 +77,18 @@ export class GapFillComponent implements OnInit {
     return chosenNumbers;
   }
 
-  onSubmit() {
+  onBack() {
+    this.router.navigate(['../dayAtRaces']);
+  }
+
+  onSubmitAnswers() {
+    this.onAnswered.emit(true);
+  }
+
+  onClear() {
 
   }
+
+
 
 }
