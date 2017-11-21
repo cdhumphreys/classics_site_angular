@@ -25,9 +25,13 @@ import { GapFillContainerComponent } from './components/gap-fill-container/gap-f
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
 
+
+import { AuthService } from './services/auth.service';
 import { QuizDataService } from './services/quiz-data.service';
 import { QuizDatabaseService } from './services/quiz-database.service';
 import { GapFillService } from './services/gap-fill.service';
+
+import { AuthGuard } from './guards/auth.guard';
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -56,7 +60,7 @@ const appRoutes: Routes = [
   {path: 'quiz/:book', component: QuizComponent},
   {path: 'quiz/:book/print', component: PrintComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'admin', component: AdminComponent},
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
   {path: 'gapFill', component: GapFillContainerComponent}
 ];
 
@@ -96,9 +100,11 @@ const appRoutes: Routes = [
     AngularFireAuthModule
   ],
   providers: [
+    AuthService,
     QuizDataService,
     QuizDatabaseService,
-    GapFillService
+    GapFillService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

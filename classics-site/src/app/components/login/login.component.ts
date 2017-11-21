@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
           isAdmin: true
         });
       }
-
     })
     .catch((error) => {
       console.log(error);
@@ -120,5 +119,6 @@ export class LoginComponent implements OnInit {
     this.auth_email_in_use = false;
     this.auth_weak_password = false;
   }
+
 
 }
