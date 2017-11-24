@@ -1,40 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
+// import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
-  user: Observable<firebase.User>;
+  userId: string;
+  userDetails: User;
+  userIdSubscription: Subscription;
+  userDetailsSubscription: Subscription;
+
   auth_user_not_found = false;
   auth_email_in_use = false;
   auth_weak_password = false;
   auth_wrong_password = false;
-  adminSignup = false;
 
   // items: FirebaseListObservable<any[]>;
   // msgVal: string = '';
 
-  constructor(public afAuth: AngularFireAuth, public af: AngularFireDatabase) {
-    // this.items = af.list('/messages', {
-    //   query: {
-    //     limitToLast: 50
-    //   }
-    // });
-
-    this.user = this.afAuth.authState;
-
-  }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    this.userId = this.authService.userId;
+    this.userDetails = this.authService.userDetails;
+
+    this.userIdSubscription = this.authService.userIdChange.subscribe((userId) => {
+      this.userId = userId;
+    });
+    this.userDetailsSubscription = this.authService.userDetailsChange.subscribe((userDetails) => {
+      this.userDetails = userDetails;
+    });
   }
 
 
@@ -45,25 +49,12 @@ export class LoginComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    this.authService.createUser(email, password)
     .then((user) => {
-
-      if (!this.adminSignup) {
-        firebase.database().ref('users/' + user.uid).set({
-          email: email,
-          isAdmin: false
-        });
-      }
-      else {
-        firebase.database().ref('users/' + user.uid).set({
-          email: email,
-          isAdmin: true
-        });
-      }
+      this.authService.createUserDetails(email, user.uid);
     })
     .catch((error) => {
       console.log(error);
-
       if (error["code"] == "auth/email-already-in-use") {
         this.auth_email_in_use = true;
       }
@@ -71,8 +62,6 @@ export class LoginComponent implements OnInit {
         this.auth_weak_password = true;
       }
     });
-
-
   }
 
   login(form: NgForm) {
@@ -82,9 +71,13 @@ export class LoginComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    this.afAuth.auth.signInWithEmailAndPassword(email, password).catch((error) => {
+    this.authService.login(email, password)
+    .then((user) => {
+      console.log(user);
+      this.authService.storeId(user.uid);
+    })
+    .catch((error) => {
       console.log(error);
-
       if (error["code"] == "auth/user-not-found") {
         this.auth_user_not_found = true;
       }
@@ -99,9 +92,9 @@ export class LoginComponent implements OnInit {
     console.log('reset pw');
     const email = form.value.email;
 
-    this.afAuth.auth.sendPasswordResetEmail(email).catch((error) => {
+    this.authService.resetPassword(email)
+    .catch((error) => {
       console.log(error);
-
       if (error["code"] == "auth/user-not-found") {
         this.auth_user_not_found = true;
       }
@@ -110,7 +103,7 @@ export class LoginComponent implements OnInit {
 
   logout() {
     console.log('logout');
-    this.afAuth.auth.signOut();
+    this.authService.signout();
   }
 
   resetFlags() {
@@ -118,6 +111,11 @@ export class LoginComponent implements OnInit {
     this.auth_wrong_password = false;
     this.auth_email_in_use = false;
     this.auth_weak_password = false;
+  }
+
+  ngOnDestroy() {
+    this.userIdSubscription.unsubscribe();
+    this.userDetailsSubscription.unsubscribe();
   }
 
 

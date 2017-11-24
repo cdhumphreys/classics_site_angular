@@ -16,7 +16,7 @@
         <li>
           <a href="#" [routerLink]="['/admin']">
             <button
-            *ngIf="(userDetails | async)?.isAdmin"
+            *ngIf="userDetails?.isAdmin"
             class="btn btn-info">
               Admin
             </button>
@@ -25,12 +25,12 @@
         <li>
           <a href="#" [routerLink]="['/login']">
             <button
-            *ngIf="!(user | async)?.uid"
+            *ngIf="!userId || userId == ''"
             class="btn login-button">
               Log In/Sign Up
             </button>
             <button
-            *ngIf="(user | async)?.uid"
+            *ngIf="userId && userId != ''"
             class="btn login-button">
               Log Out
             </button>

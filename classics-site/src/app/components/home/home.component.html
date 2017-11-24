@@ -1,24 +1,3 @@
 <div class="container">
-  <div class="row">
-    <div *ngIf="!(userDetails | async)">
-      Please login
-    </div>
-  </div>
-  <div *ngIf="(userDetails | async)"class="row flex">
-    <a [routerLink]="['/illiad']">
-      <button type="button" name="button" class="btn btn-secondary btn-lg">
-        Illiad
-      </button>
-    </a>
-    <a [routerLink]="['/germanicus']">
-      <button type="button" name="button" class="btn btn-secondary btn-lg">
-        Germanicus &amp; Piso
-      </button>
-    </a>
-    <a [routerLink]="['/dayAtRaces']">
-      <button type="button" name="button" class="btn btn-secondary btn-lg">
-        Day At The Races
-      </button>
-    </a>
-  </div>
+  <router-outlet></router-outlet>
 </div>

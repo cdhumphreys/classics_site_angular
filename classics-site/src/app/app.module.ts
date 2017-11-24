@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
+import { SubjectsComponent } from './components/subjects/subjects.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { LoginComponent } from './components/login/login.component';
 import { PrintComponent } from './components/print/print.component';
@@ -32,12 +33,15 @@ import { QuizDatabaseService } from './services/quiz-database.service';
 import { GapFillService } from './services/gap-fill.service';
 
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+
 
 import { AngularFireModule } from 'angularfire2';
 
 // New imports to update based on AngularFire2 version 4
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+
 
 
 
@@ -53,15 +57,23 @@ export const firebaseConfig = {
 };
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'illiad', component: IlliadComponent},
-  {path: 'germanicus', component: GermanicusComponent},
-  {path: 'dayAtRaces', component: DayAtRacesComponent},
-  {path: 'quiz/:book', component: QuizComponent},
-  {path: 'quiz/:book/print', component: PrintComponent},
+  {path: '', component: HomeComponent, children: [
+    {
+      path: 'subjects',
+      component: SubjectsComponent,
+      canActivate: [AuthGuard],
+      canActivateChild: [AuthGuard],
+      children: [
+        {path: 'illiad', component: IlliadComponent},
+        {path: 'germanicus', component: GermanicusComponent},
+        {path: 'dayAtRaces', component: DayAtRacesComponent},
+        {path: 'quiz/:book', component: QuizComponent},
+        {path: 'quiz/:book/print', component: PrintComponent},
+        {path: 'gapFill', component: GapFillContainerComponent}
+      ]}
+  ]},
   {path: 'login', component: LoginComponent},
-  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
-  {path: 'gapFill', component: GapFillContainerComponent}
+  {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]}
 ];
 
 
@@ -85,7 +97,8 @@ const appRoutes: Routes = [
     DayAtRacesComponent,
     CategorySidebarComponent,
     GapFillDisplayComponent,
-    GapFillContainerComponent
+    GapFillContainerComponent,
+    SubjectsComponent
 
   ],
   imports: [
@@ -104,7 +117,8 @@ const appRoutes: Routes = [
     QuizDataService,
     QuizDatabaseService,
     GapFillService,
-    AuthGuard
+    AuthGuard,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })
