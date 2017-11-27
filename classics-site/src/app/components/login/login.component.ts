@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user.interface';
 
+import { Observable } from 'rxjs/Observable';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,9 +17,8 @@ import { User } from '../../interfaces/user.interface';
 export class LoginComponent implements OnInit, OnDestroy {
 
   userId: string;
-  userDetails: User;
+  userDetails: Observable<User>;
   userIdSubscription: Subscription;
-  userDetailsSubscription: Subscription;
 
   auth_user_not_found = false;
   auth_email_in_use = false;
@@ -35,9 +36,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.userIdSubscription = this.authService.userIdChange.subscribe((userId) => {
       this.userId = userId;
-    });
-    this.userDetailsSubscription = this.authService.userDetailsChange.subscribe((userDetails) => {
-      this.userDetails = userDetails;
+      console.log(this.userDetails);
+      console.log('userID', this.userId);
     });
   }
 
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  login(form: NgForm) {
+  loginUser(form: NgForm) {
     this.resetFlags();
     console.log('login user');
 
@@ -86,6 +86,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 
   resetPassword(form: NgForm) {
     this.resetFlags();
@@ -115,7 +116,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.userIdSubscription.unsubscribe();
-    this.userDetailsSubscription.unsubscribe();
   }
 
 

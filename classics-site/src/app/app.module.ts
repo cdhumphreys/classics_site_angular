@@ -57,21 +57,17 @@ export const firebaseConfig = {
 };
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent, children: [
-    {
-      path: 'subjects',
-      component: SubjectsComponent,
-      canActivate: [AuthGuard],
-      canActivateChild: [AuthGuard],
-      children: [
-        {path: 'illiad', component: IlliadComponent},
-        {path: 'germanicus', component: GermanicusComponent},
-        {path: 'dayAtRaces', component: DayAtRacesComponent},
-        {path: 'quiz/:book', component: QuizComponent},
-        {path: 'quiz/:book/print', component: PrintComponent},
-        {path: 'gapFill', component: GapFillContainerComponent}
-      ]}
-  ]},
+  {path: '', component: HomeComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children:
+    [
+      {path: 'subjects', component: SubjectsComponent},
+      {path: 'illiad', component: IlliadComponent},
+      {path: 'germanicus', component: GermanicusComponent},
+      {path: 'dayAtRaces', component: DayAtRacesComponent},
+      {path: 'quiz/:book', component: QuizComponent},
+      {path: 'quiz/:book/print', component: PrintComponent},
+      {path: 'gapFill', component: GapFillContainerComponent}
+    ]
+  },
   {path: 'login', component: LoginComponent},
   {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]}
 ];

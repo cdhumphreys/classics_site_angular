@@ -5,6 +5,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
 
 import * as firebase from 'firebase/app';
 
@@ -14,20 +16,18 @@ import { User } from '../interfaces/user.interface';
 export class AuthService {
   userId: string;
   user: Observable<firebase.User>;
-  userDetails: User;
+  userDetails: Observable<User>;
 
   userIdChange: Subject<string> = new Subject<string>();
-  userDetailsChange: Subject<User> = new Subject<User>();
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.user = this.afAuth.authState;
-    this.user.subscribe((user) => {
+    this.userDetails = this.afAuth.authState
+    .switchMap(user => {
       if (user) {
-        this.storeId(user.uid);
-
-        this.db.object(`/users/${user.uid}`).subscribe((snapshot) => {
-            this.storeDetails(snapshot);
-        });
+        return this.db.object(`users/${user.uid}`);
+      } else {
+        return Observable.of(null);
       }
     });
   }
@@ -37,24 +37,17 @@ export class AuthService {
   }
 
   createUserDetails(email: string, userId: string) {
-    this.userDetails = {
+    const userDetails = {
       email: email,
       isAdmin: false
     };
 
-    this.storeId(userId);
-
-    return firebase.database().ref(`users/${userId}`).set(this.userDetails);
+    return firebase.database().ref(`users/${userId}`).set(userDetails);
   }
 
   storeId(id: string) {
     this.userId = id;
     this.userIdChange.next(this.userId);
-  }
-
-  storeDetails(userDetails: User) {
-    this.userDetails = userDetails;
-    this.userDetailsChange.next(this.userDetails);
   }
 
   login(email: string, password: string) {

@@ -1,5 +1,10 @@
 <div class="container heading">
   <div class="row">
+    <a routerLink="/subjects">
+      < Back to subjects
+    </a>    
+  </div>
+  <div class="row">
     <h2>Day At The Races</h2>
   </div>
 </div>
@@ -7,6 +12,7 @@
 class="col-xs-3"
 (onSelectedOption)="onSelectTask($event)"
 ></category-sidebar>
+
 <div class="col-xs-8 main-content">
   <div class="row">
     <gap-fill-display
