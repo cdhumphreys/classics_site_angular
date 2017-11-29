@@ -25,6 +25,7 @@ export class AuthService {
     this.userDetails = this.afAuth.authState
     .switchMap(user => {
       if (user) {
+        this.storeId(user.uid);
         return this.db.object(`users/${user.uid}`);
       } else {
         return Observable.of(null);

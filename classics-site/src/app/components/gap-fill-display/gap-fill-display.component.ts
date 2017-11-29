@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { GapFillService } from '../../services/gap-fill.service';
@@ -18,7 +18,7 @@ export class GapFillDisplayComponent implements OnInit {
   previews = [];
   @Input() category;
 
-  constructor(private gapFillService: GapFillService, private router: Router) { }
+  constructor(private gapFillService: GapFillService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getGapFills();
@@ -79,8 +79,7 @@ export class GapFillDisplayComponent implements OnInit {
     });
 
     this.gapFillService.updateSelectedGapFills(gapFills);
-
-    this.router.navigate(['../gapFill']);
+    this.router.navigate(['./gapFill'], {relativeTo: this.route});
   }
 
 

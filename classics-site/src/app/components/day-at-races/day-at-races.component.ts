@@ -3,9 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { CategorySidebarComponent } from '../category-sidebar/category-sidebar.component';
 import { GapFillDisplayComponent } from '../gap-fill-display/gap-fill-display.component';
 
-import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'day-at-races',

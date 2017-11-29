@@ -6,12 +6,12 @@ import { GapFillService } from '../../services/gap-fill.service';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'app-gap-fill-container',
+  selector: 'gap-fill-container',
   templateUrl: './gap-fill-container.component.html',
   styleUrls: ['./gap-fill-container.component.css']
 })
 export class GapFillContainerComponent implements OnInit {
-  gapFillQuestions: GapFill[];
+  gapFillQuestions: GapFill[] = [];
   selectedQuestion: number;
   questionCount: number = 0;
   answeredQuestions: number[] = [];
@@ -24,10 +24,10 @@ export class GapFillContainerComponent implements OnInit {
 
   ngOnInit() {
     this.gapFillQuestions = this.gapFillService.getChosenGapFills();
-
-    for (var i = 0; i < this.gapFillQuestions.length; i++) {
-      this.unansweredQuestions.push(i);
-    }
+    console.log(this.gapFillQuestions);
+    // for (var i = 0; i < this.gapFillQuestions.length; i++) {
+    //   this.unansweredQuestions.push(i);
+    // }
 
     if (this.randomise) {
       this.selectedQuestion = Math.round(Math.random()*this.unansweredQuestions.length -1);

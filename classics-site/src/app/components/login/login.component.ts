@@ -72,10 +72,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     const password = form.value.password;
 
     this.authService.login(email, password)
-    .then((user) => {
-      console.log(user);
-      this.authService.storeId(user.uid);
-    })
     .catch((error) => {
       console.log(error);
       if (error["code"] == "auth/user-not-found") {

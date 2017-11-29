@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { SubjectsComponent } from './components/subjects/subjects.component';
+import { SubjectComponent } from './components/subject/subject.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { LoginComponent } from './components/login/login.component';
 import { PrintComponent } from './components/print/print.component';
@@ -25,6 +26,7 @@ import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-
 import { GapFillContainerComponent } from './components/gap-fill-container/gap-fill-container.component';
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
+import { CapitalisePipe } from './pipes/capitalise.pipe';
 
 
 import { AuthService } from './services/auth.service';
@@ -47,6 +49,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 
 
+
 export const firebaseConfig = {
   apiKey: "AIzaSyAsj0eyzBbypGOR5De6zaKDPeHuBRN0OD8",
   authDomain: "classics-quiz.firebaseapp.com",
@@ -59,13 +62,16 @@ export const firebaseConfig = {
 const appRoutes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children:
     [
-      {path: 'subjects', component: SubjectsComponent},
+      {path: 'subjects', component: SubjectsComponent, children: [
+        {path: ':subject', component: SubjectComponent},
+        {path: ':subject/gapFill', component: GapFillContainerComponent}
+      ]},
       {path: 'illiad', component: IlliadComponent},
       {path: 'germanicus', component: GermanicusComponent},
       {path: 'dayAtRaces', component: DayAtRacesComponent},
       {path: 'quiz/:book', component: QuizComponent},
       {path: 'quiz/:book/print', component: PrintComponent},
-      {path: 'gapFill', component: GapFillContainerComponent}
+
     ]
   },
   {path: 'login', component: LoginComponent},
@@ -81,6 +87,7 @@ const appRoutes: Routes = [
     QuizComponent,
     HomeComponent,
     AnswerFilterPipe,
+    CapitalisePipe,
     LoginComponent,
     PrintComponent,
     AdminComponent,
@@ -94,7 +101,8 @@ const appRoutes: Routes = [
     CategorySidebarComponent,
     GapFillDisplayComponent,
     GapFillContainerComponent,
-    SubjectsComponent
+    SubjectsComponent,
+    SubjectComponent
 
   ],
   imports: [
