@@ -20,7 +20,19 @@ export class AdminGuard implements CanActivate {
     .take(1)
     .map((userDetails) => {
       console.log(userDetails);
-      return userDetails.isAdmin;
+      if (userDetails) {
+        if (userDetails.isAdmin) {
+          return true;
+        }
+        else {
+          this.router.navigate(['/login']);
+          return false;
+        }
+      }
+      else {
+        this.router.navigate(['/login']);
+        return false;
+      }
     })
   }
 }

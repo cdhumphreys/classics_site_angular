@@ -19,8 +19,7 @@ import { EditQuestionFormComponent } from './components/edit-question-form/edit-
 import { GapFillComponent } from './components/gap-fill/gap-fill.component';
 import { AddGapFillComponent } from './components/add-gap-fill/add-gap-fill.component';
 import { IlliadComponent } from './components/illiad/illiad.component';
-import { GermanicusComponent } from './components/germanicus/germanicus.component';
-import { DayAtRacesComponent } from './components/day-at-races/day-at-races.component';
+
 import { CategorySidebarComponent } from './components/category-sidebar/category-sidebar.component';
 import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-display.component';
 import { GapFillContainerComponent } from './components/gap-fill-container/gap-fill-container.component';
@@ -67,8 +66,6 @@ const appRoutes: Routes = [
         {path: ':subject/gapFill', component: GapFillContainerComponent}
       ]},
       {path: 'illiad', component: IlliadComponent},
-      {path: 'germanicus', component: GermanicusComponent},
-      {path: 'dayAtRaces', component: DayAtRacesComponent},
       {path: 'quiz/:book', component: QuizComponent},
       {path: 'quiz/:book/print', component: PrintComponent},
 
@@ -96,8 +93,6 @@ const appRoutes: Routes = [
     GapFillComponent,
     AddGapFillComponent,
     IlliadComponent,
-    GermanicusComponent,
-    DayAtRacesComponent,
     CategorySidebarComponent,
     GapFillDisplayComponent,
     GapFillContainerComponent,

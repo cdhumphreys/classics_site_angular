@@ -25,12 +25,22 @@ export class AuthService {
     this.userDetails = this.afAuth.authState
     .switchMap(user => {
       if (user) {
+        console.log(user);
         this.storeId(user.uid);
         return this.db.object(`users/${user.uid}`);
       } else {
         return Observable.of(null);
       }
     });
+    // this.user.subscribe((user)=> {
+    //   if (user) {
+    //     console.log(user);
+    //     this.storeId(user.uid);
+    //     this.userDetails = this.db.object(`users/${user.uid}`);
+    //   } else {
+    //     this.userDetails = Observable.of(null);
+    //   }
+    // });
   }
 
   createUser(email: string, password: string) {

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.userId = this.authService.userId;
     this.userDetails = this.authService.userDetails;
 
-    this.userIdSubscription = this.authService.userIdChange.subscribe((userId) => {
+    this.userIdSubscription = this.authService.userIdChange.take(1).subscribe((userId) => {
       this.userId = userId;
       console.log(this.userDetails);
       console.log('userID', this.userId);
