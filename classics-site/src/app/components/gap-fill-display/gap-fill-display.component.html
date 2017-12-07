@@ -18,7 +18,7 @@
   <li *ngFor="let gapFill of gapFills; let i = index">
     <div class="preview" (click)="onSelectExercise(i)">
       <textarea rows="8" cols="20" disabled class="form-control">{{gapFill.latinText}}</textarea>
-      <h4>Lines {{ gapFill.startLine}} - {{ gapFill.endLine }}</h4>
+      <h4>{{ gapFill.exercise }}</h4>
     </div>
   </li>
 </ul>

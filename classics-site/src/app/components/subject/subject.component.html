@@ -1,18 +1,19 @@
-<div class="container heading">
+<div class="container" style="text-decoration: underline;">
   <div class="row">
     <h2>{{ subjectTitle | capitalise}}</h2>
   </div>
-</div>
-<category-sidebar
-class="col-xs-3"
-(onSelectedOption)="onSelectTask($event)"
-></category-sidebar>
-
-<div class="col-xs-8 main-content">
   <div class="row">
-    <gap-fill-display
-    *ngIf= "selectedTask == 'gap-fill'"
-    [category]="selectedCategory"
-    ></gap-fill-display>
+    <div class="col-xs-4">
+      <ul>
+        <li *ngFor="let exercise of exercises">
+          <div (click)="onSelectExercise(exercise)" class="btn btn-large btn-warning">{{exercise | capitalise}}</div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-xs-8">
+      <div *ngIf="selectedExercise == 'gap-fill'">
+        <gap-fill-display [course]="subject"></gap-fill-display>
+      </div>
+    </div>
   </div>
 </div>

@@ -16,7 +16,8 @@ export class GapFillDisplayComponent implements OnInit {
   selectedGapFills: number[] = [];
   randomiseGapFills: boolean = false;
   previews = [];
-  @Input() category;
+
+  @Input() course;
 
   constructor(private gapFillService: GapFillService, private router: Router, private route: ActivatedRoute) { }
 
@@ -40,10 +41,8 @@ export class GapFillDisplayComponent implements OnInit {
           return;
         }
         else {
-          this.gapFills = snapshot.filter((element) => {
-            return element.category.toLowerCase() == this.category.toLowerCase();
-          }).sort((a, b) => {
-            return a.startLine - b.startLine;
+          this.gapFills = snapshot.filter((gapFill: GapFill) => {
+            return gapFill.course.toLowerCase() == this.course.toLowerCase();
           });
         }
       },

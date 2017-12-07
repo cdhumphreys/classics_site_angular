@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-// import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user.interface';
-
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-login',
@@ -17,13 +15,16 @@ import { Observable } from 'rxjs/Observable';
 export class LoginComponent implements OnInit, OnDestroy {
 
   userId: string;
-  userDetails: Observable<User>;
+  userDetails: User;
+
   userIdSubscription: Subscription;
+  userDetailsSubscription: Subscription;
 
   auth_user_not_found = false;
   auth_email_in_use = false;
   auth_weak_password = false;
   auth_wrong_password = false;
+  auth_too_many_attempts = false;
 
   // items: FirebaseListObservable<any[]>;
   // msgVal: string = '';
@@ -31,13 +32,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.userId = this.authService.userId;
-    this.userDetails = this.authService.userDetails;
 
-    this.userIdSubscription = this.authService.userIdChange.take(1).subscribe((userId) => {
+    this.userIdSubscription = this.authService.userId.subscribe((userId) => {
       this.userId = userId;
-      console.log(this.userDetails);
-      console.log('userID', this.userId);
+    });
+    this.userDetailsSubscription = this.authService.userDetails.subscribe((userDetails) => {
+      this.userDetails = userDetails;
     });
   }
 
@@ -80,6 +80,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       else if (error["code"] == "auth/wrong-password") {
         this.auth_wrong_password = true;
       }
+      else if (error["code"] == "auth/too-many-requests") {
+        this.auth_too_many_attempts = true;
+      }
     });
   }
 
@@ -108,10 +111,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.auth_wrong_password = false;
     this.auth_email_in_use = false;
     this.auth_weak_password = false;
+    this.auth_too_many_attempts = false;
   }
 
   ngOnDestroy() {
     this.userIdSubscription.unsubscribe();
+    this.userDetailsSubscription.unsubscribe();
   }
 
 

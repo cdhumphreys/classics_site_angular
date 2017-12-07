@@ -9,13 +9,17 @@ import { GapFillService } from '../../services/gap-fill.service';
 })
 export class AddGapFillComponent implements OnInit {
   model: GapFill = {
-    category: '',
-    startLine: 1,
-    endLine: 1,
+    course: '',
+    exercise: '',
     latinText: '',
     englishText: '',
     translatableWords: []
   };
+
+  courses: string[] = [
+    'Germanicus & Piso',
+    'Day at the Races'
+  ];
 
   gapFills = [];
   duplicate: boolean = false;
@@ -33,11 +37,10 @@ export class AddGapFillComponent implements OnInit {
   //DOM elements
   latinTextArea: any;
   englishTextArea: any;
-  startLineInput: any;
-  endLineInput: any;
-  gapFillCategory: any;
+  course: any;
+  exercise: any;
 
-  validityChecker: string;
+
 
 
   constructor(private gapFillService: GapFillService) { }
@@ -45,9 +48,8 @@ export class AddGapFillComponent implements OnInit {
   ngOnInit() {
     this.latinTextArea = document.querySelector('#latin');
     this.englishTextArea = document.querySelector('#english');
-    this.startLineInput = document.querySelector('#startLine');
-    this.endLineInput = document.querySelector('#endLine');
-    this.gapFillCategory = document.querySelector('#gapFillCategory');
+    this.course = document.querySelector('#course');
+    this.exercise = document.querySelector('#exercise');
 
     this.gapFillService.getGapFillTexts().subscribe(
       (snapshot) => {
@@ -128,25 +130,16 @@ export class AddGapFillComponent implements OnInit {
     console.log('checking validity');
     this.canUploadData = (this.latinTextArea.classList.contains('ng-valid') &&
     this.englishTextArea.classList.contains('ng-valid') &&
-    this.gapFillCategory.classList.contains('ng-valid') &&
-    (parseInt(this.endLineInput.value) >= parseInt(this.startLineInput.value)) &&
+    this.course.classList.contains('ng-valid') &&
+    this.exercise.classList.contains('ng-valid') &&
     (this.model.translatableWords.length > 0) &&
     this.textsSaved);
-
-    this.validityChecker = `
-    latinTextArea ${this.latinTextArea.classList.contains('ng-valid')};
-    englishTextArea ${this.englishTextArea.classList.contains('ng-valid')};
-    gapFillCategory ${this.gapFillCategory.classList.contains('ng-valid')};
-    endLine greater than startLine ${(parseInt(this.endLineInput.value) >= parseInt(this.startLineInput.value))};
-    translatableWords ${this.model.translatableWords};
-    textsSaved ${this.textsSaved}`;
   }
 
   public uploadNewGapFill() {
     const gapFill: GapFill = {
-      category: this.model.category.trim(),
-      startLine: this.model.startLine,
-      endLine: this.model.endLine,
+      course: this.model.course.trim(),
+      exercise: this.model.exercise.trim(),
       latinText: this.model.latinText.trim(),
       englishText: this.model.englishText.trim(),
       translatableWords: this.model.translatableWords

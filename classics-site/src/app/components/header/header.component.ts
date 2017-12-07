@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 
-import { Observable } from 'rxjs/Observable';
-
 import { User } from '../../interfaces/user.interface';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-header',
@@ -12,16 +11,32 @@ import { User } from '../../interfaces/user.interface';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  userDetails: Observable<User>;
+  userId: string;
+  userDetails: User;
+
+  userIdSub: Subscription;
+  userDetailsSub: Subscription;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.userDetails = this.authService.userDetails;
+    this.userIdSub = this.authService.userId.subscribe((userId) => {
+      this.userId = userId;
+      console.log(this.userId);
+    })
+    this.userDetailsSub = this.authService.userDetails.subscribe((userDetails) => {
+      this.userDetails = userDetails;
+      console.log(this.userDetails);
+    })
   }
 
   toggleNavBar() {
     const navbarContent = document.querySelector('#navbar');
     navbarContent.classList.toggle('collapse');
+  }
+
+  ngOnDestroy() {
+    this.userIdSub.unsubscribe();
+    this.userDetailsSub.unsubscribe();
   }
 }

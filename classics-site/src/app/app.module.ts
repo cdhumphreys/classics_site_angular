@@ -3,11 +3,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
+
 import { SubjectsComponent } from './components/subjects/subjects.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { QuizComponent } from './components/quiz/quiz.component';
@@ -20,7 +20,6 @@ import { GapFillComponent } from './components/gap-fill/gap-fill.component';
 import { AddGapFillComponent } from './components/add-gap-fill/add-gap-fill.component';
 import { IlliadComponent } from './components/illiad/illiad.component';
 
-import { CategorySidebarComponent } from './components/category-sidebar/category-sidebar.component';
 import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-display.component';
 import { GapFillContainerComponent } from './components/gap-fill-container/gap-fill-container.component';
 
@@ -32,6 +31,7 @@ import { AuthService } from './services/auth.service';
 import { QuizDataService } from './services/quiz-data.service';
 import { QuizDatabaseService } from './services/quiz-database.service';
 import { GapFillService } from './services/gap-fill.service';
+import { SubjectsService } from './services/subjects.service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
@@ -44,7 +44,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 
-
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 
@@ -57,24 +58,6 @@ export const firebaseConfig = {
   storageBucket: "",
   messagingSenderId: "236630132150"
 };
-
-const appRoutes: Routes = [
-  {path: '', component: HomeComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children:
-    [
-      {path: 'subjects', component: SubjectsComponent, children: [
-        {path: ':subject', component: SubjectComponent},
-        {path: ':subject/gapFill', component: GapFillContainerComponent}
-      ]},
-      {path: 'illiad', component: IlliadComponent},
-      {path: 'quiz/:book', component: QuizComponent},
-      {path: 'quiz/:book/print', component: PrintComponent},
-
-    ]
-  },
-  {path: 'login', component: LoginComponent},
-  {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]}
-];
-
 
 
 @NgModule({
@@ -93,20 +76,20 @@ const appRoutes: Routes = [
     GapFillComponent,
     AddGapFillComponent,
     IlliadComponent,
-    CategorySidebarComponent,
     GapFillDisplayComponent,
     GapFillContainerComponent,
     SubjectsComponent,
-    SubjectComponent
+    SubjectComponent,
+    PageNotFoundComponent
 
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule
@@ -116,6 +99,7 @@ const appRoutes: Routes = [
     QuizDataService,
     QuizDatabaseService,
     GapFillService,
+    SubjectsService,
     AuthGuard,
     AdminGuard
   ],

@@ -1,7 +1,6 @@
 export interface GapFill {
-  category: string;
-  startLine: number;
-  endLine: number;
+  course: string;
+  exercise: string;
   latinText: string;
   englishText: string;
   translatableWords: string[];

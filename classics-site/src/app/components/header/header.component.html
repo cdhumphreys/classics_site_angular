@@ -9,28 +9,28 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">ES Classics</a>
+      <a class="navbar-brand" routerLink='/'>ES Classics</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="#" [routerLink]="['/admin']">
+          <a routerLink="/admin">
             <button
-            *ngIf="(userDetails | async)?.isAdmin"
+            *ngIf="userDetails?.isAdmin"
             class="btn btn-info">
               Admin
             </button>
           </a>
         </li>
         <li>
-          <a href="#" [routerLink]="['/login']">
+          <a routerLink="/login">
             <button
-            *ngIf="!(userDetails | async)"
+            *ngIf="!userId"
             class="btn login-button">
               Log In/Sign Up
             </button>
             <button
-            *ngIf="userDetails | async"
+            *ngIf="userId"
             class="btn login-button">
               Log Out
             </button>

@@ -12,11 +12,9 @@ import { Observable } from 'rxjs/Observable';
 })
 export class GapFillContainerComponent implements OnInit {
   gapFillQuestions: GapFill[] = [];
-  selectedQuestion: number;
-  questionCount: number = 0;
-  answeredQuestions: number[] = [];
-  unansweredQuestions: number[];
+  selectedQuestion: number = 0;
 
+  exercises: string[] = [];
 
   randomise: boolean = false;
 
@@ -24,27 +22,16 @@ export class GapFillContainerComponent implements OnInit {
 
   ngOnInit() {
     this.gapFillQuestions = this.gapFillService.getChosenGapFills();
-    console.log(this.gapFillQuestions);
-    // for (var i = 0; i < this.gapFillQuestions.length; i++) {
-    //   this.unansweredQuestions.push(i);
-    // }
-
-    if (this.randomise) {
-      this.selectedQuestion = Math.round(Math.random()*this.unansweredQuestions.length -1);
-    }
-    else {
-      this.selectedQuestion = 0;
-    }
+    this.gapFillQuestions.map((question) => {
+      this.exercises.push(question.exercise);
+    });
   }
 
-  onAnsweredQuestion(event) {
-    console.log(event);
-    this.questionCount++;
+  onAnsweredQuestion(answered) {
+    console.log(answered);
 
-    this.answeredQuestions.push(this.unansweredQuestions[this.selectedQuestion]);
-    this.unansweredQuestions.splice(this.selectedQuestion);
+    // store student answers on db - make new service
 
-    this.selectedQuestion = Math.round(Math.random()*this.unansweredQuestions.length -1);
   }
 
 }

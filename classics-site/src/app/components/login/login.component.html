@@ -1,7 +1,10 @@
 <div class="container">
   <div class="row">
-    <div *ngIf="userDetails | async; then loggedIn else login">
-        <!-- template will replace this div -->
+    <div *ngIf="userDetails; else login">
+     <div class="col-sm-6 col-sm-offset-3 text-center">You are logged in as {{ userDetails?.email }}</div>
+      <button
+      (click)="logout()"
+      class="margin-top-spacing col-xs-4 col-xs-offset-4 btn btn-primary">Logout</button>
     </div>
   </div>
 </div>
@@ -12,6 +15,7 @@
     <div *ngIf="auth_email_in_use" role="alert" class="col-xs-4 col-xs-offset-4 alert alert-warning text-center">That e-mail is already in use</div>
     <div *ngIf="auth_weak_password" role="alert" class="col-xs-4 col-xs-offset-4 alert alert-warning text-center">Your password must be at least 6 characters long</div>
     <div *ngIf="auth_wrong_password" role="alert" class="col-xs-4 col-xs-offset-4 alert alert-danger text-center">Incorrect Password</div>
+    <div *ngIf="auth_too_many_attempts" role="alert" class="col-xs-4 col-xs-offset-4 alert alert-danger text-center">Too many attempts have been made, please try again later</div>
   </div>
   <div class="row">
     <form class="form-horizontal col-xs-8 col-xs-offset-2" #f="ngForm">
@@ -33,11 +37,4 @@
       <button (click)="resetPassword(f)" type="button" class="col-xs-7 col-sm-5 col-xs-offset-1 col-sm-offset-4 btn btn-info btn-small margin-top-spacing">Reset Password</button>
     </form>
   </div>
-</ng-template>
-
-<ng-template #loggedIn>
- <div class="col-sm-6 col-sm-offset-3 text-center">You are logged in as {{ (userDetails | async)?.email }}</div>
-  <button
-  (click)="logout()"
-  class="margin-top-spacing col-xs-4 col-xs-offset-4 btn btn-primary">Logout</button>
 </ng-template>

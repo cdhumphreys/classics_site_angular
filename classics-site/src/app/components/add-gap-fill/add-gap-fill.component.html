@@ -1,4 +1,5 @@
-<div class="row">
+<h3 class="text-center margin-top-spacing" style="text-decoration: underline">Add a new gap fill exercise</h3>
+<div class="row  margin-top-spacing">
     <button type="button" [disabled]="!canUploadData" class="btn btn-success col-xs-3 col-xs-offset-3" style="margin-right:2em" (click)="uploadNewGapFill()">Save</button>
     <button type="button" class="btn btn-danger col-xs-3" (click)="clearInputs()">Cancel</button>
   </div>
@@ -6,37 +7,24 @@
     <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center margin-top-spacing">Gap fill exercise uploaded!</div>
     <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center margin-top-spacing">Error uploading gap fill exercise, please try again or contact support if this error persists</div>
   </div>
+
   <div class="row margin-top-spacing">
     <div class="col-xs-12">
       <div class="form-group">
-        <label for="category">Category:</label>
-        <input type="text" id="gapFillCategory" #gapFillCategory name="gapFillCategory" class="form-control" [(ngModel)]="model.category" required
-        placeholder="Please enter a category for this e.g. Ovid" (keyup)="checkFormValidity()">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group">
-      <div class="col-xs-2">
-        <label for="startLine">Start Line:</label>
-        <input type="number" id="startLine" #startLine name="startLine" class="form-control"
-        (change)="checkFormValidity()"
-        [(ngModel)]="model.startLine"
-        [ngClass]="{'warning': model.endLine < model.startLine}" required>
-      </div>
-      <div class="col-xs-2">
-        <label for="endLine">End Line:</label>
-        <input type="number" id="endLine" #endLine name="endLine" class="form-control"
-        (change)="checkFormValidity()"
-        [(ngModel)]="model.endLine"
-        [ngClass]="{'warning': model.endLine < model.startLine}" required>
+        <label for="category">Course:</label>
+        <select id="course" #course name="course" class="form-control" [(ngModel)]="model.course" required placeholder="Please choose a course">
+          <option *ngFor="let course of courses" [value]="course">{{course}}</option>
+        </select>
       </div>
     </div>
   </div>
 
-  <div class="row" *ngIf="model.endLine < model.startLine">
+  <div class="row margin-top-spacing">
     <div class="col-xs-12">
-      <div class="alert alert-danger text-center margin-top-spacing" text-center>The end line must be greater than the start line</div>
+      <div class="form-group">
+        <label for="category">Exercise:</label>
+        <input class="form-control" type="text" id="exercise" name="exercise" [(ngModel)]="model.exercise" required>
+      </div>
     </div>
   </div>
 
@@ -86,19 +74,11 @@
       <div class="form-group">
         <label for="translatableWords">Translatable Words</label><br/>
         <small>Click the words below to remove them</small>
-        <div class="form-control" [ngClass]="{'disabled': !textsSaved}">
+        <div class="form-control" [ngClass]="{'disabled': !textsSaved}" style="height: auto; min-height: 34px;">
           <ng-container *ngFor="let word of model.translatableWords; let j = index;">
             <span class="hoverable hoverable-delete" (click)="onRemoveTranslatableWord($event)">{{word}}</span><span *ngIf="j != model.translatableWords.length - 1">&nbsp;</span>
           </ng-container>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4>ValidityChecker</h4>
-      <h4>
-        {{validityChecker}}
-      </h4>
     </div>
   </div>

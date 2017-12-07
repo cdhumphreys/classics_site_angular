@@ -4,9 +4,12 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/switchMap';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+// import { Subscription } from 'rxjs/Subscription';
+
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/mergeMap';
 
 import * as firebase from 'firebase/app';
 
@@ -14,33 +17,33 @@ import { User } from '../interfaces/user.interface';
 
 @Injectable()
 export class AuthService {
-  userId: string;
   user: Observable<firebase.User>;
-  userDetails: Observable<User>;
 
-  userIdChange: Subject<string> = new Subject<string>();
+  userId: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  userDetails: BehaviorSubject<User> = new BehaviorSubject<User>({email: null, isAdmin: false});
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.user = this.afAuth.authState;
-    this.userDetails = this.afAuth.authState
-    .switchMap(user => {
+    this.user.switchMap((user) => {
       if (user) {
-        console.log(user);
-        this.storeId(user.uid);
+        this.userId.next(user.uid);
         return this.db.object(`users/${user.uid}`);
-      } else {
+      }
+      else {
+        this.userId.next('');
         return Observable.of(null);
       }
-    });
-    // this.user.subscribe((user)=> {
-    //   if (user) {
-    //     console.log(user);
-    //     this.storeId(user.uid);
-    //     this.userDetails = this.db.object(`users/${user.uid}`);
-    //   } else {
-    //     this.userDetails = Observable.of(null);
-    //   }
-    // });
+    })
+    .subscribe(
+      (userDetails) => {
+        this.userDetails.next(userDetails);
+      },
+      (error) => {
+        this.userDetails.next({email: null, isAdmin: false});
+        console.log('error', error);
+      }
+    );
+
   }
 
   createUser(email: string, password: string) {
@@ -54,11 +57,6 @@ export class AuthService {
     };
 
     return firebase.database().ref(`users/${userId}`).set(userDetails);
-  }
-
-  storeId(id: string) {
-    this.userId = id;
-    this.userIdChange.next(this.userId);
   }
 
   login(email: string, password: string) {
