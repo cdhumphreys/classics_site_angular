@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
+import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../../services/auth.service';
@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   userId: string;
   userDetails: User;
+  emailRegEx: RegExp;
 
   userIdSubscription: Subscription;
   userDetailsSubscription: Subscription;
@@ -29,15 +30,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   // items: FirebaseListObservable<any[]>;
   // msgVal: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
+    this.emailRegEx = new RegExp('(@bedmod.co.uk)\w*');
 
     this.userIdSubscription = this.authService.userId.subscribe((userId) => {
       this.userId = userId;
+      console.log(this.userId);
     });
     this.userDetailsSubscription = this.authService.userDetails.subscribe((userDetails) => {
       this.userDetails = userDetails;
+      console.log(this.userDetails);
     });
   }
 
@@ -72,6 +76,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     const password = form.value.password;
 
     this.authService.login(email, password)
+    .then(() => {
+      this.router.navigate(['/subjects']);
+    })
     .catch((error) => {
       console.log(error);
       if (error["code"] == "auth/user-not-found") {

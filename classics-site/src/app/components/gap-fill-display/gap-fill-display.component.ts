@@ -13,9 +13,13 @@ import { GapFill } from '../../interfaces/gap-fill.interface';
 })
 export class GapFillDisplayComponent implements OnInit {
   gapFills: GapFill[] = [];
+
   selectedGapFills: number[] = [];
+
   randomiseGapFills: boolean = false;
-  previews = [];
+
+  sections = [];
+  selectedSections = [];
 
   @Input() course;
 
@@ -30,8 +34,11 @@ export class GapFillDisplayComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
-    const previews = document.querySelectorAll('.preview');
-    this.previews = Array.prototype.slice.call(previews);
+
+  }
+
+  onRandomiseSelect() {
+    this.randomiseGapFills = !this.randomiseGapFills;
   }
 
   getGapFills() {
@@ -44,6 +51,13 @@ export class GapFillDisplayComponent implements OnInit {
           this.gapFills = snapshot.filter((gapFill: GapFill) => {
             return gapFill.course.toLowerCase() == this.course.toLowerCase();
           });
+
+          for (let gapFillIndex in this.gapFills) {
+            let section = this.gapFills[gapFillIndex].exercise.split(" ")[1];
+            if (this.sections.indexOf(section) == -1) {
+              this.sections.push(section);
+            }
+          }
         }
       },
       (error) => {
@@ -52,32 +66,28 @@ export class GapFillDisplayComponent implements OnInit {
     );
   }
 
-  onSelectExercise(exerciseIndex: number) {
-    const selectedGapFillsIndex = this.selectedGapFills.indexOf(exerciseIndex);
+  onSelectSection(event, section) {
+    const element = event.target;
+    element.classList.toggle('section-selected');
 
-    if (selectedGapFillsIndex == -1) {
-      this.selectedGapFills.push(exerciseIndex);
+    const sectionIndex = this.selectedSections.indexOf(section);
+
+    if (sectionIndex == -1) {
+      this.selectedSections.push(section);
     }
     else {
-      this.selectedGapFills.splice(selectedGapFillsIndex, 1);
+      this.selectedSections.splice(sectionIndex, 1);
     }
-
-    // toggle selected visuals
-    this.previews[exerciseIndex].classList.toggle('selected');
-  }
-
-  randomiseArray(array: any[]) {
-    return array.sort((a, b) => {
-      return (0.5 - Math.random());
-    })
   }
 
   onShowGapFills() {
-    const gapFills = this.gapFills.filter((element, index) => {
-      return this.selectedGapFills.includes(index);
+    const gapFills = this.gapFills.filter((element) => {
+      return this.sections.includes(element.exercise.split(" ")[1]);
     });
 
     this.gapFillService.updateSelectedGapFills(gapFills);
+    this.gapFillService.setRandomise(this.randomiseGapFills);
+
     this.router.navigate(['./gapFill'], {relativeTo: this.route});
   }
 

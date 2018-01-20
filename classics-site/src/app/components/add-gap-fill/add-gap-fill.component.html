@@ -1,8 +1,4 @@
 <h3 class="text-center margin-top-spacing" style="text-decoration: underline">Add a new gap fill exercise</h3>
-<div class="row  margin-top-spacing">
-    <button type="button" [disabled]="!canUploadData" class="btn btn-success col-xs-3 col-xs-offset-3" style="margin-right:2em" (click)="uploadNewGapFill()">Save</button>
-    <button type="button" class="btn btn-danger col-xs-3" (click)="clearInputs()">Cancel</button>
-  </div>
   <div class="row">
     <div *ngIf="successNotification" class="col-xs-12 alert alert-success text-center margin-top-spacing">Gap fill exercise uploaded!</div>
     <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center margin-top-spacing">Error uploading gap fill exercise, please try again or contact support if this error persists</div>
@@ -81,4 +77,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row  margin-top-spacing">
+    <button type="button" [disabled]="!canUploadData" class="btn btn-success col-xs-3 col-xs-offset-3" style="margin-right:2em" (click)="uploadNewGapFill()">Save</button>
+    <button type="button" class="btn btn-danger col-xs-3" (click)="clearInputs()">Cancel</button>
   </div>

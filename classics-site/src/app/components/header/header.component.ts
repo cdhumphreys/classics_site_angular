@@ -22,12 +22,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userIdSub = this.authService.userId.subscribe((userId) => {
       this.userId = userId;
-      console.log(this.userId);
-    })
+    });
     this.userDetailsSub = this.authService.userDetails.subscribe((userDetails) => {
       this.userDetails = userDetails;
-      console.log(this.userDetails);
-    })
+    });
   }
 
   toggleNavBar() {

@@ -18,11 +18,15 @@ export class GapFillComponent implements OnInit {
   submittedTranslation: string[] = [];
   gapTranslation: string[] = [];
   inputEntries: number[];
+  reviewClasses = {};
+
+
+
+  reviewActive: boolean = false;
+  score: string;
 
   @Input() gapFillQuestion;
   @Output() onAnswered = new EventEmitter<any>();
-
-  domInputs: any[];
 
 
 
@@ -40,7 +44,6 @@ export class GapFillComponent implements OnInit {
 
   initGapFill() {
     this.submittedTranslation = [];
-    this.domInputs = [];
     this.parseGapFill();
   }
 
@@ -62,8 +65,6 @@ export class GapFillComponent implements OnInit {
         return entry;
       }
     });
-
-    this.domInputs = Array.prototype.slice.call(document.querySelectorAll('.translationInput'));
 
   }
 
@@ -91,16 +92,41 @@ export class GapFillComponent implements OnInit {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
+  onClear(form: NgForm) {
+    form.reset();
+    this.reviewClasses = {};
+    this.reviewActive = false;
+    this.score = null;
+  }
+
   onSubmitAnswers(form: NgForm) {
+    this.reviewActive = true;
     let answers = form.value;
     let correctAnswers = 0;
     for (let answer in answers) {
       let index = parseInt(answer.split('_')[1]);
       if (answers[answer].trim() == this.translationArray[index]) {
         correctAnswers++;
+        this.reviewClasses[answer] = 'correct';
+      }
+      else {
+        this.reviewClasses[answer] = 'incorrect';
       }
     }
-    this.onAnswered.emit({course: this.gapFillQuestion.course, exercise: this.gapFillQuestion.exercise, score: correctAnswers});
+
+    const date = new Date();
+
+    const percentage = Math.round(correctAnswers/Object.keys(form.controls).length * 100);
+    this.score = percentage + '%';
+
+    const studentAnswers = {
+      course: this.gapFillQuestion.course,
+      exercise: this.gapFillQuestion.exercise,
+      percentage: percentage,
+      date: date.toUTCString()
+    };
+
+    this.onAnswered.emit(studentAnswers);
   }
 
 

@@ -3,20 +3,28 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { GapFill } from '../interfaces/gap-fill.interface';
+import { GapFillAnswers } from '../interfaces/gap-fill-answers.interface';
 
 // import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 
+import { AuthService } from './auth.service';
+
 @Injectable()
 export class GapFillService {
+  userId: string;
   gapFillRef: FirebaseListObservable<any>;
   selectedGapFills: GapFill[];
+  randomiseGapFills: boolean = false;
 
-  constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) { }
+  constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private authService: AuthService) {
+    this.authService.userId.subscribe((id: string) => {
+      this.userId = id;
+    });
+  }
 
   private fetchGapFillTexts() {
     this.gapFillRef = this.db.list('/gapFills/');
-
   }
 
   public getGapFillTexts() {
@@ -34,7 +42,26 @@ export class GapFillService {
   }
 
   public getChosenGapFills() {
-    return this.selectedGapFills;
+    if (this.randomiseGapFills) {
+      return this.randomiseArray(this.selectedGapFills);
+    }
+    else {
+        return this.selectedGapFills;
+    }
+  }
+
+  public setRandomise(randomise: boolean) {
+    this.randomiseGapFills = randomise;
+  }
+
+  public uploadStudentAnswers(answers: GapFillAnswers) {
+    return this.db.list(`users/${this.userId}/gapFills/`).push(answers);
+  }
+
+  randomiseArray(array: any[]) {
+    return array.sort((a, b) => {
+      return (0.5 - Math.random());
+    })
   }
 
 

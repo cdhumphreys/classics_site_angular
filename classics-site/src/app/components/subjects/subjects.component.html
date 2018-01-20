@@ -1,22 +1,28 @@
-<div class="container">
-  <div class="row flex">
-    <a [routerLink]="['/subjects', 'illiad']">
-      <button type="button" name="button" class="btn btn-info btn-lg">
-        Illiad
-      </button>
-    </a>
-    <a [routerLink]="['/subjects', 'germanicus and piso']">
-      <button type="button" name="button" class="btn btn-info btn-lg">
+<div class="side-nav primary-color-bg">
+  <ul>
+      <h4 class="text-white text-shadow-dark">Subjects</h4>
+    <li class="text-white">
+      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'iliad']">
+        Iliad
+      </a>
+    </li>
+    <li class="text-white text-shadow-dark">
+      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'germanicus-and-piso']">
         Germanicus &amp; Piso
-      </button>
-    </a>
-    <a [routerLink]="['/subjects', 'day at the races']">
-      <button type="button" name="button" class="btn btn-info btn-lg">
+      </a>
+    </li>
+    <li class="text-white text-shadow-dark">
+      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'day-at-the-races']">
         Day At The Races
-      </button>
-    </a>
-  </div>
-  <div class="row">
-    <router-outlet></router-outlet>
-  </div>
+      </a>
+    </li>
+    <li class="text-white text-shadow-dark">
+      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'propertius-tibullus-and-ovid']">
+        Propertius, Tibullus &amp; Ovid
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="main-content white-bg">
+  <router-outlet></router-outlet>
 </div>

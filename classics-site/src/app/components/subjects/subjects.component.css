@@ -1,12 +1,37 @@
-.flex {
+.side-nav {
+  float: left;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
-  text-align: center;
+  height: 100%;
+  width: 15%;
+  padding: 40px 40px 40px 0px;
+  margin-top: -20px;
+
 }
 
-.flex a {
-  flex: 1 1 auto;
+.side-nav ul li a {
+  text-decoration: none;
+}
+
+.side-nav ul li {
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  list-style: upper-roman;
+
+}
+
+.text-shadow-dark {
+  text-shadow: -2px 2px #002984;
+}
+
+.main-content {
+  position: absolute;
+  left: 15%;
+  top: 66px;
+
+  width: 85%;
 }

@@ -1,28 +1,22 @@
 <h3 class="category">{{ category }}</h3>
 <h4 class="margin-top-spacing">Gap Fill Exercises</h4>
 
-<div class="buttons-container bg-info">
+
+<div class="sections-container">
+  <div *ngFor="let section of sections" class="section" (click)="onSelectSection($event, section)">
+    {{ section }}
+  </div>
+</div>
+
+<div class="buttons-container">
+  <div class="radio">
+    <label (click)="onRandomiseSelect()"><input type="checkbox" name="randomise" [checked]="randomiseGapFills" value="randomise">Randomise</label>
+  </div>
     <button class="btn btn-success"
     type="button"
     (click)="onShowGapFills()"
-    [disabled]="!(selectedGapFills.length > 0)">Start</button>
-    <div class="radio">
-      <label (click)="randomiseGapFills = false"><input type="radio" name="randomise" [checked]="!randomiseGapFills" value="inOrder">In Order</label>
-    </div>
-    <div class="radio">
-      <label (click)="randomiseGapFills = true"><input type="radio" name="randomise" [checked]="randomiseGapFills" value="randomise">Randomise</label>
-    </div>
+    [disabled]="selectedSections.length == 0">Start</button>
 </div>
-
-<ul class="margin-top-spacing preview-wrapper">
-  <li *ngFor="let gapFill of gapFills; let i = index">
-    <div class="preview" (click)="onSelectExercise(i)">
-      <textarea rows="8" cols="20" disabled class="form-control">{{gapFill.latinText}}</textarea>
-      <h4>{{ gapFill.exercise }}</h4>
-    </div>
-  </li>
-</ul>
-
 
 <div *ngIf="gapFills.length == 0">
   <ul class="preview-wrapper">

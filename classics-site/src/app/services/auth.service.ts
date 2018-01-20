@@ -24,6 +24,7 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.user = this.afAuth.authState;
+
     this.user.switchMap((user) => {
       if (user) {
         this.userId.next(user.uid);
@@ -46,6 +47,10 @@ export class AuthService {
 
   }
 
+  isAuthenticated() {
+    return this.user;
+  }
+
   createUser(email: string, password: string) {
     return firebase.auth().createUserWithEmailAndPassword(email, password);
   }
@@ -56,7 +61,7 @@ export class AuthService {
       isAdmin: false
     };
 
-    return firebase.database().ref(`users/${userId}`).set(userDetails);
+    return this.db.object(`users/${userId}`).set(userDetails);
   }
 
   login(email: string, password: string) {

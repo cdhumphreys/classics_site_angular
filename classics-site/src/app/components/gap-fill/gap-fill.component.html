@@ -20,7 +20,7 @@
             <span class="translation" *ngFor="let entry of gapTranslation; let i = index;">
               <span *ngIf="entry.split('=').length == 1">{{entry}}</span>
               <span *ngIf="entry.split('=').length == 2">
-                <input type="text" [name]="'answer_'+i" class="form-control-sm translationInput" [attr.maxlength]="entry.length" ngModel>
+                <input type="text" [name]="'answer_'+i" class="form-control-sm translationInput" ngModel [disabled]="reviewActive" [ngClass]="reviewClasses['answer_'+i]">
               </span>
             </span>
           </form>
@@ -29,9 +29,12 @@
     </div>
   </div>
   <div class="row" style="padding-bottom: 2em;">
-    <div class="col-xs-12 text-left">
-      <div class="btn btn-success" (click)="onSubmitAnswers(translationForm)">Submit</div>
-      <div class="btn btn-danger" (click)="onClear()">Clear</div>
+    <div class="col-xs-8 text-left">
+      <button class="btn btn-success" [disabled]="!translationForm.touched || reviewActive" (click)="onSubmitAnswers(translationForm)">Submit</button>
+      <button class="btn btn-danger" (click)="onClear(translationForm)">Clear</button>
+    </div>
+    <div *ngIf="score" class="col-xs-4 text-right" style="font-size: 2em;">
+      {{score}}
     </div>
   </div>
 </div>

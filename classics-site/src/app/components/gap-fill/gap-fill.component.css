@@ -7,3 +7,11 @@
 blockquote {
   line-height: 2.5em;
 }
+
+.correct {
+  background-color: rgba(0,255,0,0.4);
+}
+
+.incorrect {
+  background-color: rgba(255,0,0,0.4);
+}

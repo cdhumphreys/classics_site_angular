@@ -18,7 +18,8 @@ export class AddGapFillComponent implements OnInit {
 
   courses: string[] = [
     'Germanicus & Piso',
-    'Day at the Races'
+    'Day at the Races',
+    'Propertius, Tibullus & Ovid'
   ];
 
   gapFills = [];
@@ -144,8 +145,6 @@ export class AddGapFillComponent implements OnInit {
       englishText: this.model.englishText.trim(),
       translatableWords: this.model.translatableWords
     };
-
-
 
     this.gapFillService.addGapFillText(gapFill)
     .then((data) => {

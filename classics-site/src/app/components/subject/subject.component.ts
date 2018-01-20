@@ -13,7 +13,7 @@ import { SubjectsService } from '../../services/subjects.service';
 export class SubjectComponent implements OnInit {
 
   subjectTitle: string;
-  subject: string;
+  subjectSlug: string;
   exercises: string[];
   selectedExercise: string = '';
 
@@ -22,17 +22,15 @@ export class SubjectComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap
     .subscribe((params) => {
-      this.subject = params.get('subject');
+      this.subjectSlug = params.get('subject');
 
-      this.subjectTitle = this.subject == 'germanicus and piso' ? 'Germanicus & Piso' : this.subject;
+      this.subjectTitle = this.subjectsService.getSubjectName(this.subjectSlug);
 
-      this.exercises = this.subjectsService.getSubjectExercises(this.subject);
+      this.exercises = this.subjectsService.getSubjectExercises(this.subjectSlug);
 
       console.log(this.exercises);
       this.selectedExercise = '';
     });
-
-
 
   }
 
