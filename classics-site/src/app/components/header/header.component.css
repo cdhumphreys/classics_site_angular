@@ -2,3 +2,7 @@
   background-color: #ccc;
 
 }
+
+nav {
+  z-index: 1000;
+}

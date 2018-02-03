@@ -1,0 +1,36 @@
+.translucent {
+  opacity: 0.5;
+}
+
+.hidden {
+  display: none;
+}
+
+.hoverable {
+  padding: 0.25em;
+  border-radius: 5px;
+}
+
+.hoverable:hover {
+  cursor: pointer;
+}
+
+.hoverable-add:hover {
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+.hoverable-delete:hover {
+  background-color: rgba(255, 0, 0, 0.75);
+}
+
+.text-output {
+  height: auto !important;
+}
+
+.warning {
+  border-color: red;
+}
+
+.alert-danger {
+  color: black;
+}

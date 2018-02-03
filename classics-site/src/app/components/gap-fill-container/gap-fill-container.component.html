@@ -4,6 +4,15 @@
     <div *ngIf="failureNotification" class="col-xs-12 alert alert-danger text-center margin-top-spacing">Error submitting answers, please try again</div>
   </div>
   <div class="row" *ngFor="let gapFillQuestion of gapFillQuestions; let i = index">
-    <gap-fill [gapFillQuestion]="gapFillQuestion" *ngIf="selectedQuestion == i" (onAnswered)="onAnsweredQuestion($event)"></gap-fill>
+    <div class="col-xs-12">
+      <gap-fill [gapFillQuestion]="gapFillQuestion" *ngIf="selectedQuestion == i" (onAnswered)="onAnsweredQuestion($event)"></gap-fill>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="high-score" *ngIf="highestScore">
+        Your highest score for this section: {{ this.highestScore }}%
+      </h3>
+    </div>
   </div>
 </div>

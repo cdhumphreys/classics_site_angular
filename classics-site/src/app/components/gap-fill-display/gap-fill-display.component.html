@@ -3,6 +3,9 @@
 
 
 <div class="sections-container">
+  <div *ngIf="gapFills.length == 0">
+    <h4><strong>No gap fill exercises yet!</strong></h4>
+  </div>
   <div *ngFor="let section of sections" class="section" (click)="onSelectSection($event, section)">
     {{ section }}
   </div>
@@ -16,10 +19,4 @@
     type="button"
     (click)="onShowGapFills()"
     [disabled]="selectedSections.length == 0">Start</button>
-</div>
-
-<div *ngIf="gapFills.length == 0">
-  <ul class="preview-wrapper">
-    <li>No gap fill exercises yet!</li>
-  </ul>
 </div>

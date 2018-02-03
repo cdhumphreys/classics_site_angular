@@ -6,7 +6,7 @@ export class SubjectsService {
 
   subjects: any = {
     'iliad': {
-      exercises: ['quiz']
+      exercises: []
     },
     'germanicus-and-piso': {
       exercises: ['gap-fill']
@@ -44,6 +44,20 @@ export class SubjectsService {
         case 'propertius-tibullus-and-ovid':
           return 'Propertius, Tibullus & Ovid';
       }
+  }
+  getSlug(subject: string) {
+      switch (subject) {
+        case 'Iliad':
+          return 'iliad';
 
+        case 'Germanicus & Piso':
+          return 'germanicus-and-piso';
+
+        case 'Day at the Races':
+          return 'day-at-the-races';
+
+        case 'Propertius, Tibullus & Ovid':
+          return 'propertius-tibullus-and-ovid';
+      }
   }
 }

@@ -28,7 +28,6 @@ export class SubjectComponent implements OnInit {
 
       this.exercises = this.subjectsService.getSubjectExercises(this.subjectSlug);
 
-      console.log(this.exercises);
       this.selectedExercise = '';
     });
 

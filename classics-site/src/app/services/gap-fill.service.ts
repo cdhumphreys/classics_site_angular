@@ -37,6 +37,10 @@ export class GapFillService {
     return this.gapFillRef.push(gapFillData);
   }
 
+  public updateGapFillText(key: string, gapFillData: GapFill) {
+    return this.gapFillRef.set(key, gapFillData);
+  }
+
   public updateSelectedGapFills(gapFills: GapFill[]) {
     this.selectedGapFills = gapFills;
   }
@@ -58,11 +62,14 @@ export class GapFillService {
     return this.db.list(`users/${this.userId}/gapFills/`).push(answers);
   }
 
+  public getStudentAnswers(courseSlug: string, exercise: string) {
+    return this.db.list(`users/${this.userId}/gapFills/`);
+  }
+
   randomiseArray(array: any[]) {
     return array.sort((a, b) => {
       return (0.5 - Math.random());
     })
   }
-
 
 }

@@ -88,6 +88,13 @@ export class GapFillComponent implements OnInit {
     });
   }
 
+  removePunctuation(word: string) {
+    const strippedPunctuation = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    const removedExtraSpaces = strippedPunctuation.replace(/\s{2,}/g," ");
+
+    return removedExtraSpaces;
+  }
+
   onBack() {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
@@ -102,10 +109,18 @@ export class GapFillComponent implements OnInit {
   onSubmitAnswers(form: NgForm) {
     this.reviewActive = true;
     let answers = form.value;
+
+    const formattedCorrectAnswers = this.translationArray.map((element) => {
+      return this.removePunctuation(element.toLowerCase().trim());
+    });
+
+    console.log(answers);
+    console.log(formattedCorrectAnswers);
+    
     let correctAnswers = 0;
     for (let answer in answers) {
       let index = parseInt(answer.split('_')[1]);
-      if (answers[answer].trim() == this.translationArray[index]) {
+      if (answers[answer].toLowerCase().trim() == formattedCorrectAnswers[index]) {
         correctAnswers++;
         this.reviewClasses[answer] = 'correct';
       }

@@ -1,6 +1,8 @@
 <div class="container" style="text-decoration: underline;">
   <div class="row">
-    <h2>{{ subjectTitle | capitalise}}</h2>
+    <div class="col-xs-12">
+      <h2>{{ subjectTitle | capitalise}}</h2>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-3">
@@ -8,6 +10,7 @@
         <li *ngFor="let exercise of exercises">
           <div (click)="onSelectExercise(exercise)" class="btn btn-large btn-warning">{{exercise | capitalise}}</div>
         </li>
+        <li *ngIf="exercises.length == 0">No exercises yet!</li>
       </ul>
     </div>
     <div class="col-xs-9">

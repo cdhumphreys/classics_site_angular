@@ -19,6 +19,7 @@ import { PrintComponent } from './components/print/print.component';
 import { AddQuestionFormComponent } from './components/add-question-form/add-question-form.component';
 import { EditQuestionFormComponent } from './components/edit-question-form/edit-question-form.component';
 import { AddGapFillComponent } from './components/add-gap-fill/add-gap-fill.component';
+import { EditGapFillComponent } from './components/edit-gap-fill/edit-gap-fill.component';
 
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
       {path: 'login', component: LoginComponent},
       {path: 'admin', component: AdminComponent, canActivate: [AdminGuard], children: [
         {path: 'add-gap-fill', component: AddGapFillComponent},
+        {path: 'edit-gap-fill', component: EditGapFillComponent},
         {path: 'add-quiz-question', component: AddQuestionFormComponent},
         {path: 'edit-quiz-question', component: EditQuestionFormComponent}
       ]},
