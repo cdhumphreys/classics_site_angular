@@ -53,7 +53,7 @@ export class GapFillDisplayComponent implements OnInit {
           });
 
           for (let gapFillIndex in this.gapFills) {
-            let section = this.gapFills[gapFillIndex].exercise.split(" ")[1];
+            let section = this.gapFills[gapFillIndex].exercise;
             if (this.sections.indexOf(section) == -1) {
               this.sections.push(section);
             }
@@ -82,7 +82,7 @@ export class GapFillDisplayComponent implements OnInit {
 
   onShowGapFills() {
     const gapFills = this.gapFills.filter((element) => {
-      return this.sections.includes(element.exercise.split(" ")[1]);
+      return this.selectedSections.includes(element.exercise);
     });
 
     this.gapFillService.updateSelectedGapFills(gapFills);

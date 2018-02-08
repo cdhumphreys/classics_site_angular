@@ -6,6 +6,8 @@ import { GapFillAnswers } from '../../interfaces/gap-fill-answers.interface';
 import { GapFillService } from '../../services/gap-fill.service';
 import { Observable } from 'rxjs/Observable';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'gap-fill-container',
   templateUrl: './gap-fill-container.component.html',
@@ -24,8 +26,11 @@ export class GapFillContainerComponent implements OnInit {
 
   highestScore: number;
 
+  showNextButton:boolean = false;
+  showFinishButton:boolean = false;
 
-  constructor(private gapFillService: GapFillService) { }
+
+  constructor(private gapFillService: GapFillService, private router: Router) { }
 
   ngOnInit() {
     this.gapFillQuestions = this.gapFillService.getChosenGapFills();
@@ -38,7 +43,6 @@ export class GapFillContainerComponent implements OnInit {
   }
 
   onAnsweredQuestion(answers: GapFillAnswers) {
-    console.log(answers);
     this.gapFillService.getStudentAnswers(answers.course, answers.exercise).subscribe((data) => {
       let highestScore = 0;
       for (let i = 0; i < data.length; i++) {
@@ -66,7 +70,22 @@ export class GapFillContainerComponent implements OnInit {
         this.failureNotification = false;
       }, 2000);
     });
+    if (this.selectedQuestion < this.gapFillQuestions.length - 1) {
+      this.showNextButton = true;
+    }
+    else {
+      this.showFinishButton = true;
+    }
+  }
 
+  onShowNextGapFill() {
+    this.showNextButton = false;
+    this.selectedQuestion++;
+    this.highestScore = null;
+  }
+
+  onFinished() {
+    this.router.navigate(['/subjects']);
   }
 
 }

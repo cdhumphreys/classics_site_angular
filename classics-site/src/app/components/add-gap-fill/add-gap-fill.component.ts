@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GapFill } from '../../interfaces/gap-fill.interface';
 import { GapFillService } from '../../services/gap-fill.service';
+import { SubjectsService } from '../../services/subjects.service';
 
 @Component({
   selector: 'add-gap-fill',
@@ -44,7 +45,7 @@ export class AddGapFillComponent implements OnInit {
 
 
 
-  constructor(private gapFillService: GapFillService) { }
+  constructor(private subjectsService: SubjectsService, private gapFillService: GapFillService) { }
 
   ngOnInit() {
     this.latinTextArea = document.querySelector('#latin');
@@ -139,7 +140,7 @@ export class AddGapFillComponent implements OnInit {
 
   public uploadNewGapFill() {
     const gapFill: GapFill = {
-      course: this.model.course.trim(),
+      course: this.subjectsService.getSlug(this.model.course),
       exercise: this.model.exercise.trim(),
       latinText: this.model.latinText.trim(),
       englishText: this.model.englishText.trim(),

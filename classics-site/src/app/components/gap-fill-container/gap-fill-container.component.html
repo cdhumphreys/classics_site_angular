@@ -15,4 +15,12 @@
       </h3>
     </div>
   </div>
+  <div class="row">
+    <div *ngIf="showNextButton" class="col-xs-12">
+      <button class="btn btn-info" (click)="onShowNextGapFill()">Next</button>
+    </div>
+    <div *ngIf="showFinishButton" class="col-xs-12">
+      <button class="btn btn-info" (click)="onFinished()">Finish</button>
+    </div>
+  </div>
 </div>

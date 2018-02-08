@@ -114,9 +114,7 @@ export class GapFillComponent implements OnInit {
       return this.removePunctuation(element.toLowerCase().trim());
     });
 
-    console.log(answers);
-    console.log(formattedCorrectAnswers);
-    
+
     let correctAnswers = 0;
     for (let answer in answers) {
       let index = parseInt(answer.split('_')[1]);
