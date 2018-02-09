@@ -3,6 +3,10 @@
 
 }
 
+.navbar-brand {
+  margin-top: 5px; 
+}
+
 nav {
   z-index: 1000;
 }

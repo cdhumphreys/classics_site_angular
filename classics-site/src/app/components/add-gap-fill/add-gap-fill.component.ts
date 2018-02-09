@@ -142,7 +142,7 @@ export class AddGapFillComponent implements OnInit {
 
   public uploadNewGapFill() {
     const gapFill: GapFill = {
-      course: this.subjectsService.getSlug(this.model.course),
+      course: this.subjectsService.getSubjectSlug(this.model.course),
       exercise: this.model.exercise.trim(),
       latinText: this.model.latinText.trim(),
       englishText: this.model.englishText.trim(),

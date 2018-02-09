@@ -81,7 +81,7 @@ export class EditGapFillComponent implements OnInit {
     );
 
     this.gapFills = this.gapFills.filter((gapFill) => {
-      return gapFill.course == this.subjectsService.getSlug(this.model.course);
+      return gapFill.course == this.subjectsService.getSubjectSlug(this.model.course);
     });
 
     for (let i = 0; i < this.gapFills.length; i++) {
@@ -98,7 +98,7 @@ export class EditGapFillComponent implements OnInit {
     let chosenGapFill;
      for (let i = 0; i< this.gapFills.length; i++) {
        let gapFill = this.gapFills[i];
-       if (gapFill.course == this.subjectsService.getSlug(this.model.course) && gapFill.exercise == this.model.exercise) {
+       if (gapFill.course == this.subjectsService.getSubjectSlug(this.model.course) && gapFill.exercise == this.model.exercise) {
          chosenGapFill = gapFill;
          this.chosenGapFillKey = gapFill.$key;
        }
@@ -194,7 +194,7 @@ export class EditGapFillComponent implements OnInit {
 
   public updateGapFill() {
     const gapFill: GapFill = {
-      course: this.subjectsService.getSlug(this.model.course),
+      course: this.subjectsService.getSubjectSlug(this.model.course),
       exercise: this.model.exercise.trim(),
       latinText: this.model.latinText.trim(),
       englishText: this.model.englishText.trim(),

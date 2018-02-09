@@ -66,6 +66,18 @@ export class GapFillService {
     return this.db.list(`users/${this.userId}/gapFills/`, ref => ref.equalTo({key: 'course', value: courseSlug}));
   }
 
+  public getUserResults() {
+    return this.db.list(`users/${this.userId}/gapFills/`);
+
+  }
+
+  public getStudentResults(studentId: string) {
+    return this.db.list(`users/${studentId}/gapFills/`);
+
+  }
+
+
+
   randomiseArray(array: any[]) {
     return array.sort((a, b) => {
       return (0.5 - Math.random());

@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>My Results</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-10">
+      <table>
+        <tr>
+          <th>Course</th>
+          <th>Section</th>
+          <th>Percentage</th>
+          <th>Date</th>
+        </tr>
+        <tr *ngIf="!filteredResults">
+          <th>Loading results...</th>
+          <th>...</th>
+          <th>...</th>
+          <th>...</th>
+        </tr>
+        <tr *ngFor="let result of filteredResults">
+          <td>{{ result.course }}</td>
+          <td style="text-align:center;">{{ result.exercise }}</td>
+          <td style="text-align:center;">{{ result.percentage }}%</td>
+          <td>{{ result.date|date }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xs-2 filters">
+      <h5>Filter By Course:</h5>
+      <div class="filters-courses">
+        <div class="filter" (click)="onSelectFilter($event)">Germanicus & Piso</div>
+        <div class="filter" (click)="onSelectFilter($event)">Day At The Races</div>
+        <div class="btn btn-info" (click)="onClearFilter($event)">
+          Clear filter
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

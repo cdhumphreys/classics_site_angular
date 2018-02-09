@@ -20,6 +20,7 @@ import { AddQuestionFormComponent } from './components/add-question-form/add-que
 import { EditQuestionFormComponent } from './components/edit-question-form/edit-question-form.component';
 import { AddGapFillComponent } from './components/add-gap-fill/add-gap-fill.component';
 import { EditGapFillComponent } from './components/edit-gap-fill/edit-gap-fill.component';
+import { MyResultsComponent } from './components/my-results/my-results.component';
 
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
         {path: ':subject/gap-fills', component: SubjectComponent},
         {path: ':subject/gap-fills/gapFill', component: GapFillContainerComponent}
       ]},
+      {path: 'my-results', component: MyResultsComponent, canActivate: [AuthGuard]},
       {path: 'quiz/:book', component: QuizComponent},
       {path: 'quiz/:book/print', component: PrintComponent},
 

@@ -45,7 +45,7 @@ export class SubjectsService {
           return 'Propertius, Tibullus & Ovid';
       }
   }
-  getSlug(subject: string) {
+  getSubjectSlug(subject: string) {
       switch (subject) {
         case 'Iliad':
           return 'iliad';
