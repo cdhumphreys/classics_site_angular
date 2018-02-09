@@ -36,14 +36,25 @@
   cursor: pointer;
 }
 
-.section:hover {
-  border: 2px #3f51b5 solid;
-  color: #3f51b5;
-}
-
 .section-selected {
   border: 2px #007ac1 solid;
   color: #007ac1;
-  background-color: rgba(0, 122, 193, 0.2);
+  background-color: rgba(0, 122, 193, 0.2) !important;
 
+}
+
+.section-perfect {
+  background-color: rgba(126, 87, 194, 0.4);
+}
+
+.section-good {
+  background-color: rgba(76, 175, 80, 0.4);
+}
+
+.section-fair {
+  background-color: rgba(255, 235, 59, 0.4);
+}
+
+.section-difficulties {
+  background-color: rgba(255, 87, 34, 0.4);
 }

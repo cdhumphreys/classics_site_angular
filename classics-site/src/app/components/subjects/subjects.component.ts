@@ -12,4 +12,13 @@ export class SubjectsComponent implements OnInit {
   ngOnInit() {
   }
 
+  onToggleOptions(event) {
+
+    const exerciseList = event.target.parentElement.querySelector('ul');
+    if (exerciseList) {
+      exerciseList.classList.toggle('hidden');
+    }
+
+  }
+
 }

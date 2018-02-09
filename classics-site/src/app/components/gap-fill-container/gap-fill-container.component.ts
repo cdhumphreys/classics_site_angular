@@ -43,10 +43,10 @@ export class GapFillContainerComponent implements OnInit {
   }
 
   onAnsweredQuestion(answers: GapFillAnswers) {
-    this.gapFillService.getStudentAnswers(answers.course, answers.exercise).subscribe((data) => {
+    this.gapFillService.getStudentAnswers(answers.course).subscribe((data) => {
       let highestScore = 0;
       for (let i = 0; i < data.length; i++) {
-        if (data[i].percentage > highestScore) {
+        if (data[i].exercise == this.gapFillQuestions[this.selectedQuestion].exercise && data[i].percentage > highestScore) {
           highestScore = data[i].percentage;
         }
       }
@@ -76,6 +76,16 @@ export class GapFillContainerComponent implements OnInit {
     else {
       this.showFinishButton = true;
     }
+  }
+
+  onRetryQuestion(event) {
+    this.showNextButton = false;
+    this.showFinishButton = false;
+
+    this.highestScore = null;
+
+    this.selectedQuestion--;
+    this.selectedQuestion++;
   }
 
   onShowNextGapFill() {

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row text-center">
-    <h2>{{gapFillQuestion.course | capitalise}}: <u>{{gapFillQuestion.exercise}}</u></h2>
+    <h2>{{ gapFillQuestion.course | capitalise }}: Section {{ gapFillQuestion.exercise }}</h2>
   </div>
   <div class="row">
     <div class="col-xs-12 text-left">
@@ -20,7 +20,7 @@
             <span class="translation" *ngFor="let entry of gapTranslation; let i = index;">
               <span *ngIf="entry.split('=').length == 1">{{entry}}</span>
               <span *ngIf="entry.split('=').length == 2">
-                <input type="text" [name]="'answer_'+i" class="form-control-sm translationInput" ngModel [disabled]="reviewActive" [ngClass]="reviewClasses['answer_'+i]">
+                <input type="text" [name]="'answer_'+i" class="form-control-sm translationInput" ngModel [disabled]="reviewActive" [ngClass]="reviewClasses['answer_'+i]" (keypress)="onArrowPress($event)">
               </span>
             </span>
           </form>
@@ -31,7 +31,8 @@
   <div class="row" style="padding-bottom: 2em;">
     <div class="col-xs-8 text-left">
       <button class="btn btn-success" [disabled]="!translationForm.touched || reviewActive" (click)="onSubmitAnswers(translationForm)">Submit</button>
-      <button class="btn btn-danger" (click)="onClear(translationForm)">Clear</button>
+      <button class="btn btn-danger" *ngIf="!reviewActive" (click)="onClear(translationForm)">Clear</button>
+      <button class="btn btn-warning" *ngIf="reviewActive" (click)="onRetry()">Retry</button>
     </div>
     <div *ngIf="score" class="col-xs-4 text-right" style="font-size: 2em;">
       {{score}}

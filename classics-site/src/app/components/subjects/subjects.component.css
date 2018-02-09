@@ -6,17 +6,25 @@
   align-items: flex-start;
 
   height: 100%;
-  width: 15%;
+  max-width: 20%;
   padding: 40px 40px 40px 0px;
   margin-top: -20px;
 
 }
 
-.side-nav ul li a {
+.side-nav ul li a, .side-nav ol li a {
   text-decoration: none;
 }
 
-.side-nav ul li {
+.side-nav ol > li > div {
+  cursor: pointer;
+}
+
+.side-nav ol > li > div:hover {
+  color: #03a9f4;
+}
+
+.side-nav ol > li {
   padding-top: 20px;
   padding-bottom: 20px;
 

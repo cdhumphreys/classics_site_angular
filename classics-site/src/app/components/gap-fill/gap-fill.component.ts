@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { GapFill } from '../../interfaces/gap-fill.interface';
@@ -20,15 +20,14 @@ export class GapFillComponent implements OnInit {
   inputEntries: number[];
   reviewClasses = {};
 
-
+  translationInputs = []
 
   reviewActive: boolean = false;
   score: string;
 
   @Input() gapFillQuestion;
   @Output() onAnswered = new EventEmitter<any>();
-
-
+  @Output() onRetryQuestion = new EventEmitter<any>();
 
   randomNumbersChosen: number[] = [];
 
@@ -65,7 +64,6 @@ export class GapFillComponent implements OnInit {
         return entry;
       }
     });
-
   }
 
   getUniqueRandoms(max: number, howMany: number) {
@@ -140,6 +138,29 @@ export class GapFillComponent implements OnInit {
     };
 
     this.onAnswered.emit(studentAnswers);
+  }
+
+  onArrowPress(event) {
+    this.translationInputs = Array.prototype.slice.call(document.querySelectorAll('.translationInput'));
+
+    const currentFocussedInputIndex = this.translationInputs.indexOf(event.target);
+
+    const nextInputIndex = currentFocussedInputIndex == this.translationInputs.length - 1 ? 0 : currentFocussedInputIndex + 1;
+    const previousInputIndex = currentFocussedInputIndex == 0 ? this.translationInputs.length - 1 : currentFocussedInputIndex - 1;
+
+    if (event.key == 'ArrowRight') {
+      this.translationInputs[nextInputIndex].focus();
+    }
+    else if (event.key == 'ArrowLeft') {
+      this.translationInputs[previousInputIndex].focus();
+    }
+  }
+
+  onRetry() {
+    this.onRetryQuestion.emit(true);
+    this.reviewClasses = {};
+    this.reviewActive = false;
+    this.score = null;
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -21,6 +21,8 @@ export class GapFillDisplayComponent implements OnInit {
   sections = [];
   selectedSections = [];
 
+  highestScores = {};
+
   @Input() course;
 
   constructor(private gapFillService: GapFillService, private router: Router, private route: ActivatedRoute) { }
@@ -30,11 +32,8 @@ export class GapFillDisplayComponent implements OnInit {
   }
 
   ngOnChanges() {
+    this.gapFills = this.sections = [];
     this.getGapFills();
-  }
-
-  ngAfterViewChecked() {
-
   }
 
   onRandomiseSelect() {
@@ -58,12 +57,25 @@ export class GapFillDisplayComponent implements OnInit {
               this.sections.push(section);
             }
           }
+
+          for (let i = 0; i < this.sections.length; i++) {
+            this.gapFillService.getStudentAnswers(this.course.toLowerCase()).subscribe((data) => {
+              let highestScore = 0;
+              for (let j = 0; j < data.length; j++) {
+                if (data[j].exercise == this.sections[i] && data[j].percentage > highestScore) {
+                  highestScore = data[j].percentage;
+                }
+              }
+              this.highestScores[this.sections[i]] = highestScore;
+            });
+          }
         }
       },
       (error) => {
         console.log(error);
       }
     );
+
   }
 
   onSelectSection(event, section) {
@@ -92,5 +104,23 @@ export class GapFillDisplayComponent implements OnInit {
   }
 
 
+  getSectionColour(section) {
+    const highScore = this.highestScores[section];
 
+    if (highScore == 0) {
+      return null;
+    }
+    else if (highScore > 0 && highScore < 50) {
+      return 'section-difficulties';
+    }
+    else if (highScore > 50 && highScore <= 75) {
+      return 'section-fair';
+    }
+    else if (highScore > 75 && highScore < 90) {
+      return 'section-good';
+    }
+    else if (highScore >= 90 && highScore <= 100) {
+      return 'section-perfect';
+    }
+  }
 }

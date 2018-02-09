@@ -5,7 +5,7 @@
   </div>
   <div class="row" *ngFor="let gapFillQuestion of gapFillQuestions; let i = index">
     <div class="col-xs-12">
-      <gap-fill [gapFillQuestion]="gapFillQuestion" *ngIf="selectedQuestion == i" (onAnswered)="onAnsweredQuestion($event)"></gap-fill>
+      <gap-fill [gapFillQuestion]="gapFillQuestion" *ngIf="selectedQuestion == i" (onAnswered)="onAnsweredQuestion($event)" (onRetryQuestion)="onRetryQuestion($event)"></gap-fill>
     </div>
   </div>
   <div class="row">

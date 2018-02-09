@@ -1,28 +1,37 @@
 <div class="side-nav primary-color-bg">
-  <ul>
+  <ol>
       <h4 class="text-white text-shadow-dark">Subjects</h4>
     <li class="text-white">
-      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'iliad']">
+      <div class="text-white text-shadow-dark">
         Iliad
-      </a>
+      </div>
     </li>
     <li class="text-white text-shadow-dark">
-      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'germanicus-and-piso']">
+      <div class="text-white text-shadow-dark" (click)="onToggleOptions($event)">
         Germanicus &amp; Piso
-      </a>
+      </div>
+      <ul class="hidden">
+        <li><a class="text-white text-shadow-dark" [routerLink]="['/subjects/germanicus-and-piso/gap-fills']">Gap fills</a></li>
+      </ul>
     </li>
     <li class="text-white text-shadow-dark">
-      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'day-at-the-races']">
+      <div class="text-white text-shadow-dark" (click)="onToggleOptions($event)">
         Day At The Races
-      </a>
+      </div>
+      <ul class="hidden">
+        <li><a class="text-white text-shadow-dark" [routerLink]="['/subjects/day-at-the-races/gap-fills']">Gap fills</a></li>
+      </ul>
     </li>
     <li class="text-white text-shadow-dark">
-      <a class="text-white text-shadow-dark" [routerLink]="['/subjects', 'propertius-tibullus-and-ovid']">
+      <div class="text-white text-shadow-dark" (click)="onToggleOptions($event)">
         Propertius, Tibullus &amp; Ovid
-      </a>
+      </div>
+      <ul class="hidden">
+        <li><a class="text-white text-shadow-dark" [routerLink]="['/subjects/propertius-tibullus-and-ovid/gap-fills']">Gap fills</a></li>
+      </ul>
     </li>
-  </ul>
+  </ol>
 </div>
-<div class="main-content white-bg">
+<div class="main-content">
   <router-outlet></router-outlet>
 </div>

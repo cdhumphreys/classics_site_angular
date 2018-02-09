@@ -35,8 +35,8 @@ const appRoutes: Routes = [
         {path: 'edit-quiz-question', component: EditQuestionFormComponent}
       ]},
       {path: 'subjects', component: SubjectsComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
-        {path: ':subject', component: SubjectComponent},
-        {path: ':subject/gapFill', component: GapFillContainerComponent}
+        {path: ':subject/gap-fills', component: SubjectComponent},
+        {path: ':subject/gap-fills/gapFill', component: GapFillContainerComponent}
       ]},
       {path: 'quiz/:book', component: QuizComponent},
       {path: 'quiz/:book/print', component: PrintComponent},

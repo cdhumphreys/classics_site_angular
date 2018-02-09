@@ -6,14 +6,15 @@
   <div *ngIf="gapFills.length == 0">
     <h4><strong>No gap fill exercises yet!</strong></h4>
   </div>
-  <div *ngFor="let section of sections" class="section" (click)="onSelectSection($event, section)">
+  <div *ngFor="let section of sections" class="section" [ngClass]="getSectionColour(section)"
+  (click)="onSelectSection($event, section)">
     {{ section }}
   </div>
 </div>
 
 <div class="buttons-container">
   <div class="radio">
-    <label (click)="onRandomiseSelect()"><input type="checkbox" name="randomise" [checked]="randomiseGapFills" value="randomise">Randomise</label>
+    <label><input type="checkbox" name="randomise" (change)="onRandomiseSelect()" value="randomise">Randomise</label>
   </div>
     <button class="btn btn-success"
     type="button"

@@ -15,11 +15,15 @@ export class SubjectComponent implements OnInit {
   subjectTitle: string;
   subjectSlug: string;
   exercises: string[];
-  selectedExercise: string = '';
 
   constructor(private route: ActivatedRoute, private subjectsService: SubjectsService) { }
 
   ngOnInit() {
+    this.selectGapFillExercise();
+  }
+
+
+  selectGapFillExercise() {
     this.route.paramMap
     .subscribe((params) => {
       this.subjectSlug = params.get('subject');
@@ -27,18 +31,6 @@ export class SubjectComponent implements OnInit {
       this.subjectTitle = this.subjectsService.getSubjectName(this.subjectSlug);
 
       this.exercises = this.subjectsService.getSubjectExercises(this.subjectSlug);
-
-      this.selectedExercise = '';
     });
-
   }
-
-  ngOnChanges() {
-    this.selectedExercise = '';
-  }
-
-  onSelectExercise(exercise: string) {
-    this.selectedExercise = exercise;
-  }
-
 }

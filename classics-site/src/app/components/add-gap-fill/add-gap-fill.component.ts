@@ -23,6 +23,8 @@ export class AddGapFillComponent implements OnInit {
     'Propertius, Tibullus & Ovid'
   ];
 
+  sections: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
   gapFills = [];
   duplicate: boolean = false;
   canUploadData: boolean = false;

@@ -20,7 +20,7 @@ export class AuthService {
   user: Observable<firebase.User>;
 
   userId: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  userDetails: BehaviorSubject<User> = new BehaviorSubject<User>({email: null, isAdmin: false});
+  userDetails: BehaviorSubject<User> = new BehaviorSubject<User>({email: null, isAdmin: false, group: ''});
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.user = this.afAuth.authState;
@@ -40,7 +40,7 @@ export class AuthService {
         this.userDetails.next(userDetails);
       },
       (error) => {
-        this.userDetails.next({email: null, isAdmin: false});
+        this.userDetails.next({email: null, isAdmin: false, group: ''});
         console.log('error', error);
       }
     );
@@ -58,7 +58,8 @@ export class AuthService {
   createUserDetails(email: string, userId: string) {
     const userDetails = {
       email: email,
-      isAdmin: false
+      isAdmin: false,
+      group: 'none'
     };
 
     return this.db.object(`users/${userId}`).set(userDetails);
