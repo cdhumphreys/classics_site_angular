@@ -20,7 +20,7 @@
             <span class="translation" *ngFor="let entry of gapTranslation; let i = index;">
               <span *ngIf="entry.split('=').length == 1">{{entry}}</span>
               <div *ngIf="entry.split('=').length == 2" class="translation-input-container">
-                <input type="text" [name]="'answer_'+i" class="form-control-sm translationInput" ngModel [disabled]="reviewActive" [ngClass]="reviewClasses['answer_'+i]" (keypress)="onArrowPress($event)">
+                <input type="text" [name]="'answer_'+i" class="form-control-sm translationInput" ngModel [disabled]="reviewActive" [ngClass]="reviewClasses['answer_'+i]" (keypress)="onArrowPress($event)" [size]="entry[1]">
                 <span *ngIf="reviewActive" class="review-correct">{{ translationArray[i] }}</span>
               </div>
             </span>
@@ -31,9 +31,12 @@
   </div>
   <div class="row" style="padding-bottom: 2em;">
     <div class="col-xs-8 text-left">
-      <button class="btn btn-success" [disabled]="!translationForm.touched || reviewActive" (click)="onSubmitAnswers(translationForm)">Submit</button>
+      <button class="btn btn-success" *ngIf="!reviewActive" [disabled]="!translationForm.touched" (click)="onSubmitAnswers(translationForm)">Submit</button>
       <button class="btn btn-danger" *ngIf="!reviewActive" (click)="onClear(translationForm)">Clear</button>
+
       <button class="btn btn-warning" *ngIf="reviewActive" (click)="onRetry()">Retry</button>
+      <button class="btn btn-info" *ngIf="reviewActive && showNextButton" (click)="onClickNext()">Next</button>
+      <button class="btn btn-info" *ngIf="reviewActive && showFinishButton" (click)="onClickFinish()">Finish</button>
     </div>
     <div *ngIf="score" class="col-xs-4 text-right" style="font-size: 2em;">
       {{score}}
