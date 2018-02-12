@@ -24,6 +24,7 @@ import { IlliadComponent } from './components/illiad/illiad.component';
 import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-display.component';
 import { GapFillContainerComponent } from './components/gap-fill-container/gap-fill-container.component';
 import { MyResultsComponent } from './components/my-results/my-results.component';
+import { AdminResultsComponent } from './components/admin-results/admin-results.component';
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
 import { CapitalisePipe } from './pipes/capitalise.pipe';
@@ -84,7 +85,8 @@ export const firebaseConfig = {
     SubjectComponent,
     PageNotFoundComponent,
     EditGapFillComponent,
-    MyResultsComponent
+    MyResultsComponent,
+    AdminResultsComponent
 
   ],
   imports: [

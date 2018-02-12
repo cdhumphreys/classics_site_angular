@@ -4,6 +4,15 @@
   height: 2em;
 }
 
+.translation {
+  position: relative;
+}
+
+.translation:hover .review-correct {
+  opacity: 1;
+  visibility: visible;
+}
+
 blockquote {
   line-height: 2.5em;
 }
@@ -14,4 +23,27 @@ blockquote {
 
 .incorrect {
   background-color: rgba(255,0,0,0.4);
+}
+
+.review-correct {
+  position: absolute;
+  left: 0;
+  top: -100%;
+  width: 100%;
+  height: auto;
+
+  text-align: center;
+  background-color: rgb(129, 199, 132);
+
+  visibility: hidden;
+  opacity: 0;
+
+  z-index: 10;
+
+  color: white;
+}
+
+.translation-input-container {
+  display: inline-block;
+  position: relative;
 }

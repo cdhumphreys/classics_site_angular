@@ -19,9 +19,10 @@
           <form #translationForm="ngForm">
             <span class="translation" *ngFor="let entry of gapTranslation; let i = index;">
               <span *ngIf="entry.split('=').length == 1">{{entry}}</span>
-              <span *ngIf="entry.split('=').length == 2">
+              <div *ngIf="entry.split('=').length == 2" class="translation-input-container">
                 <input type="text" [name]="'answer_'+i" class="form-control-sm translationInput" ngModel [disabled]="reviewActive" [ngClass]="reviewClasses['answer_'+i]" (keypress)="onArrowPress($event)">
-              </span>
+                <span *ngIf="reviewActive" class="review-correct">{{ translationArray[i] }}</span>
+              </div>
             </span>
           </form>
         </blockquote>

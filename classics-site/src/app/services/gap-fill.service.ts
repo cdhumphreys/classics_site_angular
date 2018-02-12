@@ -71,8 +71,8 @@ export class GapFillService {
 
   }
 
-  public getStudentResults(studentId: string) {
-    return this.db.list(`users/${studentId}/gapFills/`);
+  public getAllStudents() {
+    return this.db.list(`users`);
 
   }
 

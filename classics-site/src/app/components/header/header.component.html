@@ -13,12 +13,19 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-left">
-        <li>
+        <li *ngIf="userDetails?.email && !userDetails?.isAdmin">
           <a routerLink="/my-results">
             <button
-            *ngIf="userDetails?.email"
             class="btn btn-warning">
-              My results
+              My Results
+            </button>
+          </a>
+        </li>
+        <li *ngIf="userDetails?.email && userDetails?.isAdmin">
+          <a routerLink="/admin-results">
+            <button
+            class="btn btn-info">
+              View Results
             </button>
           </a>
         </li>

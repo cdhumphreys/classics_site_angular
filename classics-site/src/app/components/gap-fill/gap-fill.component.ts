@@ -140,6 +140,7 @@ export class GapFillComponent implements OnInit {
     this.onAnswered.emit(studentAnswers);
   }
 
+// have left/right arrows behave like tabbing back/forward
   onArrowPress(event) {
     this.translationInputs = Array.prototype.slice.call(document.querySelectorAll('.translationInput'));
 

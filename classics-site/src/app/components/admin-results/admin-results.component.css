@@ -1,0 +1,52 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #757de8;
+  color: white;
+  border: 1px black solid;
+  /* margin: -10px; */
+}
+
+.filters h5 {
+  color: white;
+  padding-bottom: 10px;
+  border-bottom: 1px black solid;
+}
+
+.filters-courses {
+  color: white;
+  padding: 0px 10px 20px 10px;
+}
+
+.filters-courses div {
+  margin: 10px 0 10px 0;
+}
+
+.filters-courses .filter {
+  cursor: pointer;
+
+}
+
+.filters-courses .filter.active {
+  color: #67daff;
+  font-weight: bold;
+}
