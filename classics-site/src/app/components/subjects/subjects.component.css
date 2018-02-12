@@ -10,30 +10,37 @@
   padding: 40px 40px 40px 0px;
   margin-top: -20px;
 
+  background-color: #f8f8f8;
+
 }
+
 
 .side-nav ul li a, .side-nav ol li a {
   text-decoration: none;
+  color: black;
 }
 
-.side-nav ol > li > div {
+.side-nav ul > li > div {
   cursor: pointer;
 }
 
-.side-nav ol > li > div:hover {
+.side-nav ul > li > div:hover {
   color: #03a9f4;
 }
 
-.side-nav ol > li {
+.side-nav ul > li {
   padding-top: 20px;
   padding-bottom: 20px;
 
-  list-style: upper-roman;
-
 }
 
-.text-shadow-dark {
-  text-shadow: -2px 2px #002984;
+.side-nav ul > li > ul {
+  padding-left: 20px;
+}
+
+.side-nav ul > li > ul > li {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .main-content {
@@ -42,4 +49,9 @@
   top: 66px;
 
   width: 85%;
+}
+
+.side-nav ul li .active-link, .side-nav ol li .active-link {
+  color: #03a9f4;
+  font-weight: bold;
 }
