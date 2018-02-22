@@ -27,6 +27,7 @@ import { MyResultsComponent } from './components/my-results/my-results.component
 import { AdminResultsComponent } from './components/admin-results/admin-results.component';
 
 import { AnswerFilterPipe } from './pipes/answer-filter.pipe';
+import { NameOnlyPipe } from './pipes/name-only.pipe';
 import { CapitalisePipe } from './pipes/capitalise.pipe';
 
 
@@ -71,6 +72,7 @@ export const firebaseConfig = {
     HomeComponent,
     AnswerFilterPipe,
     CapitalisePipe,
+    NameOnlyPipe,
     LoginComponent,
     PrintComponent,
     AdminComponent,
