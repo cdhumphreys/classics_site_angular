@@ -26,8 +26,14 @@ export class GapFillComponent implements OnInit {
   score: string;
 
   @Input() gapFillQuestion;
+  @Input() showNextButton: boolean;
+  @Input() showFinishButton: boolean;
+
   @Output() onAnswered = new EventEmitter<any>();
   @Output() onRetryQuestion = new EventEmitter<any>();
+  @Output() onNextGapFill = new EventEmitter<any>();
+  @Output() onFinishGapFill = new EventEmitter<any>();
+
 
   randomNumbersChosen: number[] = [];
 
@@ -164,6 +170,13 @@ export class GapFillComponent implements OnInit {
     this.score = null;
   }
 
+  onClickNext() {
+    this.onNextGapFill.emit(true);
+  }
+
+  onClickFinish() {
+    this.onFinishGapFill.emit(true);
+  }
 
 
 }
