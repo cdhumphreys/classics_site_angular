@@ -6,7 +6,7 @@ import { GapFillAnswers } from '../../interfaces/gap-fill-answers.interface';
 import { GapFillService } from '../../services/gap-fill.service';
 import { Observable } from 'rxjs/Observable';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'gap-fill-container',
@@ -30,7 +30,7 @@ export class GapFillContainerComponent implements OnInit {
   showFinishButton:boolean = false;
 
 
-  constructor(private gapFillService: GapFillService, private router: Router) { }
+  constructor(private gapFillService: GapFillService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.gapFillQuestions = this.gapFillService.getChosenGapFills();
@@ -95,7 +95,7 @@ export class GapFillContainerComponent implements OnInit {
   }
 
   onFinished() {
-    this.router.navigate(['/subjects']);
+    this.router.navigate(['/']);
   }
 
 }
