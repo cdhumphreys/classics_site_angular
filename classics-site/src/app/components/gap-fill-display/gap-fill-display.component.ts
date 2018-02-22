@@ -21,7 +21,7 @@ export class GapFillDisplayComponent implements OnInit {
   sections = [];
   selectedSections = [];
 
-  highestScores = {};
+  averageScores = {};
 
   @Input() course;
 
@@ -60,13 +60,24 @@ export class GapFillDisplayComponent implements OnInit {
 
           for (let i = 0; i < this.sections.length; i++) {
             this.gapFillService.getStudentAnswers(this.course.toLowerCase()).subscribe((data) => {
-              let highestScore = 0;
-              for (let j = 0; j < data.length; j++) {
-                if (data[j].exercise == this.sections[i] && data[j].percentage > highestScore) {
-                  highestScore = data[j].percentage;
-                }
-              }
-              this.highestScores[this.sections[i]] = highestScore;
+              // let highestScore = 0;
+              // for (let j = 0; j < data.length; j++) {
+              //   if (data[j].exercise == this.sections[i] && data[j].percentage > highestScore) {
+              //     highestScore = data[j].percentage;
+              //   }
+              // }
+              let sectionCount = 0;
+              let total = data
+              .filter(element => element.exercise == this.sections[i])
+              .map((element) => {
+                  sectionCount++;
+                  return element.percentage;
+              })
+              .reduce((total, percentage) => {
+                return total + percentage;
+              }, 0);
+              console.log(total/sectionCount);
+              this.averageScores[this.sections[i]] = Math.round(total/sectionCount);
             });
           }
         }
@@ -105,22 +116,19 @@ export class GapFillDisplayComponent implements OnInit {
 
 
   getSectionColour(section) {
-    const highScore = this.highestScores[section];
+    const averageScore = this.averageScores[section];
 
-    if (highScore == 0) {
+    if (averageScore == 0) {
       return null;
     }
-    else if (highScore > 0 && highScore < 50) {
-      return 'section-difficulties';
+    else if (averageScore > 0 && averageScore < 60) {
+      return 'section-red';
     }
-    else if (highScore > 50 && highScore <= 75) {
-      return 'section-fair';
+    else if (averageScore >= 60 && averageScore < 75) {
+      return 'section-amber';
     }
-    else if (highScore > 75 && highScore < 90) {
-      return 'section-good';
-    }
-    else if (highScore >= 90 && highScore <= 100) {
-      return 'section-perfect';
+    else if (averageScore >= 75 && averageScore < 100) {
+      return 'section-green';
     }
   }
 }
