@@ -1,36 +1,37 @@
-<div class="side-nav primary-color-bg">
-  <ol>
-      <h4 class="text-white text-shadow-dark">Subjects</h4>
-    <li class="text-white">
-      <div class="text-white text-shadow-dark">
+<div class="side-nav">
+  <ul>
+    <li>
+      <div class="">
         Iliad
       </div>
     </li>
-    <li class="text-white text-shadow-dark">
-      <div class="text-white text-shadow-dark" (click)="onToggleOptions($event)">
+    <li class="">
+      <div class="" (click)="onToggleOptions($event)">
         Germanicus &amp; Piso
       </div>
       <ul class="hidden">
-        <li><a class="text-white text-shadow-dark" [routerLink]="['/subjects/germanicus-and-piso/gap-fills']">Gap fills</a></li>
+        <li><a class="" routerLinkActive="active-link" [routerLink]="['/subjects/germanicus-and-piso/gap-fills']">Gap fills</a></li>
+        <li><a class="" target="_blank" href="http://enzyme.myzen.co.uk/wjec18explore/nexus.html?file=wjec18_germpiso">Revise Text</a></li>
       </ul>
     </li>
-    <li class="text-white text-shadow-dark">
-      <div class="text-white text-shadow-dark" (click)="onToggleOptions($event)">
+    <li class="">
+      <div class="" (click)="onToggleOptions($event)">
         Day At The Races
       </div>
       <ul class="hidden">
-        <li><a class="text-white text-shadow-dark" [routerLink]="['/subjects/day-at-the-races/gap-fills']">Gap fills</a></li>
+        <li><a class="" routerLinkActive="active-link" [routerLink]="['/subjects/day-at-the-races/gap-fills']">Gap fills</a></li>
+        <li><a class="" target="_blank" href="http://enzyme.myzen.co.uk/wjec18explore/indexraces.html">Revise text</a></li>
       </ul>
     </li>
-    <li class="text-white text-shadow-dark">
-      <div class="text-white text-shadow-dark" (click)="onToggleOptions($event)">
+    <li class="text-shadow-dark">
+      <div class="" (click)="onToggleOptions($event)">
         Propertius, Tibullus &amp; Ovid
       </div>
       <ul class="hidden">
-        <li><a class="text-white text-shadow-dark" [routerLink]="['/subjects/propertius-tibullus-and-ovid/gap-fills']">Gap fills</a></li>
+        <li><a class="" routerLinkActive="active-link" [routerLink]="['/subjects/propertius-tibullus-and-ovid/gap-fills']">Gap fills</a></li>
       </ul>
     </li>
-  </ol>
+  </ul>
 </div>
 <div class="main-content">
   <router-outlet></router-outlet>
