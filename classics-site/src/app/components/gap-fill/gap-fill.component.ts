@@ -99,10 +99,6 @@ export class GapFillComponent implements OnInit {
     return removedExtraSpaces;
   }
 
-  onBack() {
-    this.router.navigate(['../'], {relativeTo: this.route});
-  }
-
   onClear(form: NgForm) {
     form.reset();
     this.reviewClasses = {};

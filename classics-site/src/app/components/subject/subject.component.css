@@ -1,4 +1,5 @@
 .subject-exercise {
   text-decoration: underline;
-  padding-left: 20px;
+  padding: 0 0 0 5em;
+  max-width: 100%;
 }
