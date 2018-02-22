@@ -1,0 +1,27 @@
+<h4>Year Group Results</h4>
+<table>
+  <tr>
+    <th>Student Username</th>
+    <th>Group</th>
+    <th>Course</th>
+    <th>Section</th>
+    <th>Average %</th>
+    <th>Top %</th>
+  </tr>
+  <tr *ngIf="studentResults && studentResults.length == 0">
+    <td>No results</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr *ngFor="let student of studentResults" (click)="onSelectExercise(event, student.course, student.exercise)">
+    <td>{{ student.email|nameOnly }}</td>
+    <td>{{ student.group|capitalise }}</td>
+    <td>{{ student.course }}</td>
+    <td style="text-align:center;">{{ student.exercise }}</td>
+    <td style="text-align:center;">{{ student.averageScore }}%</td>
+    <td style="text-align:center;">{{ student.highestScore }}%</td>
+  </tr>
+</table>

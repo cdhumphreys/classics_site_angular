@@ -14,21 +14,7 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
-.choice {
+tr:not(:first-child):hover {
   cursor: pointer;
-}
-
-.choice:hover {
-  text-decoration: underline;
-  color: grey;
-}
-
-.year-group-choice .active {
-  font-weight: bold;
-  color: #007ac1;
-}
-
-.group-choice .active{
-  font-weight: bold;
-  color: #007ac1;
+  background-color: rgba(63, 81, 181, 0.4);
 }

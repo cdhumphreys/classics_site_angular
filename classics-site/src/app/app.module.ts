@@ -20,6 +20,7 @@ import { GapFillComponent } from './components/gap-fill/gap-fill.component';
 import { AddGapFillComponent } from './components/add-gap-fill/add-gap-fill.component';
 import { EditGapFillComponent } from './components/edit-gap-fill/edit-gap-fill.component';
 import { IlliadComponent } from './components/illiad/illiad.component';
+import { ResultsPreviewComponent } from './components/results-preview/results-preview.component';
 
 import { GapFillDisplayComponent } from './components/gap-fill-display/gap-fill-display.component';
 import { GapFillContainerComponent } from './components/gap-fill-container/gap-fill-container.component';
@@ -88,7 +89,8 @@ export const firebaseConfig = {
     PageNotFoundComponent,
     EditGapFillComponent,
     MyResultsComponent,
-    AdminResultsComponent
+    AdminResultsComponent,
+    ResultsPreviewComponent
 
   ],
   imports: [

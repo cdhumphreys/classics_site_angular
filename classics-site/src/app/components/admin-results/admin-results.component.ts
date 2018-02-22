@@ -11,16 +11,28 @@ import { SubjectsService } from '../../services/subjects.service';
   styleUrls: ['./admin-results.component.css']
 })
 export class AdminResultsComponent implements OnInit {
-  students;
-  filteredStudents;
+  students: any[] = [];
+  filteredStudents: any[] = [];
+  studentResultsPreview: any[] = [];
+  chosenStudentData: any[] = [];
 
-  groups: string[] = [];
+  yearGroups: string[] = [];
+  courses: string[] = [];
+
+  selectedYearGroup = '';
+  selectedCourse = '';
+  selectedCourseExercise = '';
+
+
 
   constructor(private gapFillService: GapFillService, private subjectsService: SubjectsService) {}
 
   ngOnInit() {
     this.gapFillService.getAllStudents().subscribe((snapshot) => {
       this.students = snapshot.filter((element) => {
+        if (this.selectedYearGroup) {
+          return !element.isAdmin && element.group == !this.selectedYearGroup;
+        }
         return !element.isAdmin;
       })
       .map((studentData) => {
@@ -28,8 +40,8 @@ export class AdminResultsComponent implements OnInit {
         if (studentData.group) {
           group = studentData.group;
         }
-        if (!this.groups.includes(group))  {
-          this.groups.push(group);
+        if (!this.yearGroups.includes(group))  {
+          this.yearGroups.push(group);
         }
 
         const newStudentData = {email: studentData.email, gapFills: [], group: group};
@@ -38,9 +50,23 @@ export class AdminResultsComponent implements OnInit {
         });
 
         const gapFills = gapFillsArray.map((gapFill) => {
-          return {...gapFill, ...{course: this.subjectsService.getSubjectName(gapFill.course), date: new Date(gapFill.date)}};
+          const courseSlug = gapFill.course;
+          const courseName = this.subjectsService.getSubjectName(courseSlug);
+          if (!this.courses.includes(courseName)) {
+            this.courses.push(courseName);
+          }
+          return {...gapFill, ...{course: gapFill.course, date: new Date(gapFill.date)}};
         })
         .sort((a, b) => {
+          // sort by ascending name
+          const usernameA = a.email.split('@')[0];
+          const usernameB = b.email.split('@')[0];
+          if (usernameA < usernameB) {
+            return -1;
+          }
+          if (usernameA > usernameB) {
+            return 1;
+          }
           // sort by ascending course
           const nameA = a.course.toUpperCase(); // ignore upper and lowercase
           const nameB = b.course.toUpperCase(); // ignore upper and lowercase
@@ -76,7 +102,6 @@ export class AdminResultsComponent implements OnInit {
         });
         newStudentData.gapFills = gapFills;
 
-        console.log(newStudentData);
         return newStudentData;
       })
       .sort((a, b) => {
@@ -93,30 +118,70 @@ export class AdminResultsComponent implements OnInit {
     });
   }
 
-  onSelectFilter(event, group) {
-    if (event.target.classList.contains('active')) return;
-
-    const siblingNodes = event.target.parentElement.querySelectorAll('.filter');
-    const siblings = Array.from(siblingNodes).filter((element) => {
-      return element != event.target;
-    });
-
-    siblings.map((element: HTMLElement) => {
-      element.classList.remove('active');
-    });
-
+  onSelectYearGroup(event, group) {
     event.target.classList.add('active');
 
-    this.filteredStudents = this.students.filter((student) => {
-      return student.group == group;
+    if (this.selectedYearGroup == group) return;
+
+    this.selectedYearGroup = group;
+
+    const studentResults = this.students.filter((student) => {
+      return !student.isAdmin && student.group == this.selectedYearGroup;
+    })
+    .map((student) => {
+      const email = student.email;
+      const group = student.group;
+
+      const courseResults = {};
+
+      student.gapFills.map(gapFill => {
+        const courseName = this.subjectsService.getSubjectName(gapFill.course);
+        if (!courseResults[courseName]) {
+          courseResults[courseName] = {};
+        }
+
+        if (!courseResults[courseName][gapFill.exercise]) {
+          courseResults[courseName][gapFill.exercise] = [];
+        }
+        courseResults[courseName][gapFill.exercise].push(gapFill.percentage);
+      });
+      const results = [];
+      for (let course in courseResults) {
+        for (let exercise in courseResults[course]) {
+
+          const averageScore = courseResults[course][exercise].reduce((total, percentage, index, array) => {
+            total += percentage;
+
+            if (index == array.length - 1) {
+              return total/array.length;
+            }
+
+            return total;
+          }, 0).toFixed(0);
+
+          const highestScore = Math.max(...courseResults[course][exercise]);
+
+          results.push({email, group, course, exercise: exercise, averageScore, highestScore})
+        }
+      }
+      return results;
     });
+    this.studentResultsPreview = Array.prototype.concat(...studentResults);
   }
 
-  onClearFilter(event) {
-    this.filteredStudents = this.students;
-    const siblingNodes = event.target.parentElement.querySelectorAll('.filter');
-    const siblings = Array.from(siblingNodes).map((element: HTMLElement) => {
-      element.classList.remove('active');
+  onSelectExercise(event) {
+    this.chosenStudentData = this.students.filter((student) => {
+      return !student.isAdmin;
+    })
+    .map(student => {
+      const filteredGapFills = student.gapFills.filter(gapFill => {
+        return gapFill.course == this.subjectsService.getSubjectSlug(event.course) && gapFill.exercise == event.exercise;
+      })
+      .map(gapFill => {
+        return {...gapFill, course: event.course};
+      });
+
+      return {...student, gapFills: filteredGapFills};
     });
   }
 

@@ -1,32 +1,46 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <h3>My Results</h3>
+      <h3>View Student Results</h3>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-10">
+    <div class="col-xs-12">
+      <h5>Year Groups</h5>
+      <ul>
+        <ng-container *ngFor="let year of yearGroups" >
+          <li (click)="onSelectYearGroup($event, year)" class="choice year-group-choice" [ngClass]="{'active': selectedYearGroup == year}">
+            <span *ngIf="year == 'none'">No group</span>
+            <span *ngIf="year != 'none'">Year {{ year }}</span>
+          </li>
+        </ng-container>
+
+      </ul>
+    </div>
+  </div>
+  <div class="row margin-top-spacing">
+    <div class="col-xs-12">
+      <results-preview *ngIf="selectedYearGroup" [studentResults]="studentResultsPreview" (selectedExercise)="onSelectExercise($event)"></results-preview>
+    </div>
+  </div>
+
+  <div class="row margin-top-spacing" *ngIf="chosenStudentData.length != 0">
+    <div class="col-xs-12">
+      <h4>Section Results</h4>
       <table>
         <tr>
-          <th>Student Email</th>
+          <th>Student Username</th>
           <th>Group</th>
           <th>Course</th>
           <th>Section</th>
           <th>Percentage</th>
           <th>Date</th>
         </tr>
-        <tr *ngIf="!filteredStudents">
-          <th>Loading results...</th>
-          <th>...</th>
-          <th>...</th>
-          <th>...</th>
-          <th>...</th>
-          <th>...</th>
-        </tr>
-        <ng-container *ngFor="let student of filteredStudents">
+        <ng-container *ngFor="let student of chosenStudentData">
           <tr *ngFor="let gapFill of student.gapFills">
-            <td>{{ student.email }}</td>
+            <td>{{ student.email|nameOnly }}</td>
             <td>{{ student.group }}</td>
+
             <td>{{ gapFill.course }}</td>
             <td style="text-align:center;">{{ gapFill.exercise }}</td>
             <td style="text-align:center;">{{ gapFill.percentage }}%</td>
@@ -34,15 +48,6 @@
           </tr>
         </ng-container>
       </table>
-    </div>
-    <div class="col-xs-2 filters">
-      <h5>Filter By Group:</h5>
-      <div class="filters-courses">
-        <div *ngFor="let group of groups" class="filter" (click)="onSelectFilter($event, group)">{{ group }}</div>
-        <div class="btn btn-info" (click)="onClearFilter($event)">
-          Clear filter
-        </div>
-      </div>
     </div>
   </div>
 </div>
